@@ -1,0 +1,185 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/spain_game_main"
+    android:gravity="center_horizontal"
+    android:layoutAnimation="@anim/layout_main_menu_animation"
+    android:orientation="vertical"
+    tools:context=".Main">
+
+    <!-- android:layoutAnimation="@anim/layout_main_menu_animation" -->
+
+    <LinearLayout
+        android:id="@+id/Rlcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:gravity="center"
+        android:layoutAnimation="@anim/layout_main_menu_animation_nested"
+        android:orientation="vertical">
+
+        <!-- android:layoutAnimation="@anim/layout_main_menu_animation" -->
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="150dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/choose_jackpot" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp">
+
+                <com.AppRocks.jackpot.view.InfiniteViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="fill_parent"
+                    android:layout_height="180dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true" />
+
+                <ImageButton
+                    android:id="@+id/btnRight"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@null"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/next" />
+
+                <ImageButton
+                    android:id="@+id/btnLeft"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:background="@null"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/prevt" />
+
+                <!--
+                    <com.makeramen.RoundedImageView
+					      android:id="@+id/imgJAckBot"
+					      android:layout_width="180dp"
+					      android:layout_height="180dp"
+					      android:layout_centerHorizontal="true"
+					      android:layout_centerVertical="true"
+					      android:padding="15dip"
+					      android:src="@drawable/cartest"
+					      android:scaleType="fitXY"
+					      app:corner_radius="115dip"
+					      app:border_width="3dip"
+					      android:background="@drawable/jackpot_badge"					      
+					      app:oval="true"
+					      app:border_color="@drawable/border"
+					      />
+
+                    
+                -->
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtPlayFree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayout1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="Play For Free"
+                android:textColor="@color/DarkOliveGreen"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
+
+            <RatingBar
+                android:id="@+id/ratingBar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtPlayFree"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
+                android:isIndicator="true" />
+
+            <Button
+                android:id="@+id/btnPlay"
+                style="@style/btnREDTransparent"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ratingBar1"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
+                android:text="Play" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottombar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layoutAnimation="@anim/layout_main_menu_animation_nested_2"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_continue_game"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/custom_circle_btn_bottom"
+            android:scaleType="fitXY"
+            android:src="@drawable/bottom_icon3" />
+
+        <ImageButton
+            android:id="@+id/bottom_btnMoney"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/custom_circle_btn_bottom"
+            android:scaleType="fitXY"
+            android:src="@drawable/bottom_icon2" />
+
+        <ImageButton
+            android:id="@+id/bottom_btnStar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/custom_circle_btn_bottom"
+            android:scaleType="fitXY"
+            android:src="@drawable/bottom_icon1" />
+
+        <ImageButton
+            android:id="@+id/bottom_btnHome"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/custom_circle_btn_bottom"
+            android:scaleType="fitXY"
+            android:src="@drawable/bottom_icon4" />
+
+        <ImageButton
+            android:id="@+id/bottom_btnVedio"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/custom_circle_btn_bottom"
+            android:scaleType="fitXY"
+            android:src="@drawable/stop_music" />
+    </LinearLayout>
+
+</LinearLayout>
