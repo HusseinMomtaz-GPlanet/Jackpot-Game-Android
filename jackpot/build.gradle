@@ -23,7 +23,7 @@ dependencies {
     compile project(':roundimageview')
     compile project(':myNineold')
     compile project(':universalImageLoader')
-    compile 'com.android.support:support-v4:20.0.0'
+    compile 'com.android.support:support-v4:21.0.0'
     compile 'com.google.code.gson:gson:2.2.4'
     compile files('libs/androidannotations-api-3.0.1.jar')
     compile files('libs/YouTubeAndroidPlayerApi.jar')
