@@ -44,7 +44,7 @@ public class QuestionDetails {
         level = levelNumber;
         // FIXME TEST Question
         /*setQuestion("TEST");
-		setAllChoices(new String[]{"right", "wrong1 Test longgggggg", "Clintss Eastwoods", "Alfonsoo Zapatero"});
+        setAllChoices(new String[]{"right", "wrong1 Test longgggggg", "Clintss Eastwoods", "Alfonsoo Zapatero"});
 		setAnswer("right");
 		*/
         getQuestionTask = new GetQuestionDetailsTask();

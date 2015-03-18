@@ -27,7 +27,7 @@ public class Splash extends Activity {
 
         rootLayout = (LinearLayout) findViewById(R.id.rootLayout);
         /*test.setOnTouchListener(new OnTouchListener() {
-			
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				startActivity(new Intent(Splash.this, Main_.class));

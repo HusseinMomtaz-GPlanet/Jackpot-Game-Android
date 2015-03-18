@@ -31,7 +31,9 @@ public class PlayJackpotTask extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void result) {
         if (callerActivity instanceof Jackpot) {
             Jackpot activity = (Jackpot) callerActivity;
-            activity.startActivity(new Intent(activity, Question.class));
+            Question.jackpotDetailsJson = activity.jackpotJsonDetails;
+            Intent questionsIntent = new Intent(activity, Question.class);
+            activity.startActivity(questionsIntent);
             activity.playMusicContinue = false;
         } else if (callerActivity instanceof Question) {
             Question activity = (Question) callerActivity;

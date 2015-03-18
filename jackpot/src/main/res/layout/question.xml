@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/spain_game_main">
+
     <RelativeLayout
         android:id="@+id/topCategoryLayout"
         android:layout_width="fill_parent"
@@ -34,43 +35,43 @@
     <LinearLayout
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="@drawable/needle_bg"
-        android:layout_toLeftOf="@+id/layoutAvometer"
         android:layout_alignTop="@+id/layoutAvometer"
-        android:gravity="center"
-        android:layout_marginTop="25dp"
         android:layout_marginRight="20dp"
-        >
+        android:layout_marginTop="25dp"
+        android:layout_toLeftOf="@+id/layoutAvometer"
+        android:background="@drawable/needle_bg"
+        android:gravity="center">
+
         <TextView
             android:id="@+id/question_counter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="26sp"
-            android:textStyle="bold"
             android:gravity="center"
+            android:text=""
             android:textColor="@color/white"
-            android:text="1/5"/>
-        </LinearLayout>
+            android:textSize="26sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="@drawable/needle_bg"
-        android:layout_toRightOf="@+id/layoutAvometer"
         android:layout_alignTop="@+id/layoutAvometer"
-        android:gravity="center"
-        android:padding="5dp"
-        android:layout_marginTop="25dp"
         android:layout_marginLeft="20dp"
-        >
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/layoutAvometer"
+        android:background="@drawable/needle_bg"
+        android:gravity="center"
+        android:padding="5dp">
+
         <com.makeramen.RoundedImageView
             android:id="@+id/company_rigth_logo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="fitXY"
             app:corner_radius="115dip"
-            app:oval="true"
-            android:background="@drawable/success"/>
-        </LinearLayout>
+            app:oval="true" />
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/layoutAvometer"
@@ -107,10 +108,9 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:visibility="gone"
             app:corner_radius="115dip"
-            app:oval="true"
-            android:background="@drawable/true_icon255"
-            android:visibility="gone" />
+            app:oval="true" />
 
         <ImageView
             android:id="@+id/imgNiddle"

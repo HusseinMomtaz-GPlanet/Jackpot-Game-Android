@@ -2,13 +2,13 @@ package com.AppRocks.jackpot.webservice;
 
 import android.os.AsyncTask;
 
-import com.AppRocks.jackpot.activities.Jackpot;
+import com.AppRocks.jackpot.activities.Login;
 
 public class GetTermsTask extends AsyncTask<Integer, Void, String> {
 
-    Jackpot callerActivity;
+    Login callerActivity;
 
-    public GetTermsTask(Jackpot callerActivity) {
+    public GetTermsTask(Login callerActivity) {
         super();
         this.callerActivity = callerActivity;
     }

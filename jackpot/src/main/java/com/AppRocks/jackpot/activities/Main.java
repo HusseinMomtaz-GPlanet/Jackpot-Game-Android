@@ -62,9 +62,9 @@ public class Main extends BaseActivity {
     @ViewById(R.id.viewPager)
     public ViewPager vp; // Reference to class to swipe views
 
-	/*
+    /*
      * @ViewById RoundedImageView imgJAckBot;
-	 */
+     */
     public PagerAdapter pagesAdapter;
     public ArrayList<HashMap<String, String>> jackpotsList;
     @ViewById
@@ -79,9 +79,9 @@ public class Main extends BaseActivity {
     ImageButton btnLeft;
     @ViewById
     ImageButton btn_continue_game;
-	/*
-	 * String[] IDs; String[] imgURLs; int[] difficulty;
-	 */
+    /*
+     * String[] IDs; String[] imgURLs; int[] difficulty;
+     */
     @ViewById
     RatingBar ratingBar1;
     @ViewById
@@ -96,7 +96,7 @@ public class Main extends BaseActivity {
     private boolean isJackpotFree = true;
     private int jackpotDifficulty;
     private ImageButton btnPlayMusic;
-	
+
 	/*
 	 * public static void setJackpotsList(ArrayList<HashMap<String, String>>
 	 * jackpots) { jackpotsList = jackpots; vp.setAdapter(pagesAdapter);
@@ -153,13 +153,6 @@ public class Main extends BaseActivity {
         setContentView(R.layout.main);
         p = new JackpotParameters(this);
         SoundPlayer.initSounds(getApplicationContext());
-		/*btnPlayMusic = (ImageButton)findViewById(R.id.bottom_btnVedio);
-		if (jackpotParams.getBoolean("playMusic", true)){
-			startService(new Intent(getBaseContext(), MusicService.class));
-		}
-		else {
-			btnPlayMusic.setBackgroundResource(R.drawable.stop_music_off);
-		}*/
     }
 
     @Override
@@ -167,7 +160,6 @@ public class Main extends BaseActivity {
         initUILConfig();
         super.onStart();
     }
-	
 
 
     @Override

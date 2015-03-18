@@ -62,7 +62,11 @@
                 android:paddingRight="5dp"
                 android:textColor="#F00"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:focusableInTouchMode="true"
+                android:textStyle="bold" >
+            <requestFocus />
+            </EditText>
+
         </LinearLayout>
 
         <LinearLayout
@@ -93,7 +97,9 @@
                 android:paddingRight="5dp"
                 android:textColor="#F00"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold" >
+            <requestFocus />
+            </EditText>
         </LinearLayout>
 
         <View

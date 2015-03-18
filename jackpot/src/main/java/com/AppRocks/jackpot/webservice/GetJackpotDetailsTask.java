@@ -92,7 +92,7 @@ public class GetJackpotDetailsTask extends AsyncTask<Object, Void, Void> {
                     videoUrl = videoJsonObject.getString(JackpotApplication.TAG_VIDEOS_LINK);
 
 					/*jackpotDetails.put(JackpotApplication.TAG_FLY,
-							jackpotDetailsJSON
+                            jackpotDetailsJSON
 									.getString(JackpotApplication.TAG_FLY));*/
                     imgFly = jackpotDetailsJSON
                             .getString(JackpotApplication.TAG_FLY);
@@ -115,7 +115,8 @@ public class GetJackpotDetailsTask extends AsyncTask<Object, Void, Void> {
 
                 i.putExtra("winner", winnerDetails);
                 callerActivity.startActivity(i);
-            } else if (!jackpotDetailsJSON.isNull(JackpotApplication.TAG_COMPANY)) {    //(!jackpotDetails.isEmpty()) {
+            } else if (!jackpotDetailsJSON.isNull(JackpotApplication.TAG_COMPANY)) {
+                callerActivity.onJackpotDataRetrieved(jackpotDetailsJSON);
                 // else not wined and has jackpot details then show it
                 //Log.d("ELSAWAF", jackpotDetails.toString());
                 callerActivity.txtCompanyName.setText(jackpotDetails

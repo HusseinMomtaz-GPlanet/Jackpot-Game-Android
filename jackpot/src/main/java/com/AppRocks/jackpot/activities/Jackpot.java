@@ -6,9 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +28,6 @@ import com.AppRocks.jackpot.activities.youtube.FullscreenDemoActivity2;
 import com.AppRocks.jackpot.services.MusicService;
 import com.AppRocks.jackpot.util.ConnectionDetector;
 import com.AppRocks.jackpot.webservice.GetJackpotDetailsTask;
-import com.AppRocks.jackpot.webservice.GetTermsTask;
 import com.AppRocks.jackpot.webservice.PlayJackpotTask;
 import com.makeramen.RoundedImageView;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -45,6 +42,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONObject;
 
 @EActivity(R.layout.jackpot)
 public class Jackpot extends BaseActivity {
@@ -63,8 +61,8 @@ public class Jackpot extends BaseActivity {
     public ImageView imgProgrWorld;
     @ViewById
     public View viewBGWorld;
-	/*@ViewById
-	Button btnYouCanPlay;*/
+    /*@ViewById
+    Button btnYouCanPlay;*/
     @ViewById
     public TextView txtCompanyName;
     @ViewById
@@ -77,7 +75,8 @@ public class Jackpot extends BaseActivity {
     public DisplayImageOptions options;
     public ProgressBar spinner;
     public boolean playMusicContinue;
-    JackpotParameters p;
+    public JSONObject jackpotJsonDetails;
+    JackpotParameters jackParams;
     @ViewById
     ImageView img3StageProgress;
     int progressYou = 0;
@@ -94,18 +93,14 @@ public class Jackpot extends BaseActivity {
     WindowManager.LayoutParams params;
     private WindowManager windowManager;
     private View getReadyView;
-    private boolean ConditonsAccepted = false;
-
 
     @Click
     void btnSeeTheVideo() {
         if (progressYou == 100) {
             if (progressWorld == 100) {
-                if (ConditonsAccepted) {
-                    new PlayJackpotTask(this).execute();
-                } else {
-                    showConditions();
-                }
+
+                new PlayJackpotTask(this).execute();
+
             } else {
                 Toast.makeText(Jackpot.this, "You must wait until world watch reach to 100%", Toast.LENGTH_SHORT).show();
             }
@@ -119,10 +114,6 @@ public class Jackpot extends BaseActivity {
         }
     }
 
-    private void showConditions() {
-        // TODO Auto-generated method stub
-        new GetTermsTask(this).execute();
-    }
 
     @Click
     void btnDescComplete() {
@@ -163,67 +154,6 @@ public class Jackpot extends BaseActivity {
 
         OkBtn.setOnClickListener(new OnClickListener() {
 
-            @Override
-            public void onClick(View arg0) {
-                // elsawaf
-                if (getReadyView != null) {
-                    windowManager.removeView(getReadyView);
-                    getReadyView = null;
-                    dimView.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-
-
-    }
-
-
-    private void showTermsScreen(String terms) {
-        dimView.setVisibility(View.VISIBLE);
-        windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);//context.getSystemService(Context.WINDOW_SERVICE);
-        LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        getReadyView = inflator.inflate(R.layout.conditions_screen, null);
-
-        int windowHeight = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getHeight();
-
-        params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT);
-
-        params.windowAnimations = R.style.screen_animation;
-        params.gravity = Gravity.TOP | Gravity.LEFT;
-        params.x = 0;
-        params.y = windowHeight / 6;
-        windowManager.addView(getReadyView, params);
-
-        TextView termsTextView = (TextView) getReadyView.findViewById(R.id.txt_cheese_info);
-        if (terms == null)
-            terms = "Terms failed to load!";
-        termsTextView.setText(Html.fromHtml(terms));
-        termsTextView.setMovementMethod(new ScrollingMovementMethod());
-
-        Button backBtn = (Button) getReadyView.findViewById(R.id.btnBack);
-
-        Button accept = (Button) getReadyView.findViewById(R.id.btnaccept);
-
-        accept.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                // elsawaf
-                if (getReadyView != null) {
-                    windowManager.removeView(getReadyView);
-                    getReadyView = null;
-                    dimView.setVisibility(View.INVISIBLE);
-                    ConditonsAccepted = true;
-                    btnSeeTheVideo.setBackgroundResource(R.drawable.jackpot_play);
-                }
-            }
-        });
-
-        backBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 // elsawaf
@@ -283,11 +213,6 @@ public class Jackpot extends BaseActivity {
         });
     }
 
-    //callback method for get Terms Task
-    public void onGetTermsTaskFinish(String terms) {
-        showTermsScreen(terms);
-    }
-
     //this method invoke automatically after init views
     @AfterViews
     void startAnimation() {
@@ -296,29 +221,24 @@ public class Jackpot extends BaseActivity {
         animation2.setRepeatCount(Animation.INFINITE);
         animation2.setRepeatMode(Animation.REVERSE);
         imgProgrYou.startAnimation(animation2);
-        //imgProgrWorld.startAnimation(animation2);
-
 
         spinner = (ProgressBar) findViewById(R.id.loading);
-		/*Typeface font = Typeface.createFromAsset(getAssets(),
-				"BigSoftie-Fat.otf");
-		btnDescComplete.setTypeface(font);*/
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initUILConfig();
-        p = new JackpotParameters(this);
+        jackParams = new JackpotParameters(this);
     }
 
     @Override
     protected void onStart() {
         if (TextUtils.isEmpty(JackpotApplication.JACKPOT_ID)) {
-            JackpotApplication.JACKPOT_ID = p.getString(JackpotApplication.PREF_LAST_JACKPOT_ID);
+            JackpotApplication.JACKPOT_ID = jackParams.getString(JackpotApplication.PREF_LAST_JACKPOT_ID);
         }
         if (TextUtils.isEmpty(JackpotApplication.TOKEN_ID)) {
-            JackpotApplication.TOKEN_ID = p.getString(JackpotApplication.PREF_USER_TOKEN);
+            JackpotApplication.TOKEN_ID = jackParams.getString(JackpotApplication.PREF_USER_TOKEN);
         }
         ConnectionDetector cd = new ConnectionDetector(Jackpot.this);
         if (cd.isConnectingToInternet()) {
@@ -348,13 +268,6 @@ public class Jackpot extends BaseActivity {
         if (!playMusicContinue) {
             stopService(new Intent(getBaseContext(), MusicService.class));
         }
-		/*if (imageLoader != null) {
-			try {
-				imageLoader.destroy();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}*/
 
     }
 
@@ -464,15 +377,16 @@ public class Jackpot extends BaseActivity {
     private void updateImg3StageProgress() {
         if (isProgressYou100 && isProgressWorld100) {
             img3StageProgress.setBackgroundResource(R.drawable.traffic_bar_green);
-            if (ConditonsAccepted) {
-                btnSeeTheVideo.setBackgroundResource(R.drawable.jackpot_play);
-            } else {
-                btnSeeTheVideo.setBackgroundResource(R.drawable.conditions);
-            }
+
+            btnSeeTheVideo.setBackgroundResource(R.drawable.jackpot_play);
         } else {
             img3StageProgress.setBackgroundResource(R.drawable.traffic_bar_yellow);
             btnSeeTheVideo.setBackgroundResource(R.drawable.jackpot_wait_video);
         }
     }
 
+    //Get jackpot data from get details service , we will need to pass it to questions details
+    public void onJackpotDataRetrieved(JSONObject jackpotDetailsJSON) {
+        jackpotJsonDetails = jackpotDetailsJSON;
+    }
 }

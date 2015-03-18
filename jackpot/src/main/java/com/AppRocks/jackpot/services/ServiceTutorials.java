@@ -225,7 +225,7 @@ public class ServiceTutorials extends Service implements OnClickListener {
         // TODO Auto-generated method stub
         Random rGenerator = new Random();
         int n = xTransation ? rGenerator.nextInt(xMax) : rGenerator.nextInt(yMax);
-			/*int n = xTransation? rGenerator.nextInt(200)+150 : rGenerator.nextInt(150)+100;
+            /*int n = xTransation? rGenerator.nextInt(200)+150 : rGenerator.nextInt(150)+100;
 			if (n%2 == 0)
 				signOpposite = !signOpposite;
 			return signOpposite? n : -n;*/

@@ -90,7 +90,7 @@ public class RouletteView extends RelativeLayout {
                     mp.release();
                 }
                 /*Animation myFadeInAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.blink);
-				arrowImage.startAnimation(myFadeInAnimation);*/
+                arrowImage.startAnimation(myFadeInAnimation);*/
 
                 // Actions to do after rotation finished
                 Handler handler = new Handler();

@@ -26,7 +26,7 @@ public class SoundPlayer {
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 100);
         soundsList = new SparseIntArray();
         /*for (int i=0 ; i<5; i++){
-			clockSoundLoading = soundPool.load(context, fileFromResources, 1);	
+            clockSoundLoading = soundPool.load(context, fileFromResources, 1);
 		}*/
         //soundsList.put(clockSound, soundPool.load(context, clockSound, 1));
         soundsList.put(needleSound, soundPool.load(context, needleSound, 1));

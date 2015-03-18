@@ -47,7 +47,6 @@ import com.AppRocks.jackpot.models.QuestionDetails;
 import com.AppRocks.jackpot.util.AlarmTimer;
 import com.AppRocks.jackpot.util.AnimationRandom;
 import com.AppRocks.jackpot.util.ConnectionDetector;
-import com.AppRocks.jackpot.util.ImageLoader;
 import com.AppRocks.jackpot.util.RouletteView;
 import com.AppRocks.jackpot.util.RouletteView.RotationEndCallBack;
 import com.AppRocks.jackpot.util.SoundPlayer;
@@ -63,6 +62,17 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.Animator.AnimatorListener;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -79,6 +89,7 @@ public class Question extends Activity implements RotationEndCallBack,
     private static final int ANIMATION_Question = 2;
     public static boolean isGetQuestionTaskEnd = false;
     public static boolean isQuestionViewsShow = false;
+    public static JSONObject jackpotDetailsJson;
     public TextView txtAnswer1;
     public TextView txtAnswer2;
     public TextView txtAnswer3;
@@ -99,6 +110,7 @@ public class Question extends Activity implements RotationEndCallBack,
     public ProgressBar adProgressBar;
     public TimeIsUpTask timeIsUpTask;
     public boolean isTryingAgain;
+    public ImageLoader imageLoader;
     RotateAnimation rotation;
     int progress;
     int newProgress;
@@ -127,6 +139,9 @@ public class Question extends Activity implements RotationEndCallBack,
     ArrayList<Integer> choisedCategory;
     boolean isAnimationEnd;
     WindowManager.LayoutParams params;
+    DisplayImageOptions options;
+    ProgressBar spinner = null;
+    private View page;
     private TextView txtQuestion;
     private ImageView imgNiddle;
     private AlarmTimer alarmTimer;
@@ -164,14 +179,12 @@ public class Question extends Activity implements RotationEndCallBack,
     private AnswerClickListener answerClickListener;
     private Button btnSaveGame;
     private JokerClickListener jockerClickListener;
-    public ImageLoader imageLoader;
-   // DisplayImageOptions options;
-
     /*
      * We have five elements invisible at beginning (imgNiddle, questionFrame,
 	 * bottomBar, leftIcon, rightIcon)
 	 */
     private FloatyClickListener floatyClickListener;
+    private LayoutInflater inflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,10 +195,17 @@ public class Question extends Activity implements RotationEndCallBack,
         SoundPlayer.initSounds(Question.this);
         jackpotParams = new JackpotParameters(Question.this);
 
-        imageLoader=new ImageLoader(this.getApplicationContext());
+        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View page = inflater.inflate(R.layout.page, null);
+        spinner = (ProgressBar) page
+                .findViewById(R.id.loading);
+        //imageLoader=new ImageLoader(this.getApplicationContext());
 
         intiUI();
-        //initUILConfig();
+        initUILConfig();
+
+        showJackpotLogoOnRightCircle();
+        //showGetDataScreen();
     }
 
     @Override
@@ -214,7 +234,7 @@ public class Question extends Activity implements RotationEndCallBack,
             updateRouletteText();
             // the suitble place to execute getquestiontask
         }
-		/*else if (choicesFrame.getVisibility() == View.VISIBLE)
+        /*else if (choicesFrame.getVisibility() == View.VISIBLE)
 			startTimer();*/
 
     }
@@ -241,37 +261,35 @@ public class Question extends Activity implements RotationEndCallBack,
         finish();
     }
 
-//    private void initUILConfig() {
-//        // This configuration tuning is custom. You can tune every option, you
-//        // may tune some of them,
-//        // or you can create default configuration by
-//        // ImageLoaderConfiguration.createDefault(this);
-//        // method.
-//        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-//                WinnerScreen.this).threadPriority(Thread.NORM_PRIORITY - 2)
-//                .denyCacheImageMultipleSizesInMemory()
-//                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-//                .diskCacheSize(50 * 1024 * 1024)
-//                        // 50 Mb
-//                .tasksProcessingOrder(QueueProcessingType.LIFO)
-//                .writeDebugLogs() // Remove for release app
-//                .build();
-//        // Initialize ImageLoader with configuration.
-//        ImageLoader.getInstance().init(config);
-//
-//        options = new DisplayImageOptions.Builder()
-//                //.showImageForEmptyUri(R.drawable.ic_empty)
-//                //.showImageOnFail(R.drawable.ic_error)
-//                .resetViewBeforeLoading(true)
-//                .cacheOnDisk(true)
-//                        //.imageScaleType(ImageScaleType.EXACTLY)
-//                        //.bitmapConfig(Bitmap.Config.RGB_565)
-//                .considerExifParams(true)
-//                .displayer(new FadeInBitmapDisplayer(300))
-//                .build();
-//
-//        imageLoader = ImageLoader.getInstance();
-//    }
+    private void initUILConfig() {
+        // This configuration tuning is custom. You can tune every option, you
+        // may tune some of them,
+        // or you can create default configuration by
+        // ImageLoaderConfiguration.createDefault(this);
+        // method.
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+                Question.this).threadPriority(Thread.NORM_PRIORITY - 2)
+                .denyCacheImageMultipleSizesInMemory()
+                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
+                .diskCacheSize(50 * 1024 * 1024)
+                        // 50 Mb
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+                .writeDebugLogs() // Remove for release app
+                .build();
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config);
+
+        options = new DisplayImageOptions.Builder()
+                .resetViewBeforeLoading(true)
+                .cacheOnDisk(true)
+                        //.imageScaleType(ImageScaleType.EXACTLY)
+                        //.bitmapConfig(Bitmap.Config.RGB_565)
+                .considerExifParams(true)
+                .displayer(new FadeInBitmapDisplayer(300))
+                .build();
+
+        imageLoader = ImageLoader.getInstance();
+    }
 
     private void intiUI() {
         txtQuestion = (TextView) findViewById(R.id.txt_question);
@@ -279,8 +297,8 @@ public class Question extends Activity implements RotationEndCallBack,
         txtAnswer2 = (TextView) findViewById(R.id.answer_2);
         txtAnswer3 = (TextView) findViewById(R.id.answer_3);
         txtAnswer4 = (TextView) findViewById(R.id.answer_4);
-        question_counter=(TextView) findViewById(R.id.question_counter);
-        right_logo=(ImageView)findViewById(R.id.company_rigth_logo);
+        question_counter = (TextView) findViewById(R.id.question_counter);
+        right_logo = (ImageView) findViewById(R.id.company_rigth_logo);
         rootLayout = (RelativeLayout) findViewById(R.id.rootLayout);
         roulette = (RouletteView) findViewById(R.id.roulette);
         rouletteLayout = (RelativeLayout) findViewById(R.id.rouletteLayout);
@@ -337,13 +355,116 @@ public class Question extends Activity implements RotationEndCallBack,
         trueAnimation.setAnimationListener(this);
 
         choisedCategory = new ArrayList<Integer>(6);
+    }
 
-        //set right Logo
-        //Loading Big Logo in center
-//        String logoURL = JackpotApplication.TAG_IMAGE;
-//        String jackpotLogoURL = JackpotApplication.BASE_URL
-//                + logoURL.substring(logoURL.indexOf("uploads"));
-        imageLoader.DisplayImage(JackpotApplication.logoURL,right_logo);
+    private void showJackpotLogoOnRightCircle() {
+        String logoURL = null;
+        try {
+            logoURL = jackpotDetailsJson.getString(JackpotApplication.TAG_IMAGE);
+            String jackpotLogoURL = JackpotApplication.BASE_URL
+                    + logoURL.substring(logoURL.indexOf("uploads"));
+            //imageLoader.DisplayImage(logoURL,right_logo);
+            if (imageLoader != null) {
+                imageLoader.displayImage(jackpotLogoURL, right_logo, options,
+                        new SimpleImageLoadingListener() {
+                            @Override
+                            public void onLoadingStarted(String imageUri, View view) {
+                                spinner.setVisibility(View.VISIBLE);
+                            }
+
+                            @Override
+                            public void onLoadingFailed(String imageUri, View view,
+                                                        FailReason failReason) {
+                                String message = null;
+                                switch (failReason.getType()) {
+                                    case IO_ERROR:
+                                        message = "Input/Output error";
+                                        break;
+                                    case DECODING_ERROR:
+                                        message = "Image can't be decoded";
+                                        break;
+                                    case NETWORK_DENIED:
+                                        message = "Downloads are denied";
+                                        break;
+                                    case OUT_OF_MEMORY:
+                                        message = "Out Of Memory error";
+                                        break;
+                                    case UNKNOWN:
+                                        message = "Unknown error";
+                                        break;
+                                }
+                                Toast.makeText(Question.this, message,
+                                        Toast.LENGTH_SHORT).show();
+
+                                spinner.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onLoadingComplete(String imageUri,
+                                                          View view, Bitmap loadedImage) {
+                                spinner.setVisibility(View.GONE);
+                            }
+                        });
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showCompanyLogoOnCenterAvomenetr() {
+        String logoURL = null;
+        try {
+            logoURL = jackpotDetailsJson.getString(JackpotApplication.TAG_FLY);
+            String jackpotLogoURL = JackpotApplication.BASE_URL
+                    + logoURL.substring(logoURL.indexOf("uploads"));
+            //imageLoader.DisplayImage(logoURL,right_logo);
+            if (imageLoader != null) {
+                imageLoader.displayImage(jackpotLogoURL, imgTrue, options,
+                        new SimpleImageLoadingListener() {
+                            @Override
+                            public void onLoadingStarted(String imageUri, View view) {
+                                spinner.setVisibility(View.VISIBLE);
+                            }
+
+                            @Override
+                            public void onLoadingFailed(String imageUri, View view,
+                                                        FailReason failReason) {
+                                String message = null;
+                                switch (failReason.getType()) {
+                                    case IO_ERROR:
+                                        message = "Input/Output error";
+                                        break;
+                                    case DECODING_ERROR:
+                                        message = "Image can't be decoded";
+                                        break;
+                                    case NETWORK_DENIED:
+                                        message = "Downloads are denied";
+                                        break;
+                                    case OUT_OF_MEMORY:
+                                        message = "Out Of Memory error";
+                                        break;
+                                    case UNKNOWN:
+                                        message = "Unknown error";
+                                        break;
+                                }
+                                Toast.makeText(Question.this, message,
+                                        Toast.LENGTH_SHORT).show();
+
+                                spinner.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onLoadingComplete(String imageUri,
+                                                          View view, Bitmap loadedImage) {
+                                spinner.setVisibility(View.GONE);
+                            }
+                        });
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadFonts() {
@@ -907,6 +1028,13 @@ public class Question extends Activity implements RotationEndCallBack,
         contactPhone.setTypeface(font);
         submitBtn.setTypeface(font);
 
+        contactEmail.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                contactEmail.clearFocus();
+                contactEmail.requestFocus();
+            }
+        });
         submitBtn.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -1068,7 +1196,7 @@ public class Question extends Activity implements RotationEndCallBack,
         txtAnswer3.setText(question.getAllChoices()[2]);
         txtAnswer4.setText(question.getAllChoices()[3]);
         //set question counter
-        question_counter.setText((level.numberOfAnswers+1)+"/"+level.numberOfQuestions);
+        question_counter.setText((level.numberOfAnswers + 1) + "/" + level.numberOfQuestions);
     }
 
     public void updateJocker() {
@@ -1121,6 +1249,7 @@ public class Question extends Activity implements RotationEndCallBack,
         }
 
         rightAnswer();
+        deleteAllWrongAnswersAndClose();
 //        imgTrue.setBackgroundResource(R.drawable.true_icon255);
 //        animN = ANIMATION_JOCKER;
 //        imgTrue.startAnimation(trueAnimation);
@@ -1232,7 +1361,8 @@ public class Question extends Activity implements RotationEndCallBack,
         imgTrue.clearAnimation();
         //make the right logo retirn to show the jackpot logo instead of true icon
         right_logo.clearAnimation();
-        imageLoader.DisplayImage(JackpotApplication.logoURL,right_logo);
+        //show jackpot logo on right icon (Normal state)
+        showJackpotLogoOnRightCircle();
         imgTrue.setVisibility(View.INVISIBLE);
         choicesFrame.setVisibility(View.INVISIBLE);
         questionBackground.setVisibility(View.INVISIBLE);
@@ -1328,19 +1458,17 @@ public class Question extends Activity implements RotationEndCallBack,
         wrongAnswerSound();
     }
 
-	/*private void calculateTotalScoreDependOnHelpUsed() {
-		level.totalScore -= (JackpotApplication.numberOfjokerUsed * 25)
-				- (JackpotApplication.numberOfFloatyUsed * 10);
-	}*/
 
     public void rightAnswerAnimation() {
 
         right_logo.setImageResource(R.drawable.true_icon255);
-        imageLoader.DisplayImage(JackpotApplication.logoURL, imgTrue);
+        //show company logo in center
+        showCompanyLogoOnCenterAvomenetr();
+
         animN = ANIMATION_TRUE;
-        right_logo.startAnimation(trueAnimation);
-        imgTrue.startAnimation(trueAnimation);
         imgTrue.setVisibility(View.VISIBLE);
+        imgTrue.startAnimation(trueAnimation);
+        right_logo.startAnimation(trueAnimation);
     }
 
     public void updateTotalScore() {

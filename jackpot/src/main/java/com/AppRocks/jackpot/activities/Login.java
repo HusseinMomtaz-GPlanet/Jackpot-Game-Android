@@ -3,24 +3,34 @@ package com.AppRocks.jackpot.activities;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,6 +40,7 @@ import com.AppRocks.jackpot.JackpotApplication;
 import com.AppRocks.jackpot.JackpotParameters;
 import com.AppRocks.jackpot.R;
 import com.AppRocks.jackpot.util.ConnectionDetector;
+import com.AppRocks.jackpot.webservice.GetTermsTask;
 import com.AppRocks.jackpot.webservice.JackpotServicesClient;
 import com.facebook.AppEventsLogger;
 import com.facebook.Request;
@@ -55,6 +66,8 @@ public class Login extends Activity {
     protected String facebookEmail = "";
     ProgressDialog progress;
     boolean signUpProcess;
+    View dimView;
+    WindowManager.LayoutParams params;
     private GraphUser user;
     private LoginButton loginButton;
     private String fName;
@@ -96,10 +109,15 @@ public class Login extends Activity {
     private RadioGroup radioGruopSex;
     private TextView txtSignUp;
     private TextView txtLogin;
+    private CheckBox conditionsCheckbox;
+    private ImageButton conditions_button;
     private Button btnLogout;
     private int Facebook_Login_Mode = 1;
     private int Normal_Login_Mode = 2;
     private int loginMethod = 0;
+    private WindowManager windowManager;
+    private View getReadyView;
+    private boolean ConditonsAccepted = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +147,31 @@ public class Login extends Activity {
 
         txtSignUp = (TextView) findViewById(R.id.txtSignUp);
         txtLogin = (TextView) findViewById(R.id.txtLogin);
+        conditionsCheckbox = (CheckBox) findViewById(R.id.iagree_checkbutton);
+        conditions_button = (ImageButton) findViewById(R.id.conditions_button);
+
+
+        initOperations();
+
+
+    }
+
+    private void initOperations() {
+
+        loginMethod = Normal_Login_Mode;
+
+        conditions_button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new GetTermsTask(Login.this).execute();
+            }
+        });
+        conditionsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ConditonsAccepted = isChecked;
+            }
+        });
 
         btnLogout.setOnClickListener(new OnClickListener() {
             @Override
@@ -152,6 +195,64 @@ public class Login extends Activity {
         if (i != null) {
             requestCode = i.getIntExtra("requestCode", 0);
         }
+    }
+
+    private void showTermsScreen(String terms) {
+
+        //dimView.setVisibility(View.VISIBLE);
+        windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);//context.getSystemService(Context.WINDOW_SERVICE);
+        LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        getReadyView = inflator.inflate(R.layout.conditions_screen, null);
+
+        int windowHeight = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getHeight();
+
+        params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+
+        params.windowAnimations = R.style.screen_animation;
+        params.gravity = Gravity.TOP | Gravity.LEFT;
+        params.x = 0;
+        params.y = windowHeight / 6;
+        windowManager.addView(getReadyView, params);
+
+        TextView termsTextView = (TextView) getReadyView.findViewById(R.id.txt_cheese_info);
+        if (terms == null)
+            terms = "Terms failed to load!";
+        termsTextView.setText(Html.fromHtml(terms));
+        termsTextView.setMovementMethod(new ScrollingMovementMethod());
+
+        Button backBtn = (Button) getReadyView.findViewById(R.id.btnBack);
+
+        Button accept = (Button) getReadyView.findViewById(R.id.btnaccept);
+
+        accept.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                // elsawaf
+                if (getReadyView != null) {
+                    windowManager.removeView(getReadyView);
+                    getReadyView = null;
+                    ConditonsAccepted = true;
+                }
+            }
+        });
+
+        backBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                // elsawaf
+                if (getReadyView != null) {
+                    windowManager.removeView(getReadyView);
+                    getReadyView = null;
+                    dimView.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
 
     }
 
@@ -176,7 +277,7 @@ public class Login extends Activity {
             if (cd.isConnectingToInternet()) {
                 registerUser();
             }
-
+            loginMethod = Facebook_Login_Mode;
             btnSignUpForm.setText("Return at game");
             btnSignUpForm.setOnClickListener(new ReturnToHomeClickListener());
 
@@ -310,7 +411,7 @@ public class Login extends Activity {
                             nickName = fName + lName;
 
 									/*
-									 * doAddUser(facebookUName, facebookPass,
+                                     * doAddUser(facebookUName, facebookPass,
 									 * facebookEmail, true);
 									 */
 
@@ -462,6 +563,10 @@ public class Login extends Activity {
 
     }
 
+    public void onGetTermsTaskFinish(String res) {
+        showTermsScreen(res);
+    }
+
     class ShowSignUpFormClickListener implements OnClickListener {
 
         @Override
@@ -475,7 +580,11 @@ public class Login extends Activity {
     class ReturnToHomeClickListener implements OnClickListener {
         @Override
         public void onClick(View v) {
-            startActivity(new Intent(Login.this, Main_.class));
+            if (ConditonsAccepted) {
+                startActivity(new Intent(Login.this, Main_.class));
+            } else {
+                Toast.makeText(Login.this, "You must accept terms and conditions first", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -550,6 +659,7 @@ public class Login extends Activity {
             }
             return -1;
         }
+
 
         @Override
         protected void onPostExecute(Integer result) {
