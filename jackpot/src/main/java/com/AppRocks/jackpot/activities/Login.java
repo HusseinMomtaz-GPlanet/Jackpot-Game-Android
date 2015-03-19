@@ -274,7 +274,7 @@ public class Login extends Activity {
             Log.w("elsawafLogin", "stateOpened");
             //	if (!jackpotParams.getBoolean("isUserRegisterOnService", false)) {
             ConnectionDetector cd = new ConnectionDetector(Login.this);
-            if (cd.isConnectingToInternet()) {
+            if (cd.isConnectingToInternet() && TextUtils.isEmpty(JackpotApplication.TOKEN_ID)) {
                 registerUser();
             }
             loginMethod = Facebook_Login_Mode;
@@ -296,6 +296,7 @@ public class Login extends Activity {
             }
         } else if (state.isClosed()) {
             Log.w("elsawafLogin", "stateClosed");
+            clearTheToken();
             btnSignUpForm.setText("Or Click Here");
             btnLogout.setVisibility(View.GONE);
             btnSignUpForm.setOnClickListener(new ShowSignUpFormClickListener());
