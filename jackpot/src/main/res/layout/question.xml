@@ -37,9 +37,8 @@
         android:layout_height="80dp"
         android:layout_alignTop="@+id/layoutAvometer"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="25dp"
         android:layout_toLeftOf="@+id/layoutAvometer"
-        android:background="@drawable/needle_bg"
+        android:background="@drawable/question_icon_bk"
         android:gravity="center">
 
         <TextView
@@ -58,9 +57,8 @@
         android:layout_height="80dp"
         android:layout_alignTop="@+id/layoutAvometer"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="25dp"
         android:layout_toRightOf="@+id/layoutAvometer"
-        android:background="@drawable/needle_bg"
+        android:background="@drawable/question_icon_bk"
         android:gravity="center"
         android:padding="5dp">
 

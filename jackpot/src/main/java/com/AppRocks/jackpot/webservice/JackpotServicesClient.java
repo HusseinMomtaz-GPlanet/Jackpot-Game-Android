@@ -412,7 +412,8 @@ public class JackpotServicesClient {
 
     public String getTerms() {
         Hashtable<String, String> header = new Hashtable<String, String>();
-        header.put("id", JackpotApplication.TOKEN_ID);
+        if(JackpotApplication.TOKEN_ID!=null)
+            header.put("id", JackpotApplication.TOKEN_ID);
 
         JSONObject msg = new JSONObject();
         try {

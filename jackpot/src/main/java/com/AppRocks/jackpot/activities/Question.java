@@ -1249,9 +1249,10 @@ public class Question extends Activity implements RotationEndCallBack,
         }
 
         rightAnswer();
+        animN = ANIMATION_JOCKER;
+
         deleteAllWrongAnswersAndClose();
 //        imgTrue.setBackgroundResource(R.drawable.true_icon255);
-//        animN = ANIMATION_JOCKER;
 //        imgTrue.startAnimation(trueAnimation);
 //        imgTrue.setVisibility(View.VISIBLE);
     }
@@ -1630,32 +1631,32 @@ public class Question extends Activity implements RotationEndCallBack,
         timer.start();
     }
 
-    private boolean deleteOneWrongAnswer() {
-        Log.d("elswaf" + getClass().getSimpleName(), "delete one answer");
-        if (!TextUtils.isEmpty(txtAnswer1.getText())
-                && !txtAnswer1.getText().equals(question.getAnswer())) {
-            question.getAllWrongAnswers().remove(txtAnswer1.getText());
-            txtAnswer1.setText("");
-            return true;
-        } else if (!TextUtils.isEmpty(txtAnswer2.getText())
-                && !txtAnswer2.getText().equals(question.getAnswer())) {
-            question.getAllWrongAnswers().remove(txtAnswer2.getText());
-            txtAnswer2.setText("");
-            return true;
-        } else if (!TextUtils.isEmpty(txtAnswer3.getText())
-                && !txtAnswer3.getText().equals(question.getAnswer())) {
-            question.getAllWrongAnswers().remove(txtAnswer3.getText());
-            txtAnswer3.setText("");
-            return true;
-        } else if (!TextUtils.isEmpty(txtAnswer4.getText())
-                && !txtAnswer4.getText().equals(question.getAnswer())) {
-            question.getAllWrongAnswers().remove(txtAnswer4.getText());
-            txtAnswer4.setText("");
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    private boolean deleteOneWrongAnswer() {
+//        Log.d("elswaf" + getClass().getSimpleName(), "delete one answer");
+//        if (!TextUtils.isEmpty(txtAnswer1.getText())
+//                && !txtAnswer1.getText().equals(question.getAnswer())) {
+//            question.getAllWrongAnswers().remove(txtAnswer1.getText());
+//            txtAnswer1.setText("");
+//            return true;
+//        } else if (!TextUtils.isEmpty(txtAnswer2.getText())
+//                && !txtAnswer2.getText().equals(question.getAnswer())) {
+//            question.getAllWrongAnswers().remove(txtAnswer2.getText());
+//            txtAnswer2.setText("");
+//            return true;
+//        } else if (!TextUtils.isEmpty(txtAnswer3.getText())
+//                && !txtAnswer3.getText().equals(question.getAnswer())) {
+//            question.getAllWrongAnswers().remove(txtAnswer3.getText());
+//            txtAnswer3.setText("");
+//            return true;
+//        } else if (!TextUtils.isEmpty(txtAnswer4.getText())
+//                && !txtAnswer4.getText().equals(question.getAnswer())) {
+//            question.getAllWrongAnswers().remove(txtAnswer4.getText());
+//            txtAnswer4.setText("");
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
     public boolean deleteRandomWrongAnswer() {
         if (question.getAllWrongAnswers().size() < 1) {
@@ -1783,7 +1784,6 @@ public class Question extends Activity implements RotationEndCallBack,
     }
 
     class HideScreenTask extends TimerTask {
-
         @Override
         public void run() {
             hideGetReadyOrTimeIsUpScreen();
@@ -1798,7 +1798,6 @@ public class Question extends Activity implements RotationEndCallBack,
             hideGetReadyOrTimeIsUpScreen();
             deleteAllWrongAnswersAndClose();
         }
-
     }
 
     class JokerClickListener implements OnClickListener {
