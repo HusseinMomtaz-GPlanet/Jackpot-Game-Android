@@ -1,12 +1,12 @@
-D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\classes\debug
-D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\support-annotations-21.0.0-24b9297db9006460b8149f110b92d47b04f11ed9.jar
-D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\bolts-dbe4be1fad04389ba1893107e356d742d9f876a4.jar
-D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\androidannotations-api-3.0.1-328d193a7375cac494c664d9abbc58ed021803d3.jar
-D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\classes-9a2aba5be89e114dbed90a851c67e0f482f84bdb.jar
-D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\classes-28f1a110afe24c5fdce697c564c2fffe6dc536fb.jar
-D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\YouTubeAndroidPlayerApi-cb0347dec5cd7ad4dc249eeff3687b72e55afcff.jar
-D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\classes-706069a49e7c1611938f2a89b77c744d739b7d55.jar
-D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\internal_impl-21.0.0-88a0d07e617c4d2440bb8ee795f86dad2311d13a.jar
-D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\gson-2.2.4-e575dee3680a521996fb55edeb4f23ddf2ddf664.jar
-D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\classes-7715d9c8a21e1ea0059c67ce32ecf8192dfd0658.jar
-D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\classes-319497b4c2caad568f92c5cb06b89a150769e510.jar
+C:\Users\elsawaf\AndroidStudioProjects\jackpotversion\jackpot\build\intermediates\classes\debug
+C:\Users\elsawaf\AndroidStudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\support-annotations-21.0.0-ebba6ff2084a2d6968fd37bef67d059ce05c97b1.jar
+C:\Users\elsawaf\AndroidStudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\bolts-44b8da39d9bd06faa253bd9ed6b38e03bec9bdd0.jar
+C:\Users\elsawaf\AndroidStudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\androidannotations-api-3.0.1-9af69bfad8744cbb2af1c7b055c02ebc71010bfd.jar
+C:\Users\elsawaf\AndroidStudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\classes-4dd3e9a8e074b8320429784fbfcd497bc27d2cf4.jar
+C:\Users\elsawaf\AndroidStudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\classes-909dc768740ba2776f9d8bebcd64410f4da4e5ef.jar
+C:\Users\elsawaf\AndroidStudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\YouTubeAndroidPlayerApi-d50dd197ac0a89a8f729049c73733f1a3f061c04.jar
+C:\Users\elsawaf\AndroidStudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\classes-912b6c51e9afed4a0b35d4cc2c5a748ae1f46926.jar
+C:\Users\elsawaf\AndroidStudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\internal_impl-21.0.0-30ef549f5cd0bfca9d32a4e3111eb006b23e26d7.jar
+C:\Users\elsawaf\AndroidStudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\gson-2.2.4-6e5731396f6e8d165b495cfa0ef215c6ed237e6a.jar
+C:\Users\elsawaf\AndroidStudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\classes-f4860ac9a47b29495b389cdc4c54de7574f8e2ee.jar
+C:\Users\elsawaf\AndroidStudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\classes-b3e5b06f8606c4d827d9cd721c5b0474380150fc.jar

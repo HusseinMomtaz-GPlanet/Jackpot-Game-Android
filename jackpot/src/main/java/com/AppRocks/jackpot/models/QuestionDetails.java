@@ -57,6 +57,7 @@ public class QuestionDetails {
 
     public void setAllWrongAnswers() {
         // entry all wrong answers after get right answer
+        Collections.shuffle(Arrays.asList(allChoices));
         allWrongAnswers = new ArrayList<String>();
         for (int i = 0; i < 4; i++) {
             if (allChoices[i].equals(getAnswer())) {

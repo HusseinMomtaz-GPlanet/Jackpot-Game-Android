@@ -1,6 +1,7 @@
 package com.AppRocks.jackpot.webservice;
 
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.AppRocks.jackpot.JackpotApplication;
@@ -27,6 +28,11 @@ public class HelpTask extends AsyncTask<String, Void, Integer> {
 
         JSONObject helpJSON = JackpotServicesClient.getInstance().help(callerActivity.question.getId(),
                 JackpotApplication.JACKPOT_ID, params[0], params[1]);
+
+        // handle if user used second jocker
+        if (!TextUtils.isEmpty(callerActivity.question.getAnswer()) && params[0].equals("1"))
+            return  FLOAT_USED;
+
 
         if (helpJSON != null && helpJSON.has("status")) {
             try {

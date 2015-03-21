@@ -124,12 +124,9 @@ public class Question extends Activity implements RotationEndCallBack,
                 // this delete one wrong answer every time
                 // and the last time will go to other conditions.
                 return;
-            } else if (animN == ANIMATION_JOCKER) {
-                // next question like right answer
-                clearQuestionData();
-                //showRouletteView();
-                hideQuestionViewes();
-                showNextQuestion();
+            } else if (animN == ANIMATION_TRUE) {
+                // this condition is important when using Jocker
+                return;
             } else {
                 // showYouLoseScreen after delete all wrong answers
                 showYouLoseScreen();
@@ -1243,15 +1240,16 @@ public class Question extends Activity implements RotationEndCallBack,
 
     public void jockerUpdateUIAfterGetAnswer() {
         //level.newScore = level.level * 5;
-        level.numberOfAnswers++;
+        //level.numberOfAnswers++;
         updateTotalScore();
 
-        if (level.numberOfAnswers == level.numberOfQuestions) {
+        /*if (level.numberOfAnswers == level.numberOfQuestions) {
             level.oneMoreQuestion = true;
-        }
+        }*/
 
         rightAnswer();
-        animN = ANIMATION_JOCKER;
+        //animN = ANIMATION_JOCKER;
+        animN = ANIMATION_TRUE;
 
         deleteAllWrongAnswersAndClose();
 //        imgTrue.setBackgroundResource(R.drawable.true_icon255);
@@ -1734,7 +1732,7 @@ public class Question extends Activity implements RotationEndCallBack,
                 hideQuestionViewes();
                 showNextQuestion();
             }
-        } else if (animN == ANIMATION_JOCKER) {
+        } /*else if (animN == ANIMATION_JOCKER) {
             //Do the same as right answer for now !!!!
             clearQuestionData();
             // check to show cheese screen before Roulette
@@ -1755,7 +1753,7 @@ public class Question extends Activity implements RotationEndCallBack,
             }
             //Warning
             //deleteAllWrongAnswersAndClose();
-        }
+        }*/
         // after wrong answer
         else if (animN == ANIMATION_FALSE) {
             deleteAllWrongAnswersAndClose();
@@ -1843,16 +1841,16 @@ public class Question extends Activity implements RotationEndCallBack,
                 //minsTotalScoreAnimation(-10);
                 MediaPlayer floatMP = MediaPlayer.create(Question.this, R.raw.when_user_press_the_joker_or_float);
                 floatMP.start();
-                // this mean I have the right answer
+                /*// this mean I have the right answer
                 if (JackpotApplication.numberOfFloatyUsed > 0) {
                     deleteRandomWrongAnswer();
-                } else {
+                } else {*/
                     ConnectionDetector cd = new ConnectionDetector(Question.this);
                     if (cd.isConnectingToInternet()) {
                         //new DecrementFloatsTask().execute(1);
                         new HelpTask(Question.this).execute("1", "0");
                     }
-                }
+                //}
                 JackpotApplication.floatyAllowed--;
                 JackpotApplication.floatyHas--;
                 JackpotApplication.numberOfFloatyUsed++;
