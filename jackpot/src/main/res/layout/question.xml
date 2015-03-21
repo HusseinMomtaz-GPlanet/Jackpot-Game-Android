@@ -196,7 +196,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_choice1" />
+                    android:background="@drawable/question_button_selector_green" />
 
                 <TextView
                     android:id="@+id/answer_2"
@@ -205,7 +205,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_choice2" />
+                    android:background="@drawable/question_button_selector_blue" />
             </LinearLayout>
 
             <LinearLayout
@@ -223,7 +223,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_choice3" />
+                    android:background="@drawable/question_button_selector_yellow" />
 
                 <TextView
                     android:id="@+id/answer_4"
@@ -232,7 +232,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_choice4" />
+                    android:background="@drawable/question_button_selector_red" />
             </LinearLayout>
         </LinearLayout>
 

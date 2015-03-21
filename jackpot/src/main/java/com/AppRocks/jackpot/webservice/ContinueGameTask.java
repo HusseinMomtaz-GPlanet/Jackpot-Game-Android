@@ -44,6 +44,9 @@ public class ContinueGameTask extends AsyncTask<Void, Void, Integer> {
                     int level = resultJOSN.getInt("level_num");
                     int question = resultJOSN.getInt("question_num");
                     int score = resultJOSN.getInt("score");
+                    //get jackpot details
+                    JSONObject jackpotDetails=JackpotServicesClient.getInstance().getJackpotDetails(JackpotApplication.JACKPOT_ID,JackpotApplication.TOKEN_ID);
+                    callerActivity.jackpotDetailsJson=jackpotDetails;
                     if (level == 1 && question == 0 && score == 0) {
                         callerActivity.isThisSavedGame = false;
                         callerActivity.level = new LevelController(difficulty, level, question, score, false);

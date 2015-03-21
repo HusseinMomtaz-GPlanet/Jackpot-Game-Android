@@ -360,6 +360,8 @@ public class Question extends Activity implements RotationEndCallBack,
     private void showJackpotLogoOnRightCircle() {
         String logoURL = null;
         try {
+            if(jackpotDetailsJson==null)
+                return;
             logoURL = jackpotDetailsJson.getString(JackpotApplication.TAG_IMAGE);
             String jackpotLogoURL = JackpotApplication.BASE_URL
                     + logoURL.substring(logoURL.indexOf("uploads"));
@@ -1513,10 +1515,19 @@ public class Question extends Activity implements RotationEndCallBack,
     }
 
     public void wrongAnswerAnimation() {
-        imgTrue.setBackgroundResource(R.drawable.false_icon);
-        imgTrue.startAnimation(trueAnimation);
+        right_logo.setImageResource(R.drawable.false_icon);
+        //show company logo in center
+        showCompanyLogoOnCenterAvomenetr();
+
         animN = ANIMATION_FALSE;
         imgTrue.setVisibility(View.VISIBLE);
+        imgTrue.startAnimation(trueAnimation);
+        right_logo.startAnimation(trueAnimation);
+
+//        imgTrue.setBackgroundResource(R.drawable.false_icon);
+//        imgTrue.startAnimation(trueAnimation);
+//        animN = ANIMATION_FALSE;
+//        imgTrue.setVisibility(View.VISIBLE);
     }
 
     private void intiNiddleToRotate() {

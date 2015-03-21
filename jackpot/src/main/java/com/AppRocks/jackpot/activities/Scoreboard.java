@@ -23,14 +23,16 @@ public class Scoreboard extends Activity {
     private ListView lv;
     private ArrayList<HashMap<String, String>> scoreData;
     private TextView youScoreTxt;
+    private TextView yourPosition;
     private int youScore;
-
+    private int position;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
         lv = (ListView) findViewById(R.id.listViewScores);
         youScoreTxt = (TextView) findViewById(R.id.youScoreTxt);
+        yourPosition = (TextView) findViewById(R.id.your_score);
 
         ConnectionDetector cd = new ConnectionDetector(Scoreboard.this);
         if (cd.isConnectingToInternet()) {
@@ -65,6 +67,7 @@ public class Scoreboard extends Activity {
 
                     JSONObject youScoreJSON = getTopJSON.getJSONObject(JackpotApplication.TAG_YOU_SCORE);
                     youScore = youScoreJSON.getInt(JackpotApplication.TAG_TOTAL_SCORE);
+                    position=getTopJSON.getInt("position");
                     return true;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -80,6 +83,7 @@ public class Scoreboard extends Activity {
                 ScoreboardAdapter adapter = new ScoreboardAdapter(Scoreboard.this, scoreData);
                 lv.setAdapter(adapter);
                 youScoreTxt.setText("" + youScore);
+                yourPosition.setText(""+position);
             }
 
             super.onPostExecute(result);
