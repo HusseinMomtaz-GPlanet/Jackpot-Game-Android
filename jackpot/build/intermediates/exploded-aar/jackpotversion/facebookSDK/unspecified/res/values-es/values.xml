@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/D:/Hussein%20(Systems%20&%20Computers)/Android%20Studio%20Workspace%20Backup/AndroidstudioProjects/jackpotversion/facebookSDK/src/main/res/values-es/strings.xml -->
+    <!-- From: file:/C:/Users/elsawaf/AndroidStudioProjects/jackpotversion/facebookSDK/src/main/res/values-es/strings.xml -->
     <eat-comment/>
     <string name="com_facebook_choose_friends">Elige Amigos</string>
     <string name="com_facebook_dialogloginactivity_ok_button">Aceptar</string>
