@@ -248,7 +248,6 @@ public class Login extends Activity {
                 if (getReadyView != null) {
                     windowManager.removeView(getReadyView);
                     getReadyView = null;
-                    dimView.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -267,6 +266,7 @@ public class Login extends Activity {
         return true;
     }
 
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void onSessionStateChange(Session session, SessionState state,
                                       Exception exception) {
@@ -278,8 +278,7 @@ public class Login extends Activity {
                 registerUser();
             }
             loginMethod = Facebook_Login_Mode;
-            btnSignUpForm.setText("Return at game");
-            btnSignUpForm.setOnClickListener(new ReturnToHomeClickListener());
+            showButtonGoToGame();
 
             //return to invitation activity after resign in
             if (requestCode == 1) {
@@ -328,9 +327,13 @@ public class Login extends Activity {
     public void onBackPressed() {
         if (rlSignUp.getVisibility() == View.VISIBLE) {
             rlSignUp.setVisibility(View.INVISIBLE);
-        } else
+        } else {
             super.onBackPressed();
+            finish();
+
+        }
     }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -359,6 +362,7 @@ public class Login extends Activity {
     public void onDestroy() {
         super.onDestroy();
         uiHelper.onDestroy();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     private void registerUser() {
@@ -447,8 +451,11 @@ public class Login extends Activity {
         //show logout if normall login not facebook login
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String token = prefs.getString(JackpotApplication.PREF_USER_TOKEN, "");
-        if (loginMethod == Normal_Login_Mode)
+        if (loginMethod == Normal_Login_Mode) {
             btnLogout.setVisibility(View.VISIBLE);
+        }else{
+            btnLogout.setVisibility(View.GONE);
+        }
     }
 
     public void updateTheToken() {

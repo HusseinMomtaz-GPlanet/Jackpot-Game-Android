@@ -19,6 +19,12 @@
         app:border_width="3dip"
         app:corner_radius="115dip"
         app:oval="true" />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignBottom="@id/imgJAckBot"
+        android:layout_alignRight="@id/imgJAckBot"
+        android:id="@+id/status_image" />
 
     <ProgressBar
         android:id="@+id/loading"

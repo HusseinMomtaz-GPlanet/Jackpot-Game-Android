@@ -55,10 +55,10 @@ public class HelpTask extends AsyncTask<String, Void, Integer> {
     @Override
     protected void onPostExecute(Integer result) {
         if (result == FLOAT_USED) {
-            Toast.makeText(callerActivity, "Float User", Toast.LENGTH_LONG).show();
+            //Toast.makeText(callerActivity, "Float User", Toast.LENGTH_LONG).show();
             callerActivity.deleteRandomWrongAnswer();
         } else if (result == JOKER_USED) {
-            Toast.makeText(callerActivity, "Joker User", Toast.LENGTH_LONG).show();
+            //Toast.makeText(callerActivity, "Joker User", Toast.LENGTH_LONG).show();
             new AnswerTask(callerActivity, true).execute(callerActivity.question.getAnswer(), "" + JackpotApplication.numberOfFloatyUsed,
                     "1");
         } else {

@@ -35,7 +35,8 @@ public class GetAllJackpotsTask extends AsyncTask<Object, Void, Integer> {
     @Override
     protected void onPreExecute() {
         if (TextUtils.isEmpty(JackpotApplication.TOKEN_ID)) {
-            JackpotApplication.TOKEN_ID = callerActivity.p.getString(JackpotApplication.PREF_USER_TOKEN);
+            if(callerActivity!=null)
+                JackpotApplication.TOKEN_ID = callerActivity.p.getString(JackpotApplication.PREF_USER_TOKEN);
         }
         super.onPreExecute();
     }
@@ -63,6 +64,8 @@ public class GetAllJackpotsTask extends AsyncTask<Object, Void, Integer> {
                             jackpot.put(JackpotApplication.TAG_TITLE, j.getString(JackpotApplication.TAG_TITLE));
                             jackpot.put(JackpotApplication.TAG_FREE, j.getString(JackpotApplication.TAG_FREE));
                             jackpot.put(JackpotApplication.TAG_DIFFICULTY, j.getString(JackpotApplication.TAG_DIFFICULTY));
+                            jackpot.put(JackpotApplication.TAG_HASWINNER, j.getString(JackpotApplication.TAG_HASWINNER));
+                            jackpot.put(JackpotApplication.TAG_Bloked, j.getString(JackpotApplication.TAG_Bloked));
 
                             callerActivity.jackpotsList.add(jackpot);
                         }

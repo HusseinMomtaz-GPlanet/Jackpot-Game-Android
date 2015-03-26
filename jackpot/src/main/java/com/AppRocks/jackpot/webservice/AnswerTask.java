@@ -86,7 +86,6 @@ public class AnswerTask extends AsyncTask<String, Void, Integer> {
             callerActivity.rightAnswer();
         } else if (result == JOCKER_USED) {
             callerActivity.jockerUpdateUIAfterGetAnswer();
-            Toast.makeText(callerActivity, "Joker User", Toast.LENGTH_LONG).show();
         } else if (result == WRONG_ANSWER) {
             callerActivity.wrongAnswer();
         } else if (result == WINNER) {

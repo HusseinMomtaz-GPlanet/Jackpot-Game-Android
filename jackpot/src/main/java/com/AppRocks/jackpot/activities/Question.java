@@ -2,12 +2,14 @@ package com.AppRocks.jackpot.activities;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -202,7 +205,6 @@ public class Question extends Activity implements RotationEndCallBack,
         initUILConfig();
 
         showJackpotLogoOnRightCircle();
-        //showGetDataScreen();
     }
 
     @Override
@@ -256,6 +258,13 @@ public class Question extends Activity implements RotationEndCallBack,
             deleteTheSavedGame();
         }
         finish();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        getWindowManager().removeView(getReadyView);
+        super.onBackPressed();
     }
 
     private void initUILConfig() {
@@ -631,12 +640,14 @@ public class Question extends Activity implements RotationEndCallBack,
         updateTxtLevel(levelTxt);
         rotateNiddle(niddleYouLose, level.level);
 
+
         //send him to the main menu
         menuBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 // elsawaf
                 mp.release();
+                getWindowManager().removeView(getReadyView);
                 level.isOneMoreQuestionSolved = false;
                 startActivity(new Intent(Question.this, Main_.class));
             }
@@ -653,9 +664,11 @@ public class Question extends Activity implements RotationEndCallBack,
                 //initJockersAndFloats();
                 level.isOneMoreQuestionSolved = false;
                 isTryingAgain = true;
+                getWindowManager().removeView(getReadyView);
             }
         });
     }
+
 
     public void showTimeIsUpScreen() {
         //get the right answer from task
@@ -994,26 +1007,12 @@ public class Question extends Activity implements RotationEndCallBack,
     }
 
     private void showGetDataScreen() {
-        rouletteDim.setVisibility(View.VISIBLE);
-        windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);// context.getSystemService(Context.WINDOW_SERVICE);
+        Dialog pop_up = new Dialog(this);
+        pop_up.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        pop_up.getWindow().setGravity(Gravity.CENTER);
         LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         getReadyView = inflator.inflate(R.layout.get_data_screen, null);
-
-        int windowHeight = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
-                .getDefaultDisplay().getHeight();
-
-        params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                (int) (windowHeight / 1.2),
-                WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT);
-
-        params.windowAnimations = R.style.screen_animation;
-        params.gravity = Gravity.TOP | Gravity.LEFT;
-        params.x = 0;
-        params.y = windowHeight / 12;
-        windowManager.addView(getReadyView, params);
+        pop_up.setContentView(getReadyView);
 
         final EditText contactEmail = (EditText) getReadyView
                 .findViewById(R.id.txt_get_ready);
@@ -1026,15 +1025,7 @@ public class Question extends Activity implements RotationEndCallBack,
         contactEmail.setTypeface(font);
         contactPhone.setTypeface(font);
         submitBtn.setTypeface(font);
-
-        contactEmail.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                contactEmail.clearFocus();
-                contactEmail.requestFocus();
-            }
-        });
-        submitBtn.setOnClickListener(new OnClickListener() {
+            submitBtn.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
@@ -1047,6 +1038,7 @@ public class Question extends Activity implements RotationEndCallBack,
             }
         });
 
+        pop_up.show();
     }
 
     private String getLevelNumberWord(int n) {
@@ -1462,14 +1454,14 @@ public class Question extends Activity implements RotationEndCallBack,
 
     public void rightAnswerAnimation() {
 
-        right_logo.setImageResource(R.drawable.true_icon255);
+        imgTrue.setImageResource(R.drawable.true_icon255);
         //show company logo in center
-        showCompanyLogoOnCenterAvomenetr();
+        //showCompanyLogoOnCenterAvomenetr();
 
         animN = ANIMATION_TRUE;
         imgTrue.setVisibility(View.VISIBLE);
         imgTrue.startAnimation(trueAnimation);
-        right_logo.startAnimation(trueAnimation);
+        //right_logo.startAnimation(trueAnimation);
     }
 
     public void updateTotalScore() {
@@ -1513,19 +1505,14 @@ public class Question extends Activity implements RotationEndCallBack,
     }
 
     public void wrongAnswerAnimation() {
-        right_logo.setImageResource(R.drawable.false_icon);
+        imgTrue.setImageResource(R.drawable.false_icon);
         //show company logo in center
-        showCompanyLogoOnCenterAvomenetr();
+        //showCompanyLogoOnCenterAvomenetr();
 
         animN = ANIMATION_FALSE;
         imgTrue.setVisibility(View.VISIBLE);
         imgTrue.startAnimation(trueAnimation);
-        right_logo.startAnimation(trueAnimation);
-
-//        imgTrue.setBackgroundResource(R.drawable.false_icon);
-//        imgTrue.startAnimation(trueAnimation);
-//        animN = ANIMATION_FALSE;
-//        imgTrue.setVisibility(View.VISIBLE);
+        //right_logo.startAnimation(trueAnimation);
     }
 
     private void intiNiddleToRotate() {

@@ -72,7 +72,7 @@
             android:layout_weight="3"
             android:text="You"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/BlueViolet"
+            android:textColor="@color/Brown"
             android:textStyle="bold" />
 
         <View

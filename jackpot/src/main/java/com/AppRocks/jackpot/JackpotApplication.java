@@ -13,6 +13,8 @@ public class JackpotApplication extends Application {
     public static final String TAG_DIFFICULTY = "difficulty";
     public static final String TAG_WINNER = "winner";
     public static final String TAG_TITLE = "title";
+    public static final String TAG_HASWINNER = "has_winner";
+    public static final String TAG_Bloked = "is_blocked";
 
     //getjackpotdetails fields
     public static final String TAG_DESCRIPTION = "description";
@@ -51,9 +53,9 @@ public class JackpotApplication extends Application {
     public static final String TAG_JOCKERS_GIFT = "giftJockers";
 
 
-    public static final String BASE_URL = "http://game.gplanet-tech.com/"; //"http://gplanet.ahmadelghazaly.com/";
+    public static final String BASE_URL = "http://game.wikimasry.com/"; //"http://gplanet.ahmadelghazaly.com/";
     //http://gplanet.ahmadelghazaly.com/api/v1/
-    public static final String BASE_URL_WEB_SERVICES = "http://game.gplanet-tech.com/api/v1/";
+    public static final String BASE_URL_WEB_SERVICES = "http://game.wikimasry.com/api/v1/";
     public static final String PREF_IS_REGISTER_FREE = "registerFree";
     public static final String PREF_NICKNAME = "nickname";
     public static final String PREF_LAST_JACKPOT_ID = "lastJackpotID";

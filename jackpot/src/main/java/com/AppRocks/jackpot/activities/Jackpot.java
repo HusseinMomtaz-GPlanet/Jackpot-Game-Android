@@ -1,10 +1,13 @@
 package com.AppRocks.jackpot.activities;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -15,7 +18,9 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.ScaleAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,6 +34,7 @@ import com.AppRocks.jackpot.services.MusicService;
 import com.AppRocks.jackpot.util.ConnectionDetector;
 import com.AppRocks.jackpot.webservice.GetJackpotDetailsTask;
 import com.AppRocks.jackpot.webservice.PlayJackpotTask;
+import com.AppRocks.jackpot.webservice.WinTask;
 import com.makeramen.RoundedImageView;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -167,7 +173,6 @@ public class Jackpot extends BaseActivity {
 
 
     }
-
 
     private void showClickLogoAlertScreen() {
         dimView.setVisibility(View.VISIBLE);

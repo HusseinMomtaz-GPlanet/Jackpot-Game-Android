@@ -32,6 +32,7 @@ import com.AppRocks.jackpot.util.ConnectionDetector;
 import com.AppRocks.jackpot.util.SoundPlayer;
 import com.AppRocks.jackpot.view.InfinitePagerAdapter;
 import com.AppRocks.jackpot.webservice.GetAllJackpotsTask;
+import com.AppRocks.jackpot.webservice.GetJackpotDetailsTask;
 import com.AppRocks.jackpot.webservice.JackpotServicesClient;
 import com.AppRocks.jackpot.webservice.PlayJackpotTask;
 import com.makeramen.RoundedImageView;
@@ -97,11 +98,6 @@ public class Main extends BaseActivity {
     private int jackpotDifficulty;
     private ImageButton btnPlayMusic;
 
-	/*
-	 * public static void setJackpotsList(ArrayList<HashMap<String, String>>
-	 * jackpots) { jackpotsList = jackpots; vp.setAdapter(pagesAdapter);
-	 * //pagesAdapter.notifyDataSetChanged(); }
-	 */
 
     // Scale the given view, its contents, and all of its children by the given
     // factor.
@@ -189,6 +185,48 @@ public class Main extends BaseActivity {
         btnRight = (ImageButton) findViewById(R.id.btnRight);
         btnLeft = (ImageButton) findViewById(R.id.btnLeft);
         vp.setOnTouchListener(new ButtonsTouchListener());
+        vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                String has_winner = jackpotsList.get(vp.getCurrentItem()).get(
+                        JackpotApplication.TAG_HASWINNER);
+                String is_blocked = jackpotsList.get(vp.getCurrentItem()).get(
+                        JackpotApplication.TAG_Bloked);
+                ImageView status_image=(ImageView)page.findViewById(R.id.status_image);
+
+                if(Integer.parseInt(has_winner)!=0){
+                    status_image.setVisibility(View.VISIBLE);
+                    status_image.setImageResource(R.drawable.trophy);
+                    btnPlay.setText("Winner");
+                    btnPlay.setClickable(true);
+                    btnPlay.setAlpha(1.0f);
+                }else  if(Integer.parseInt(is_blocked)!=0){
+                    status_image.setVisibility(View.VISIBLE);
+                    status_image.setImageResource(R.drawable.lock);
+                    btnPlay.setText("Locked");
+                    btnPlay.setClickable(false);
+                    btnPlay.setAlpha(0.7f);
+                }else{
+                    //clear image
+                    status_image.setImageDrawable(null);
+                    status_image.setVisibility(View.GONE);
+                    btnPlay.setText("Play");
+                    btnPlay.setClickable(true);
+                    btnPlay.setAlpha(1.0f);
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private void initUILConfig() {
@@ -239,9 +277,63 @@ public class Main extends BaseActivity {
         playMusicContinue = true;
         ConnectionDetector cd = new ConnectionDetector(Main.this);
         if (cd.isConnectingToInternet()) {
+
             JackpotApplication.JACKPOT_ID = jackpotsList.get(
                     vp.getCurrentItem()).get(JackpotApplication.TAG_ID);
             JackpotApplication.JACKPOT_DIFFICULTY = jackpotDifficulty;
+
+            String has_winner = jackpotsList.get(vp.getCurrentItem()).get(
+                    JackpotApplication.TAG_HASWINNER);
+            String is_blocked = jackpotsList.get(vp.getCurrentItem()).get(
+                    JackpotApplication.TAG_Bloked);
+
+            if(Integer.parseInt(has_winner)!=0){
+
+                //Get winner details from server
+                JSONObject jackpotDetailsJSON = JackpotServicesClient.getInstance()
+                        .getJackpotDetails(JackpotApplication.JACKPOT_ID, JackpotApplication.TOKEN_ID);
+
+                if (jackpotDetailsJSON != null) {
+                    try {
+
+                        if (!jackpotDetailsJSON.isNull(JackpotApplication.TAG_WON)) {
+                            //get winner info
+                            JackpotApplication.isWined = true;
+                            JSONObject wonJson = jackpotDetailsJSON.getJSONObject(JackpotApplication.TAG_WON);
+                            HashMap winnerDetails = new HashMap<String, String>();
+                            winnerDetails.put(JackpotApplication.TAG_COMPANY,
+                                    jackpotDetailsJSON
+                                            .getString(JackpotApplication.TAG_COMPANY));
+                            winnerDetails.put(JackpotApplication.TAG_BRAND,
+                                    jackpotDetailsJSON
+                                            .getString(JackpotApplication.TAG_BRAND));
+                            winnerDetails.put(JackpotApplication.TAG_FLY,
+                                    jackpotDetailsJSON
+                                            .getString(JackpotApplication.TAG_FLY));
+                            winnerDetails.put(JackpotApplication.TAG_IMAGE,
+                                    jackpotDetailsJSON
+                                            .getString(JackpotApplication.TAG_IMAGE));
+
+                            JSONObject userWonJson = wonJson.getJSONObject(JackpotApplication.TAG_WON_USER);
+                            winnerDetails.put(JackpotApplication.TAG_WON_USER_FIRST_NAME, userWonJson.getString(JackpotApplication.TAG_WON_USER_FIRST_NAME));
+                            winnerDetails.put(JackpotApplication.TAG_WON_USER_LAST_NAME, userWonJson.getString(JackpotApplication.TAG_WON_USER_LAST_NAME));
+
+                            //send user to winner screen loaded with winner data
+                            Intent i = new Intent(getApplicationContext(), WinnerScreen.class);
+                            i.putExtra("winner", winnerDetails);
+                            startActivity(i);
+
+                        }
+                    }catch (Exception ex){
+
+                    }
+                }
+                return;
+             }else  if(Integer.parseInt(is_blocked)!=0){
+                //show user he is locked
+                Toast.makeText(Main.this,"This jackpot is locked",Toast.LENGTH_LONG).show();
+                return;
+            }
 
             // save last jackpot id and difficulty to use them in jackpot activity at onStart()
             //and in Question onCreate()
@@ -392,6 +484,7 @@ public class Main extends BaseActivity {
             final ProgressBar spinner = (ProgressBar) page
                     .findViewById(R.id.loading);
 
+
             String img = jackpotsList.get(position).get(
                     JackpotApplication.TAG_IMAGE);
             String imgURL = JackpotApplication.BASE_URL
@@ -456,6 +549,7 @@ public class Main extends BaseActivity {
             object = null;
         }
 
+
         @Override
         public void finishUpdate(ViewGroup container) {
             super.finishUpdate(container);
@@ -470,6 +564,8 @@ public class Main extends BaseActivity {
             } else {
                 txtPlayFree.setVisibility(View.INVISIBLE);
             }
+
+
         }
     }
 
