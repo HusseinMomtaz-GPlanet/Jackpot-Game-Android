@@ -32,6 +32,7 @@ import com.AppRocks.jackpot.util.ConnectionDetector;
 import com.AppRocks.jackpot.util.SoundPlayer;
 import com.AppRocks.jackpot.view.InfinitePagerAdapter;
 import com.AppRocks.jackpot.webservice.GetAllJackpotsTask;
+import com.AppRocks.jackpot.webservice.GetJackpotDetailsForWinnerTask;
 import com.AppRocks.jackpot.webservice.GetJackpotDetailsTask;
 import com.AppRocks.jackpot.webservice.JackpotServicesClient;
 import com.AppRocks.jackpot.webservice.PlayJackpotTask;
@@ -288,46 +289,9 @@ public class Main extends BaseActivity {
                     JackpotApplication.TAG_Bloked);
 
             if(Integer.parseInt(has_winner)!=0){
+                //Get winner details from server and show winner screen
+                new GetJackpotDetailsForWinnerTask(Main.this).execute();
 
-                //Get winner details from server
-                JSONObject jackpotDetailsJSON = JackpotServicesClient.getInstance()
-                        .getJackpotDetails(JackpotApplication.JACKPOT_ID, JackpotApplication.TOKEN_ID);
-
-                if (jackpotDetailsJSON != null) {
-                    try {
-
-                        if (!jackpotDetailsJSON.isNull(JackpotApplication.TAG_WON)) {
-                            //get winner info
-                            JackpotApplication.isWined = true;
-                            JSONObject wonJson = jackpotDetailsJSON.getJSONObject(JackpotApplication.TAG_WON);
-                            HashMap winnerDetails = new HashMap<String, String>();
-                            winnerDetails.put(JackpotApplication.TAG_COMPANY,
-                                    jackpotDetailsJSON
-                                            .getString(JackpotApplication.TAG_COMPANY));
-                            winnerDetails.put(JackpotApplication.TAG_BRAND,
-                                    jackpotDetailsJSON
-                                            .getString(JackpotApplication.TAG_BRAND));
-                            winnerDetails.put(JackpotApplication.TAG_FLY,
-                                    jackpotDetailsJSON
-                                            .getString(JackpotApplication.TAG_FLY));
-                            winnerDetails.put(JackpotApplication.TAG_IMAGE,
-                                    jackpotDetailsJSON
-                                            .getString(JackpotApplication.TAG_IMAGE));
-
-                            JSONObject userWonJson = wonJson.getJSONObject(JackpotApplication.TAG_WON_USER);
-                            winnerDetails.put(JackpotApplication.TAG_WON_USER_FIRST_NAME, userWonJson.getString(JackpotApplication.TAG_WON_USER_FIRST_NAME));
-                            winnerDetails.put(JackpotApplication.TAG_WON_USER_LAST_NAME, userWonJson.getString(JackpotApplication.TAG_WON_USER_LAST_NAME));
-
-                            //send user to winner screen loaded with winner data
-                            Intent i = new Intent(getApplicationContext(), WinnerScreen.class);
-                            i.putExtra("winner", winnerDetails);
-                            startActivity(i);
-
-                        }
-                    }catch (Exception ex){
-
-                    }
-                }
                 return;
              }else  if(Integer.parseInt(is_blocked)!=0){
                 //show user he is locked

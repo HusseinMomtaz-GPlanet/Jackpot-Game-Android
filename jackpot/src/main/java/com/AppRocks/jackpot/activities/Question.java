@@ -14,6 +14,7 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -101,6 +102,7 @@ public class Question extends Activity implements RotationEndCallBack,
     public TextView txtScore;
     public TextView question_counter;
     public ImageView right_logo;
+    public ImageView counter_image;
     public QuestionDetails question;
     public LevelController level;
     public Timer timer;
@@ -263,7 +265,8 @@ public class Question extends Activity implements RotationEndCallBack,
 
     @Override
     public void onBackPressed() {
-        getWindowManager().removeView(getReadyView);
+        if(getReadyView!=null)
+          getWindowManager().removeView(getReadyView);
         super.onBackPressed();
     }
 
@@ -336,7 +339,7 @@ public class Question extends Activity implements RotationEndCallBack,
         btnSaveGame = (Button) findViewById(R.id.btnSaveGame);
         adImgBtn = (ImageButton) findViewById(R.id.adImgBtn);
         adProgressBar = (ProgressBar) findViewById(R.id.AdLoading);
-
+        counter_image=(ImageView)findViewById(R.id.counter_image);
 
         answerClickListener = new AnswerClickListener();
         jockerClickListener = new JokerClickListener();
@@ -520,6 +523,7 @@ public class Question extends Activity implements RotationEndCallBack,
     }
 
     public void showGetReadyScreen() {
+        //showGetDataScreen();
         // elsawaf
         windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);// context.getSystemService(Context.WINDOW_SERVICE);
         LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -1165,8 +1169,9 @@ public class Question extends Activity implements RotationEndCallBack,
     public void setQuestionDetailsOnScreen() {
         alarmTimer = new AlarmTimer(11000, 1000, this);
 
+        updateJocker();
+        updateFloaty();
         setQuestionData();
-
         startTimer();
 
         if (level.oneMoreQuestion) {
@@ -1175,8 +1180,6 @@ public class Question extends Activity implements RotationEndCallBack,
         } else {
             JackpotApplication.numberOfFloatyUsed = 0;
             JackpotApplication.numberOfjokerUsed = 0;
-            updateJocker();
-            updateFloaty();
         }
     }
 
@@ -1187,7 +1190,14 @@ public class Question extends Activity implements RotationEndCallBack,
         txtAnswer3.setText(question.getAllChoices()[2]);
         txtAnswer4.setText(question.getAllChoices()[3]);
         //set question counter
-        question_counter.setText((level.numberOfAnswers + 1) + "/" + level.numberOfQuestions);
+        //show cheese image in cheese questions
+        if(level.numberOfAnswers < level.numberOfQuestions) {
+            question_counter.setText((level.numberOfAnswers + 1) + "/" + level.numberOfQuestions);
+            counter_image.setVisibility(View.GONE);
+        }else{
+            counter_image.setVisibility(View.VISIBLE);
+            question_counter.setText("");
+        }
     }
 
     public void updateJocker() {
@@ -1606,53 +1616,36 @@ public class Question extends Activity implements RotationEndCallBack,
                 // delete first wrong answer instantly
                 //messageHandler.sendEmptyMessage(0);
                 // now loop 3 times to delete the other two wrong answers
-                Log.d("elswaf" + getClass().getSimpleName(), "" + question.getAllWrongAnswers().size());
+                //Log.d("elswaf" + getClass().getSimpleName(), "" + question.getAllWrongAnswers().size());
                 // we need this count because the size with decrease every loop
-                int count = question.getAllWrongAnswers().size();
-                for (int i = 0; i <= count; i++) {
-                    try {
-                        sleep(700);
-                        // reach to end so wait until user see the right answer
-                        // then complete
-						/*if (i == 2)
-							sleep(500);*/
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        messageHandler.sendEmptyMessage(0);
+                try {
+                    int count = question.getAllWrongAnswers().size();
+                    for (int i = 0; i <= count; i++) {
+                        try {
+                            sleep(700);
+                            // reach to end so wait until user see the right answer
+                            // then complete
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            messageHandler.sendEmptyMessage(0);
+                        }
                     }
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(new Runnable() {
+                        public void run() {
+                            showYouLoseScreen();
+                        }
+                    });
+
                 }
-            }
+                }
+
         };
         timer.start();
     }
-
-//    private boolean deleteOneWrongAnswer() {
-//        Log.d("elswaf" + getClass().getSimpleName(), "delete one answer");
-//        if (!TextUtils.isEmpty(txtAnswer1.getText())
-//                && !txtAnswer1.getText().equals(question.getAnswer())) {
-//            question.getAllWrongAnswers().remove(txtAnswer1.getText());
-//            txtAnswer1.setText("");
-//            return true;
-//        } else if (!TextUtils.isEmpty(txtAnswer2.getText())
-//                && !txtAnswer2.getText().equals(question.getAnswer())) {
-//            question.getAllWrongAnswers().remove(txtAnswer2.getText());
-//            txtAnswer2.setText("");
-//            return true;
-//        } else if (!TextUtils.isEmpty(txtAnswer3.getText())
-//                && !txtAnswer3.getText().equals(question.getAnswer())) {
-//            question.getAllWrongAnswers().remove(txtAnswer3.getText());
-//            txtAnswer3.setText("");
-//            return true;
-//        } else if (!TextUtils.isEmpty(txtAnswer4.getText())
-//                && !txtAnswer4.getText().equals(question.getAnswer())) {
-//            question.getAllWrongAnswers().remove(txtAnswer4.getText());
-//            txtAnswer4.setText("");
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
 
     public boolean deleteRandomWrongAnswer() {
         if (question.getAllWrongAnswers().size() < 1) {
@@ -1799,6 +1792,10 @@ public class Question extends Activity implements RotationEndCallBack,
     class JokerClickListener implements OnClickListener {
         @Override
         public void onClick(View v) {
+            if (JackpotApplication.jokerHas == 0) {
+                Toast.makeText(Question.this,"You have jokers left",Toast.LENGTH_LONG).show();
+                return;
+            }
             JackpotApplication.jokerAllowed--;
             JackpotApplication.numberOfjokerUsed++;
             //minsTotalScoreAnimation(-25);

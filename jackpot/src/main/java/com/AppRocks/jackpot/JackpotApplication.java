@@ -30,7 +30,7 @@ public class JackpotApplication extends Application {
     public static final String TAG_WON_USER = "user";
     public static final String TAG_WON_USER_FIRST_NAME = "first_name";
     public static final String TAG_WON_USER_LAST_NAME = "last_name";
-
+    public static final String TAG_WON_USER_Nick_NAME = "nickname";
     // getquestion fields
     public static final String TAG_ANSWER_1 = "answer_1";
     public static final String TAG_ANSWER_2 = "answer_2";
@@ -62,6 +62,7 @@ public class JackpotApplication extends Application {
     public static final String PREF_LAST_JACKPOT_DIFFICULTY = "lastJackpotDifficulty";
     public static final String PREF_SAVED_JACKPOT_ID = "savedJackpotID";
     public static final String PREF_USER_TOKEN = "user_token";
+    public static final String PREF_USER_TermsApproval="termsapproval";
     public static String TOKEN_ID;
     public static String JACKPOT_ID = "";
     public static int JACKPOT_DIFFICULTY;

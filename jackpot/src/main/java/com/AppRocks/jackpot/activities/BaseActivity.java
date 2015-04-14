@@ -52,6 +52,7 @@ public class BaseActivity extends Activity {
     @Click
     void bottom_btnMoney() {
         startActivity(new Intent(this, FaceBookInvitations.class));
+        overridePendingTransition(R.anim.rail_in_from_up, R.anim.disapear);
     }
 
     @Click
@@ -62,6 +63,7 @@ public class BaseActivity extends Activity {
     @Click
     void bottom_btnHome() {
         Intent i = new Intent(this, Login.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         //i.putExtra("login", true);
         startActivity(i);
     }

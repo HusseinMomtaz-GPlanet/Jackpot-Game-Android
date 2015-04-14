@@ -117,7 +117,7 @@ public class Login extends Activity {
     private int loginMethod = 0;
     private WindowManager windowManager;
     private View getReadyView;
-    private boolean ConditonsAccepted = true;
+    private boolean ConditonsAccepted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,7 +159,8 @@ public class Login extends Activity {
     private void initOperations() {
 
         loginMethod = Normal_Login_Mode;
-
+        conditionsCheckbox.setChecked(getTermsApproval());
+        ConditonsAccepted=getTermsApproval();
         conditions_button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,6 +171,8 @@ public class Login extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 ConditonsAccepted = isChecked;
+                //save it in shared pref
+                setTermsApproval(isChecked);
             }
         });
 
@@ -266,6 +269,18 @@ public class Login extends Activity {
         return true;
     }
 
+    private boolean getTermsApproval() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isAccepted = prefs.getBoolean(JackpotApplication.PREF_USER_TermsApproval,false);
+        return isAccepted;
+    }
+
+    private void setTermsApproval(boolean is_accepted) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Editor editor=prefs.edit();
+        editor.putBoolean(JackpotApplication.PREF_USER_TermsApproval,is_accepted);
+        editor.commit();
+    }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void onSessionStateChange(Session session, SessionState state,

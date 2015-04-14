@@ -34,11 +34,16 @@ public class GetAllJackpotsTask extends AsyncTask<Object, Void, Integer> {
 
     @Override
     protected void onPreExecute() {
-        if (TextUtils.isEmpty(JackpotApplication.TOKEN_ID)) {
-            if(callerActivity!=null)
-                JackpotApplication.TOKEN_ID = callerActivity.p.getString(JackpotApplication.PREF_USER_TOKEN);
-        }
         super.onPreExecute();
+
+        try {
+            if (TextUtils.isEmpty(JackpotApplication.TOKEN_ID)) {
+                if (callerActivity != null)
+                    JackpotApplication.TOKEN_ID = callerActivity.p.getString(JackpotApplication.PREF_USER_TOKEN);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     @Override

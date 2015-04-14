@@ -69,7 +69,7 @@
             android:name="com.AppRocks.jackpot.activities.FaceBookInvitations"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"></activity>
         <activity
             android:name="com.AppRocks.jackpot.activities.WinnerScreen"
             android:label="@string/title_activity_main"

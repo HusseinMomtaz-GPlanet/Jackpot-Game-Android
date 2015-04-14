@@ -1,15 +1,21 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        Playstore {
+            keyAlias 'Xavi'
+            keyPassword 'xavigplanet'
+            storeFile file('D:/Hussein (Systems & Computers)/XaviSign.jks')
+            storePassword 'gplanet880725'
+        }
+    }
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
-
     defaultConfig {
         applicationId "com.AppRocks.jackpot"
         minSdkVersion 9
         targetSdkVersion 21
     }
-
     buildTypes {
         release {
             minifyEnabled false

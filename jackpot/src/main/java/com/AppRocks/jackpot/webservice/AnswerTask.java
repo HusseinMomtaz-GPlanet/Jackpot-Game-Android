@@ -72,6 +72,14 @@ public class AnswerTask extends AsyncTask<String, Void, Integer> {
                     return WRONG_ANSWER;
                 }
             } catch (JSONException e) {
+                //This only happen when he answers the cheese question wrong
+                try {
+                    if (answerJSON.getInt("is_correct") == 0) {
+                        return WRONG_ANSWER;
+                    }
+                }catch(Exception ex){
+                    e.printStackTrace();
+                }
                 e.printStackTrace();
             }
 

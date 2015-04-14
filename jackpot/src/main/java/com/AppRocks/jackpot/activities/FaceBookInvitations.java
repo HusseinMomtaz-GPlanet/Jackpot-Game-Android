@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,8 @@ public class FaceBookInvitations extends Activity {
     private String dialogAction = null;
     private Bundle dialogParams = null;
     private JackpotParameters p;
+    ImageButton sendButton;
+    ImageButton cancleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +43,17 @@ public class FaceBookInvitations extends Activity {
 
         Typeface font = Typeface.createFromAsset(getAssets(),
                 "BigSoftie-Fat.otf");
-        ((TextView) findViewById(R.id.txtPlayFree)).setTypeface(font);
-        ((TextView) findViewById(R.id.textView2)).setTypeface(font);
+        //((TextView) findViewById(R.id.txtPlayFree)).setTypeface(font);
+        ((TextView) findViewById(R.id.txt_you_lose)).setTypeface(font);
+        sendButton = (ImageButton) findViewById(R.id.btnSendInvitations);
+        cancleButton = (ImageButton) findViewById(R.id.btnCancleInvitations);
 
+        cancleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -52,33 +64,28 @@ public class FaceBookInvitations extends Activity {
 
     public void sendInvitatoins(View v) {
         //call server to check and call back method will take care
+        sendButton.setEnabled(false);
         checkIfAllowedToSendInvitation();
     }
 
     private void sendWhatsAppInvitation() {
         // add gift jocker
         ConnectionDetector cd = new ConnectionDetector(FaceBookInvitations.this);
-        if (cd.isConnectingToInternet()) {
-            new AddGiftJockersTask().execute();
+
+        try {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("text/plain");
+            i.setPackage("com.whatsapp");           // so that only WhatsApp reacts and not the chooser
+            i.putExtra(Intent.EXTRA_SUBJECT, "Download and play with me");
+            i.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.AppRocks.jackpot"); //com.etermax.preguntados.lite
+            startActivity(i);
+            if (cd.isConnectingToInternet()) {
+                new AddGiftJockersTask().execute();
+            }
+        } catch (Exception ex) {
+            Toast.makeText(FaceBookInvitations.this, "You do not have whatsapp on your phone!", Toast.LENGTH_LONG).show();
         }
-
-        Intent i = new Intent(Intent.ACTION_SEND);
-        i.setType("text/plain");
-        i.setPackage("com.whatsapp");           // so that only WhatsApp reacts and not the chooser
-        i.putExtra(Intent.EXTRA_SUBJECT, "Download and play with me");
-        i.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.AppRocks.jackpot"); //com.etermax.preguntados.lite
-        startActivity(i);
-
-        //setTimeForNextInvitation();
     }
-
-    //This logic has been moved to server
-
-//	private void setTimeForNextInvitation() {
-//		Calendar timeForNextInvitaion = Calendar.getInstance();
-//		timeForNextInvitaion.add(Calendar.DAY_OF_YEAR, 1);
-//		jackpotParams.setLong(timeForNextInvitaion.getTimeInMillis(), "invitiation_time"+JackpotApplication.TOKEN_ID);
-//	}
 
     private void checkIfAllowedToSendInvitation() {
         new CheckToSendGiftJokerTask(this).execute();
@@ -131,6 +138,10 @@ public class FaceBookInvitations extends Activity {
 
     //Callback method for checking send joker availability (user can send one joker every 24 hours)
     public void giftJokerAvailabilityReturned(JSONObject response) {
+
+        //re-enable the send invitation button
+        sendButton.setEnabled(true);
+
         Boolean status = false;
         try {
             status = response.getBoolean("status");

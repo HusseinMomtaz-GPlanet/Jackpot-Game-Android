@@ -3,68 +3,138 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/spain_game_main"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".Main">
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/logo_red" />
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/txtPlayFree"
-        android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="220dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/invite_bk"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/txt_you_lose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:text="Invite friends to play \nand win extra joker!"
+                android:textColor="#ffffff"
+                android:textSize="22sp"
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/layoutPopupsScreenBG"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_you_lose"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp">
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/invite_joker"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/logo_yellow" />
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Invite Friends to play .."
-        android:textColor="#323232"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"></LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:src="@drawable/jocker_icon_big" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"></LinearLayout>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=".. and win extra jocker"
-        android:textColor="#323232"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"></LinearLayout>
+        android:gravity="center"
+        android:padding="10dp"
+        android:orientation="horizontal">
+    <ImageButton
+        android:id="@+id/btnCancleInvitations"
+        android:layout_width="70dp"
+        android:layout_height="45dp"
+        android:scaleType="fitXY"
+        android:background="@drawable/invite_no" />
 
     <ImageButton
         android:id="@+id/btnSendInvitations"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_width="70dp"
+        android:layout_height="45dp"
+        android:scaleType="fitXY"
         android:onClick="sendInvitatoins"
-        android:src="@drawable/sendwhatsapp" />
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/invite_yes" />
+    </LinearLayout>
+    <!--   <ImageView
+           android:id="@+id/imageView1"
+           android:layout_width="100dp"
+           android:layout_height="100dp"
+           android:layout_marginTop="10dp"
+           android:src="@drawable/logo_red" />
 
+       <TextView
+           android:id="@+id/txtPlayFree"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:text="Invite Friends to play .."
+           android:textColor="#323232"
+           android:textSize="25sp"
+           android:textStyle="bold" />
 
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:layout_weight="1"
+           android:orientation="vertical"></LinearLayout>
+
+       <ImageView
+           android:id="@+id/imageView2"
+           android:layout_width="170dp"
+           android:layout_height="170dp"
+           android:src="@drawable/jocker_icon_big" />
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:layout_weight="1"
+           android:orientation="vertical"></LinearLayout>
+
+       <TextView
+           android:id="@+id/textView2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text=".. and win extra jocker"
+           android:textColor="#323232"
+           android:textSize="25sp"
+           android:textStyle="bold" />
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:layout_weight="1"
+           android:orientation="vertical"></LinearLayout>
+
+       <ImageButton
+           android:id="@+id/btnSendInvitations"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginBottom="15dp"
+           android:onClick="sendInvitatoins"
+           android:src="@drawable/sendwhatsapp" />
+
+   -->
 </LinearLayout>

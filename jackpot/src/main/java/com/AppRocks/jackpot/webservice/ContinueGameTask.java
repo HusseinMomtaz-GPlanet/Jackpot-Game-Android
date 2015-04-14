@@ -81,7 +81,8 @@ public class ContinueGameTask extends AsyncTask<Void, Void, Integer> {
             }
             // it isn't saved game but it is deleted game so start from beginning
             else {
-                new PlayJackpotTask(callerActivity).execute();
+                Toast.makeText(callerActivity, "You don't have saved game.", Toast.LENGTH_LONG).show();
+                callerActivity.startActivity(new Intent(callerActivity, Main_.class));
             }
         }
         // no exit saved game
