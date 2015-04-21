@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="StartAppInApp-2.4.15">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jackpot/libs/StartAppInApp-2.4.15.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

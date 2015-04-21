@@ -1,12 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
+    lintOptions {
+        checkReleaseBuilds false
+    }
     signingConfigs {
         Playstore {
-            keyAlias 'Xavi'
+            keyAlias 'Xavi Sole'
             keyPassword 'xavigplanet'
             storeFile file('D:/Hussein (Systems & Computers)/XaviSign.jks')
-            storePassword 'gplanet880725'
+            storePassword 'xavigplanet'
         }
     }
     compileSdkVersion 21
@@ -15,12 +18,18 @@ android {
         applicationId "com.AppRocks.jackpot"
         minSdkVersion 9
         targetSdkVersion 21
+        signingConfig signingConfigs.Playstore
     }
     buildTypes {
         release {
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.Playstore
+            debuggable true
         }
+        debug {
+        }
+    }
+    productFlavors {
     }
 }
 
@@ -33,4 +42,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile files('libs/androidannotations-api-3.0.1.jar')
     compile files('libs/YouTubeAndroidPlayerApi.jar')
+    compile files('libs/StartAppInApp-2.4.15.jar')
 }

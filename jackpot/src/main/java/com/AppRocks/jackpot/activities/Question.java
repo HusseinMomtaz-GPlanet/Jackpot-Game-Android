@@ -74,6 +74,8 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.startapp.android.publish.StartAppAd;
+import com.startapp.android.publish.StartAppSDK;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -187,10 +189,11 @@ public class Question extends Activity implements RotationEndCallBack,
 	 */
     private FloatyClickListener floatyClickListener;
     private LayoutInflater inflater;
-
+    private StartAppAd startAppAd = new StartAppAd(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StartAppSDK.init(this,"103783037", "203962058", true);
         setContentView(R.layout.question);
 
         // Should load sound to be ready when we need it
@@ -208,6 +211,13 @@ public class Question extends Activity implements RotationEndCallBack,
 
         showJackpotLogoOnRightCircle();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        startAppAd.onResume();
+    }
+
 
     @Override
     protected void onStart() {
@@ -243,7 +253,7 @@ public class Question extends Activity implements RotationEndCallBack,
     @Override
     protected void onPause() {
         super.onPause();
-
+        startAppAd.onPause();
 
         if (rouletteLayout.getVisibility() == View.VISIBLE) {
             // check if roulette spin to stop it
