@@ -190,10 +190,12 @@ public class Question extends Activity implements RotationEndCallBack,
     private FloatyClickListener floatyClickListener;
     private LayoutInflater inflater;
     private StartAppAd startAppAd = new StartAppAd(this);
+    public boolean isProcessingAnswer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StartAppSDK.init(this,"103783037", "203962058", true);
+        StartAppSDK.init(this, "103783037", "203962058", true);
         setContentView(R.layout.question);
 
         // Should load sound to be ready when we need it
@@ -1908,6 +1910,9 @@ public class Question extends Activity implements RotationEndCallBack,
 
         @Override
         public void onClick(View v) {
+            if(isProcessingAnswer==true)
+                return;
+            isProcessingAnswer=true;
             stopTimer();
             TextView txtV = (TextView) v;
 

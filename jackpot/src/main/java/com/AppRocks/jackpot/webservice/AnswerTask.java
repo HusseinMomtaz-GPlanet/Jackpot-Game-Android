@@ -90,6 +90,9 @@ public class AnswerTask extends AsyncTask<String, Void, Integer> {
 
     @Override
     protected void onPostExecute(Integer result) {
+        //remove lock on questions buttons
+        callerActivity.isProcessingAnswer=false;
+
         if (result == RIGHT_ANSWER) {
             callerActivity.rightAnswer();
         } else if (result == JOCKER_USED) {
