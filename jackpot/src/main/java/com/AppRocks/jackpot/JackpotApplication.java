@@ -53,9 +53,8 @@ public class JackpotApplication extends Application {
     public static final String TAG_JOCKERS_GIFT = "giftJockers";
 
 
-    public static final String BASE_URL = "http://game.wikimasry.com/"; //"http://gplanet.ahmadelghazaly.com/";
-    //http://gplanet.ahmadelghazaly.com/api/v1/
-    public static final String BASE_URL_WEB_SERVICES = "http://game.wikimasry.com/api/v1/";
+    public static final String BASE_URL = "http://admin.trivialjackpot.com/";
+    public static final String BASE_URL_WEB_SERVICES = "http://admin.trivialjackpot.com/api/v1/";
     public static final String PREF_IS_REGISTER_FREE = "registerFree";
     public static final String PREF_NICKNAME = "nickname";
     public static final String PREF_LAST_JACKPOT_ID = "lastJackpotID";

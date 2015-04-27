@@ -187,6 +187,7 @@ public class Question extends Activity implements RotationEndCallBack,
 	 */
     private FloatyClickListener floatyClickListener;
     private LayoutInflater inflater;
+    public boolean isProcessingAnswer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1898,6 +1899,10 @@ public class Question extends Activity implements RotationEndCallBack,
 
         @Override
         public void onClick(View v) {
+            if(isProcessingAnswer==true)
+                return;
+            //put lock on answer buttons
+            isProcessingAnswer=true;
             stopTimer();
             TextView txtV = (TextView) v;
 
