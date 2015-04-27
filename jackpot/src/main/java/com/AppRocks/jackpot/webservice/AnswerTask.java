@@ -33,8 +33,6 @@ public class AnswerTask extends AsyncTask<String, Void, Integer> {
 
     @Override
     protected Integer doInBackground(String... params) {
-        //Remove the lock on the answer buttons
-        callerActivity.isProcessingAnswer=false;
         int isExtra = 0;
         if (callerActivity.level.oneMoreQuestion)
             isExtra = 1;
@@ -88,6 +86,9 @@ public class AnswerTask extends AsyncTask<String, Void, Integer> {
 
     @Override
     protected void onPostExecute(Integer result) {
+        //Remove the lock on the answer buttons
+        callerActivity.isProcessingAnswer=false;
+
         if (result == RIGHT_ANSWER) {
             callerActivity.rightAnswer();
         } else if (result == JOCKER_USED) {
