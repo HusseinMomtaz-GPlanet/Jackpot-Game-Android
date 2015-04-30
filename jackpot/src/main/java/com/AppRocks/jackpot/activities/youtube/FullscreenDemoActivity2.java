@@ -157,48 +157,6 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
             player.release();
     }
 
-    // private void doLayout() {
-    // LinearLayout.LayoutParams playerParams =
-    // (LinearLayout.LayoutParams) playerView.getLayoutParams();
-    // if (fullscreen) {
-    // // When in fullscreen, the visibility of all other views than the player
-    // should be set to
-    // // GONE and the player should be laid out across the whole screen.
-    // playerParams.width = LayoutParams.MATCH_PARENT;
-    // playerParams.height = LayoutParams.MATCH_PARENT;
-    //
-    // otherViews.setVisibility(View.GONE);
-    // } else {
-    // // This layout is up to you - this is just a simple example (vertically
-    // stacked boxes in
-    // // portrait, horizontally stacked in landscape).
-    // otherViews.setVisibility(View.VISIBLE);
-    // ViewGroup.LayoutParams otherViewsParams = otherViews.getLayoutParams();
-    // if (getResources().getConfiguration().orientation ==
-    // Configuration.ORIENTATION_LANDSCAPE) {
-    // playerParams.width = otherViewsParams.width = 0;
-    // playerParams.height = WRAP_CONTENT;
-    // otherViewsParams.height = MATCH_PARENT;
-    // playerParams.weight = 1;
-    // baseLayout.setOrientation(LinearLayout.HORIZONTAL);
-    // } else {
-    // playerParams.width = otherViewsParams.width = MATCH_PARENT;
-    // playerParams.height = WRAP_CONTENT;
-    // playerParams.weight = 0;
-    // otherViewsParams.height = 0;
-    // baseLayout.setOrientation(LinearLayout.VERTICAL);
-    // }
-    // setControlsEnabled();
-    // }
-    // }
-
-    // private void setControlsEnabled() {
-    // checkbox.setEnabled(player != null
-    // && getResources().getConfiguration().orientation ==
-    // Configuration.ORIENTATION_PORTRAIT);
-    // fullscreenButton.setEnabled(player != null);
-    // }
-
     public class YoutubeFullscreenListener implements OnFullscreenListener {
         @Override
         public void onFullscreen(boolean isFullscreen) {
