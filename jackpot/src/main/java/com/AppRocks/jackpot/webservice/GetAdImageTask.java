@@ -46,7 +46,7 @@ public class GetAdImageTask extends AsyncTask<Void, Void, Boolean> {
             try {
                 if (!adImgJSON.isNull(JackpotApplication.TAG_AD_IMAGE)) {
                     //FIXME img = JackpotApplication.BASE_URL + adImgJSON.getString(JackpotApplication.TAG_AD_IMAGE);
-                    img = "http://game.gplanet-tech.com/" + adImgJSON.getString(JackpotApplication.TAG_AD_IMAGE);
+                    img = JackpotApplication.BASE_URL + adImgJSON.getString(JackpotApplication.TAG_AD_IMAGE);
                     return true;
                 }
             } catch (JSONException e) {

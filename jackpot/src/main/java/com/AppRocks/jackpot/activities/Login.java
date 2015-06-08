@@ -65,7 +65,7 @@ public class Login extends Activity {
     protected String facebookPass = "";
     protected String facebookEmail = "";
     ProgressDialog progress;
-    boolean signUpProcess;
+    boolean signUpProcess=true;
     View dimView;
     WindowManager.LayoutParams params;
     private GraphUser user;
@@ -127,8 +127,8 @@ public class Login extends Activity {
 
         setContentView(R.layout.login);
 
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions(Arrays.asList("email"));
+        //loginButton = (LoginButton) findViewById(R.id.login_button);
+        //loginButton.setReadPermissions(Arrays.asList("email"));
         p = new JackpotParameters(this);
         rlSignUp = (RelativeLayout) findViewById(R.id.rlSignUp);
         rail_in_from_bottom = AnimationUtils.loadAnimation(this, R.anim.rail_in_from_bottom);
@@ -136,13 +136,13 @@ public class Login extends Activity {
         btnLogout = (Button) findViewById(R.id.btnLogout);
         btnSignUpForm.setOnClickListener(new ShowSignUpFormClickListener());
 
-        edtNickName = (EditText) findViewById(R.id.edtNickName);
+        //edtNickName = (EditText) findViewById(R.id.edtNickName);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
         edtEmail = (EditText) findViewById(R.id.edtEmail);
-        edtCity = (EditText) findViewById(R.id.edtCity);
-        edtAge = (EditText) findViewById(R.id.edtAge);
-        txtSex = (TextView) findViewById(R.id.txtLblSex);
-        radioGruopSex = (RadioGroup) findViewById(R.id.radioGroupSex);
+//        edtCity = (EditText) findViewById(R.id.edtCity);
+//        edtAge = (EditText) findViewById(R.id.edtAge);
+//        txtSex = (TextView) findViewById(R.id.txtLblSex);
+//        radioGruopSex = (RadioGroup) findViewById(R.id.radioGroupSex);
         btnSignUp = (Button) findViewById(R.id.btnSignUp);
 
         txtSignUp = (TextView) findViewById(R.id.txtSignUp);
@@ -495,30 +495,31 @@ public class Login extends Activity {
     }
 
     public void txtLoginClick(View v) {
-        edtNickName.setVisibility(View.GONE);
-        edtCity.setVisibility(View.GONE);
-        edtAge.setVisibility(View.GONE);
-        txtSex.setVisibility(View.GONE);
-        radioGruopSex.setVisibility(View.GONE);
+//        edtNickName.setVisibility(View.GONE);
+//        edtCity.setVisibility(View.GONE);
+//        edtAge.setVisibility(View.GONE);
+//        txtSex.setVisibility(View.GONE);
+//        radioGruopSex.setVisibility(View.GONE);
 
         btnSignUp.setText("Login");
-        txtSignUp.setTextColor(getResources().getColor(R.color.Blue));
-        txtLogin.setTextColor(getResources().getColor(R.color.Black));
+        txtSignUp.setTextColor(getResources().getColor(R.color.Black));
+        txtLogin.setTextColor(getResources().getColor(R.color.Red));
 
         signUpProcess = false;
 
     }
 
     public void txtSignupClick(View v) {
-        edtNickName.setVisibility(View.VISIBLE);
+        //edtNickName.setVisibility(View.VISIBLE);
+        /*
         edtCity.setVisibility(View.VISIBLE);
         edtAge.setVisibility(View.VISIBLE);
         txtSex.setVisibility(View.VISIBLE);
         radioGruopSex.setVisibility(View.VISIBLE);
-
+*/
         btnSignUp.setText("Sign Up");
-        txtSignUp.setTextColor(getResources().getColor(R.color.Black));
-        txtLogin.setTextColor(getResources().getColor(R.color.Blue));
+        txtSignUp.setTextColor(getResources().getColor(R.color.Red));
+        txtLogin.setTextColor(getResources().getColor(R.color.Black));
 
         signUpProcess = true;
     }
@@ -531,17 +532,20 @@ public class Login extends Activity {
                     progress.setTitle("Signing Up ...");
                     progress.setMessage("Please wait...");
                     progress.show();
+                    /* now user enter nik name only
                     nickName = edtNickName.getText().toString();
-                    password = edtPassword.getText().toString();
-                    country = edtCity.getText().toString();
-                    facebookEmail = edtEmail.getText().toString();
 
+                    country = edtCity.getText().toString();
+                    */
+                    facebookEmail = edtEmail.getText().toString();
+                    password = edtPassword.getText().toString();
+                    //password="NA";
                     new RegisterTask().execute();
                 } else {
                     progress.setTitle("Logging In ...");
                     progress.setMessage("Please wait...");
                     progress.show();
-                    password = edtPassword.getText().toString();
+                    password=edtPassword.getText().toString();
                     facebookEmail = edtEmail.getText().toString();
 
                     new LoginTask().execute();
@@ -554,22 +558,20 @@ public class Login extends Activity {
     private boolean validInputs() {
         boolean result = true;
 
-        if (signUpProcess && edtNickName.length() < 2) {
-            result = false;
-            setErrorMessage(edtNickName, "Enter proper name.");
-
-        }
+//        if (signUpProcess && edtNickName.length() < 2) {
+//            result = false;
+//            setErrorMessage(edtNickName, "Enter proper name.");
+//
+//        }
 
         if (edtPassword.length() < 2) {
             result = false;
             setErrorMessage(edtPassword, "Password must be more than 1 chars.");
         }
 
-        if (edtEmail.length() < 3
-                || !edtEmail.getText().toString().contains(".")
-                || !edtEmail.getText().toString().contains("@")) {
+        if (edtEmail.length() < 3) {
             result = false;
-            setErrorMessage(edtEmail, "Enter proper email");
+            setErrorMessage(edtEmail, "Enter proper name");
         }
 
         return result;
@@ -692,7 +694,8 @@ public class Login extends Activity {
             } else if (result == PASSWORD_INVALID) {
                 Toast.makeText(getApplicationContext(), "The password is wrong", Toast.LENGTH_SHORT).show();
             } else if (result == EMAIL_INVALID) {
-                Toast.makeText(getApplicationContext(), "The email is wrong", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getApplicationContext(), "The email is wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Nick no disponible, escoge otro", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getApplicationContext(), "Error, please try again.", Toast.LENGTH_SHORT).show();
             }

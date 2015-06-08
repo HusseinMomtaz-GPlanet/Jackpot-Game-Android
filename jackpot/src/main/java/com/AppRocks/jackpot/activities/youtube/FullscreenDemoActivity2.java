@@ -31,7 +31,7 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.AppRocks.jackpot.R;
-import com.AppRocks.jackpot.services.ServiceTutorials;
+import com.AppRocks.jackpot.services.ShowCompanyLogoService;
 import com.AppRocks.jackpot.util.ConnectionDetector;
 import com.AppRocks.jackpot.webservice.IncrementVideoViewsTask;
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -115,7 +115,7 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
         // TODO Auto-generated method stub
         super.onPause();
         stopService(new Intent(FullscreenDemoActivity2.this,
-                ServiceTutorials.class));
+                ShowCompanyLogoService.class));
     }
 
     @Override
@@ -170,7 +170,7 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
         private void closeVideo() {
             // TODO Auto-generated method stub
             stopService(new Intent(FullscreenDemoActivity2.this,
-                    ServiceTutorials.class));
+                    ShowCompanyLogoService.class));
             Toast.makeText(FullscreenDemoActivity2.this,
                     "You should to watch the complete video",
                     Toast.LENGTH_LONG).show();
@@ -200,7 +200,7 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
                     public void onStopped() {
                         // TODO Auto-generated method stub
                         stopService(new Intent(FullscreenDemoActivity2.this,
-                                ServiceTutorials.class));
+                                ShowCompanyLogoService.class));
 
                         // detect if user reach to the end of the video
                         if (player.getCurrentTimeMillis() == player
@@ -238,7 +238,7 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
                             isFirstTimeToPlay = false;
                         }
                         startService(new Intent(FullscreenDemoActivity2.this,
-                                ServiceTutorials.class));
+                                ShowCompanyLogoService.class));
 
                     }
 
@@ -246,7 +246,7 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
                     public void onPaused() {
                         // TODO Auto-generated method stub
                         stopService(new Intent(FullscreenDemoActivity2.this,
-                                ServiceTutorials.class));
+                                ShowCompanyLogoService.class));
                         isFirstTimeToPlay = false;
                     }
 

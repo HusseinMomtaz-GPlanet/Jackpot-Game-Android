@@ -21,6 +21,7 @@ import android.view.animation.ScaleAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 @EActivity(R.layout.jackpot)
@@ -77,6 +79,7 @@ public class Jackpot extends BaseActivity {
     public TextView txtDesc;
     @ViewById
     public Button btnDescComplete;
+    ImageButton btn_continue_game;
     public ImageLoader imageLoader;
     public DisplayImageOptions options;
     public ProgressBar spinner;
@@ -99,7 +102,7 @@ public class Jackpot extends BaseActivity {
     WindowManager.LayoutParams params;
     private WindowManager windowManager;
     private View getReadyView;
-
+    public static int LOGO_APPEARANCE;
     @Click
     void btnSeeTheVideo() {
         if (progressYou == 100) {
@@ -174,6 +177,13 @@ public class Jackpot extends BaseActivity {
 
     }
 
+
+    void btn_continue_game() {
+        Intent continueGame = new Intent(this, Question.class);
+        continueGame.putExtra("savedGame", true);
+        startActivity(continueGame);
+    }
+
     private void showClickLogoAlertScreen() {
         dimView.setVisibility(View.VISIBLE);
         windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);//context.getSystemService(Context.WINDOW_SERVICE);
@@ -237,8 +247,18 @@ public class Jackpot extends BaseActivity {
         jackParams = new JackpotParameters(this);
     }
 
+
     @Override
     protected void onStart() {
+        JackpotApplication.currentLanguage="sp";
+        btn_continue_game=(ImageButton)findViewById(R.id.btn_continue_game);
+        btn_continue_game.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_continue_game();
+            }
+        });
+
         if (TextUtils.isEmpty(JackpotApplication.JACKPOT_ID)) {
             JackpotApplication.JACKPOT_ID = jackParams.getString(JackpotApplication.PREF_LAST_JACKPOT_ID);
         }
@@ -287,6 +307,7 @@ public class Jackpot extends BaseActivity {
     }
 
     private void initUILConfig() {
+
 
         options = new DisplayImageOptions.Builder()
                 .resetViewBeforeLoading(true)
@@ -382,16 +403,27 @@ public class Jackpot extends BaseActivity {
     private void updateImg3StageProgress() {
         if (isProgressYou100 && isProgressWorld100) {
             img3StageProgress.setBackgroundResource(R.drawable.traffic_bar_green);
-
-            btnSeeTheVideo.setBackgroundResource(R.drawable.jackpot_play);
+            if(JackpotApplication.currentLanguage=="en")
+                btnSeeTheVideo.setBackgroundResource(R.drawable.jackpot_play);
+            else
+                btnSeeTheVideo.setBackgroundResource(R.drawable.play_button_sp);
         } else {
             img3StageProgress.setBackgroundResource(R.drawable.traffic_bar_yellow);
-            btnSeeTheVideo.setBackgroundResource(R.drawable.jackpot_wait_video);
+            if(JackpotApplication.currentLanguage=="en")
+                    btnSeeTheVideo.setBackgroundResource(R.drawable.jackpot_wait_video);
+            else
+                btnSeeTheVideo.setBackgroundResource(R.drawable.you_must_wait_sp);
         }
     }
 
     //Get jackpot data from get details service , we will need to pass it to questions details
     public void onJackpotDataRetrieved(JSONObject jackpotDetailsJSON) {
         jackpotJsonDetails = jackpotDetailsJSON;
+        try {
+            //set the count of company logo appearance to use in video screen
+            LOGO_APPEARANCE=jackpotDetailsJSON.getInt("logo_videos");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

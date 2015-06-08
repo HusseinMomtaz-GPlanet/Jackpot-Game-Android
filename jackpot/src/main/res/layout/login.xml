@@ -14,23 +14,24 @@
         android:layout_marginTop="5dp"
         android:background="@drawable/login_logo" />
 
-    <com.facebook.widget.LoginButton
+    <!--
+        <com.facebook.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/imgLogo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp" />
-
+     -->
     <Button
         android:id="@+id/btnSignUpForm"
         style="@style/btnStyleShakespeareTransparent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/login_button"
+        android:layout_below="@id/imgLogo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Or Click Here" />
+        android:text="Login Here" />
 
     <Button
         android:id="@+id/btnLogout"
@@ -87,14 +88,29 @@
         android:background="@drawable/form_shape"
         android:visibility="invisible">
 
+
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/txtSignUp"
+            android:layout_alignBottom="@+id/txtSignUp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/txtSignUp"
+            android:text=" or"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/black" />
+
         <TextView
             android:id="@+id/txtLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
+
+            android:layout_toRightOf="@+id/textView4"
             android:clickable="true"
             android:onClick="txtLoginClick"
             android:text="Login"
@@ -102,31 +118,19 @@
             android:textColor="@color/Black" />
 
         <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/txtLogin"
-            android:layout_alignBottom="@+id/txtLogin"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/txtLogin"
-            android:text=" or"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/black" />
-
-
-        <TextView
             android:id="@+id/txtSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/textView4"
             android:clickable="true"
             android:onClick="txtSignupClick"
             android:text=" Sign Up"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/Blue" />
+            android:textColor="@color/Red"
+             />
+
 
 
         <TextView
@@ -136,7 +140,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/txtSignUp"
             android:layout_marginLeft="10dp"
-            android:text="If you don't have account , sign up!"
+            android:text="Escoge tu apodo"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/Gray" />
 
@@ -170,94 +174,76 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Enter Email"
+                    android:hint="Enter Nick name"
                     android:inputType="textEmailAddress"></EditText>
+
 
                 <EditText
                     android:id="@+id/edtPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Enter Password"
+                    android:hint="contraseña"
                     android:inputType="textPassword"></EditText>
 
-                <!-- <TextView
-                    android:id="@+id/txtlblNickName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nick Name"
-                    android:textColor="@color/Gray"
-                     /> -->
+                <!--
+                                <EditText
+                                    android:id="@+id/edtNickName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ems="10"
+                                    android:hint="Enter Nick Name"
+                                    android:inputType="textPersonName"
+                                    android:visibility="invisible"></EditText>
 
-                <EditText
-                    android:id="@+id/edtNickName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Enter Nick Name"
-                    android:inputType="textPersonName"
-                    android:visibility="invisible"></EditText>
 
-                <!--  <TextView
-                     android:id="@+id/txtlblCity"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:text="City"
-                     android:textColor="@color/Gray"
-                      />
-  -->
-                <EditText
-                    android:id="@+id/edtCity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Enter City"
-                    android:inputType="textPersonName"
-                    android:visibility="invisible"></EditText>
+                                <EditText
+                                    android:id="@+id/edtCity"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ems="10"
+                                    android:hint="Enter City"
+                                    android:inputType="textPersonName"
+                                    android:visibility="invisible"></EditText>
 
-                <!-- <TextView
-                    android:id="@+id/txtLblAge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Age"
-                    android:textColor="@color/Gray" /> -->
 
-                <EditText
-                    android:id="@+id/edtAge"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Enter Age"
-                    android:inputType="number"
-                    android:visibility="invisible"></EditText>
+                                <EditText
+                                    android:id="@+id/edtAge"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ems="10"
+                                    android:hint="Enter Age"
+                                    android:inputType="number"
+                                    android:visibility="invisible"></EditText>
 
-                <TextView
-                    android:id="@+id/txtLblSex"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sex"
-                    android:textColor="@color/Gray"
-                    android:visibility="invisible" />
+                                <TextView
+                                    android:id="@+id/txtLblSex"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sex"
+                                    android:textColor="@color/Gray"
+                                    android:visibility="invisible" />
 
-                <RadioGroup
-                    android:id="@+id/radioGroupSex"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible">
+                                <RadioGroup
+                                    android:id="@+id/radioGroupSex"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="invisible">
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Male"
-                        android:textColor="@color/Gray" />
+                                    <RadioButton
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Male"
+                                        android:textColor="@color/Gray" />
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Female"
-                        android:textColor="@color/Gray" />
-                </RadioGroup>
+                                    <RadioButton
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Female"
+                                        android:textColor="@color/Gray" />
+                                </RadioGroup>
 
+                -->
             </LinearLayout>
         </ScrollView>
 
@@ -269,7 +255,7 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="10dp"
             android:onClick="btnSignUpClick"
-            android:text="Login"
+            android:text="Sign up"
             android:textSize="18dp" />
     </RelativeLayout>
 

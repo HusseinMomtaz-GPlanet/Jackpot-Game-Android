@@ -15,7 +15,7 @@ public class JackpotApplication extends Application {
     public static final String TAG_TITLE = "title";
     public static final String TAG_HASWINNER = "has_winner";
     public static final String TAG_Bloked = "is_blocked";
-
+    public static String currentLanguage="en";
     //getjackpotdetails fields
     public static final String TAG_DESCRIPTION = "description";
     public static final String TAG_COMPANY = "company";

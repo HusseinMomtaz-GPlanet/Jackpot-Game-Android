@@ -236,8 +236,6 @@ public class Question extends Activity implements RotationEndCallBack,
             updateRouletteText();
             // the suitble place to execute getquestiontask
         }
-        /*else if (choicesFrame.getVisibility() == View.VISIBLE)
-			startTimer();*/
 
     }
 
@@ -1246,18 +1244,11 @@ public class Question extends Activity implements RotationEndCallBack,
         //level.numberOfAnswers++;
         updateTotalScore();
 
-        /*if (level.numberOfAnswers == level.numberOfQuestions) {
-            level.oneMoreQuestion = true;
-        }*/
-
         rightAnswer();
         //animN = ANIMATION_JOCKER;
         animN = ANIMATION_TRUE;
 
         deleteAllWrongAnswersAndClose();
-//        imgTrue.setBackgroundResource(R.drawable.true_icon255);
-//        imgTrue.startAnimation(trueAnimation);
-//        imgTrue.setVisibility(View.VISIBLE);
     }
 
     private void minsTotalScoreAnimation(final int scoreMins) {
