@@ -76,7 +76,6 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.startapp.android.publish.StartAppAd;
 import com.startapp.android.publish.StartAppSDK;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -337,7 +336,7 @@ public class Question extends Activity implements RotationEndCallBack,
         starLayout = (RelativeLayout) findViewById(R.id.starLayout);
         choicesFrame = (FrameLayout) findViewById(R.id.choicesFrame);
         bottomBar = (LinearLayout) findViewById(R.id.bottomBar);
-        txtScoreWord = (TextView) findViewById(R.id.scoreWord);
+        //txtScoreWord = (TextView) findViewById(R.id.scoreWord);
         floatyIconFrame = (FrameLayout) findViewById(R.id.floatyIconFrame);
         jockerIconFrame = (FrameLayout) findViewById(R.id.jockerIconFrame);
         floatyIcon = (ImageButton) findViewById(R.id.floatyIcon);
