@@ -33,10 +33,6 @@ public class AnswerTask extends AsyncTask<String, Void, Integer> {
 
     @Override
     protected Integer doInBackground(String... params) {
-        // params 0 >> the click answer
-        // params 1 >> the floats used
-        // params 2 >> the jocker used
-
         int isExtra = 0;
         if (callerActivity.level.oneMoreQuestion)
             isExtra = 1;

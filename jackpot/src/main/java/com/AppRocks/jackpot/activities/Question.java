@@ -247,8 +247,6 @@ public class Question extends Activity implements RotationEndCallBack,
             updateRouletteText();
             // the suitble place to execute getquestiontask
         }
-        /*else if (choicesFrame.getVisibility() == View.VISIBLE)
-			startTimer();*/
 
     }
 

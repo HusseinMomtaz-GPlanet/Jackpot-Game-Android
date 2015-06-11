@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.AppRocks.jackpot.JackpotApplication;
 import com.AppRocks.jackpot.R;
+import com.AppRocks.jackpot.activities.Jackpot;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -35,7 +36,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ServiceTutorials extends Service implements OnClickListener {
+public class ShowCompanyLogoService extends Service implements OnClickListener {
     public ImageLoader imageLoader;
     public DisplayImageOptions options;
     Animation animEnterHand;
@@ -122,45 +123,6 @@ public class ServiceTutorials extends Service implements OnClickListener {
         params.x = x;
         params.y = y;
 
-		/*// Just a sample layout parameters.
-        ll_lp = new WindowManager.LayoutParams();
-		ll_lp.format = PixelFormat.TRANSLUCENT;
-		ll_lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-		ll_lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-		ll_lp.gravity = Gravity.TOP | Gravity.LEFT;
-
-		ll_lp.gravity = true ? (Gravity.RIGHT | Gravity.CENTER_VERTICAL)
-				: (Gravity.LEFT | Gravity.CENTER_VERTICAL);
-
-		int x = getRandomNumber(true);
-		int y = getRandomNumber(false);
-		ll_lp.x = x;
-		ll_lp.y = y;
-		Log.w("elsawafXY", x + ":" + y);
-
-		// This one is necessary.
-		ll_lp.type = WindowManager.LayoutParams.TYPE_PHONE;
-
-		// Play around with these two.
-		ll_lp.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
-		ll_lp.flags = ll_lp.flags
-				| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-		ll_lp.flags = ll_lp.flags
-				| WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
-
-		// >>>>elasawf<<<<<   Have the system blur any windows behind this one.
-	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,
-	            WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
-	    ll_lp.flags = ll_lp.flags
-				| WindowManager.LayoutParams.FLAG_BLUR_BEHIND;
-
-		// if(s.getPostionUCB()=='u')
-		// ll_lp.gravity = ll_lp.gravity|Gravity.TOP;
-		// else if(s.getPostionUCB()=='c')
-		//     ll_lp.gravity = ll_lp.gravity | Gravity.CENTER_VERTICAL;
-		// else if(s.getPostionUCB()=='b')
-		// ll_lp.gravity = ll_lp.gravity|Gravity.BOTTOM;
-*/
         localWindowManager.addView(rowView, params);
 
         initUILConfig();
@@ -225,10 +187,7 @@ public class ServiceTutorials extends Service implements OnClickListener {
         // TODO Auto-generated method stub
         Random rGenerator = new Random();
         int n = xTransation ? rGenerator.nextInt(xMax) : rGenerator.nextInt(yMax);
-            /*int n = xTransation? rGenerator.nextInt(200)+150 : rGenerator.nextInt(150)+100;
-			if (n%2 == 0)
-				signOpposite = !signOpposite;
-			return signOpposite? n : -n;*/
+
         return n;
     }
 
@@ -263,84 +222,6 @@ public class ServiceTutorials extends Service implements OnClickListener {
             }
         });
         btnClickMe.startAnimation(alphaA);
-
-		/*
-		int x = getRandomNumber(true);
-		oX = ObjectAnimator.ofFloat(btnClickMe, "translationX", -x, x)
-				.setDuration(3000);
-		int y = getRandomNumber(false);
-		oY = ObjectAnimator.ofFloat(btnClickMe, "translationY", -y, y)
-				.setDuration(3000);
-
-		oAlpha = ObjectAnimator.ofFloat(btnClickMe, "alpha", 1, 0.25f, 0)
-				.setDuration(4500);
-
-		oX.addListener(new AnimatorListener() {
-
-			@Override
-			public void onAnimationStart(Animator animation) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onAnimationRepeat(Animator animation) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onAnimationEnd(Animator animation) {
-				oAlpha.start();
-
-			}
-
-			@Override
-			public void onAnimationCancel(Animator animation) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		oAlpha.addListener(new AnimatorListener() {
-
-			@Override
-			public void onAnimationStart(Animator animation) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onAnimationRepeat(Animator animation) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onAnimationEnd(Animator animation) {
-				// this mean user didn't click on logo so close video and
-				// service
-				// finish activity
-				if (!isIconClick) {
-					sendBroadcast(new Intent("close.video.elsawaf"));
-					stopSelf();
-				}
-
-				// Log.w("elsawaf", "Animation END");
-
-			}
-
-			@Override
-			public void onAnimationCancel(Animator animation) {
-				// Log.w("elsawaf", "Animation CANCEL");
-			}
-		});
-
-		oX.start();
-		oY.start();
-		// next time will change start point
-		signOpposite = !signOpposite;
-*/
     }
 
     private void findViews() {
@@ -420,9 +301,13 @@ public class ServiceTutorials extends Service implements OnClickListener {
         //otherwise, IllegalStateException of
         //"TimerTask is scheduled already"
         //will be thrown
+
+        //decrement the number of logo appearance
+        Jackpot.LOGO_APPEARANCE--;
         timer = new Timer();
         myTimerTask = new MyTimerTask();
-        timer.schedule(myTimerTask, 10000);
+        if(Jackpot.LOGO_APPEARANCE>0)
+            timer.schedule(myTimerTask, 10000);
     }
 
     class MyTimerTask extends TimerTask {
@@ -431,11 +316,7 @@ public class ServiceTutorials extends Service implements OnClickListener {
         public void run() {
 
             messageHandler.sendEmptyMessage(0);
-			
-			 /* runOnUiThread(new Runnable(){
-			 * 
-			 * @Override public void run() { textCounter.setText(strDate); }});
-			 */
+
         }
 
     }

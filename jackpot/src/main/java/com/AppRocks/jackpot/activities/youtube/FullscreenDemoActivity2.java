@@ -31,7 +31,7 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.AppRocks.jackpot.R;
-import com.AppRocks.jackpot.services.ServiceTutorials;
+import com.AppRocks.jackpot.services.ShowCompanyLogoService;
 import com.AppRocks.jackpot.util.ConnectionDetector;
 import com.AppRocks.jackpot.webservice.IncrementVideoViewsTask;
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -115,7 +115,7 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
         // TODO Auto-generated method stub
         super.onPause();
         stopService(new Intent(FullscreenDemoActivity2.this,
-                ServiceTutorials.class));
+                ShowCompanyLogoService.class));
     }
 
     @Override
@@ -157,48 +157,6 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
             player.release();
     }
 
-    // private void doLayout() {
-    // LinearLayout.LayoutParams playerParams =
-    // (LinearLayout.LayoutParams) playerView.getLayoutParams();
-    // if (fullscreen) {
-    // // When in fullscreen, the visibility of all other views than the player
-    // should be set to
-    // // GONE and the player should be laid out across the whole screen.
-    // playerParams.width = LayoutParams.MATCH_PARENT;
-    // playerParams.height = LayoutParams.MATCH_PARENT;
-    //
-    // otherViews.setVisibility(View.GONE);
-    // } else {
-    // // This layout is up to you - this is just a simple example (vertically
-    // stacked boxes in
-    // // portrait, horizontally stacked in landscape).
-    // otherViews.setVisibility(View.VISIBLE);
-    // ViewGroup.LayoutParams otherViewsParams = otherViews.getLayoutParams();
-    // if (getResources().getConfiguration().orientation ==
-    // Configuration.ORIENTATION_LANDSCAPE) {
-    // playerParams.width = otherViewsParams.width = 0;
-    // playerParams.height = WRAP_CONTENT;
-    // otherViewsParams.height = MATCH_PARENT;
-    // playerParams.weight = 1;
-    // baseLayout.setOrientation(LinearLayout.HORIZONTAL);
-    // } else {
-    // playerParams.width = otherViewsParams.width = MATCH_PARENT;
-    // playerParams.height = WRAP_CONTENT;
-    // playerParams.weight = 0;
-    // otherViewsParams.height = 0;
-    // baseLayout.setOrientation(LinearLayout.VERTICAL);
-    // }
-    // setControlsEnabled();
-    // }
-    // }
-
-    // private void setControlsEnabled() {
-    // checkbox.setEnabled(player != null
-    // && getResources().getConfiguration().orientation ==
-    // Configuration.ORIENTATION_PORTRAIT);
-    // fullscreenButton.setEnabled(player != null);
-    // }
-
     public class YoutubeFullscreenListener implements OnFullscreenListener {
         @Override
         public void onFullscreen(boolean isFullscreen) {
@@ -212,7 +170,7 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
         private void closeVideo() {
             // TODO Auto-generated method stub
             stopService(new Intent(FullscreenDemoActivity2.this,
-                    ServiceTutorials.class));
+                    ShowCompanyLogoService.class));
             Toast.makeText(FullscreenDemoActivity2.this,
                     "You should to watch the complete video",
                     Toast.LENGTH_LONG).show();
@@ -242,7 +200,7 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
                     public void onStopped() {
                         // TODO Auto-generated method stub
                         stopService(new Intent(FullscreenDemoActivity2.this,
-                                ServiceTutorials.class));
+                                ShowCompanyLogoService.class));
 
                         // detect if user reach to the end of the video
                         if (player.getCurrentTimeMillis() == player
@@ -280,7 +238,7 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
                             isFirstTimeToPlay = false;
                         }
                         startService(new Intent(FullscreenDemoActivity2.this,
-                                ServiceTutorials.class));
+                                ShowCompanyLogoService.class));
 
                     }
 
@@ -288,7 +246,7 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
                     public void onPaused() {
                         // TODO Auto-generated method stub
                         stopService(new Intent(FullscreenDemoActivity2.this,
-                                ServiceTutorials.class));
+                                ShowCompanyLogoService.class));
                         isFirstTimeToPlay = false;
                     }
 
