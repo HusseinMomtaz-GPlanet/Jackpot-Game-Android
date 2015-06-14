@@ -31,7 +31,6 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -122,7 +121,9 @@ public class Question extends Activity implements RotationEndCallBack,
     int newProgress;
     JackpotParameters jackpotParams;
     int animN;
-    private Handler messageHandler = new Handler() {
+
+    // responsible for deleting wrong answer when using joker or get wrong answer
+    public Handler WrongAnswerDeletionHandler = new Handler() {
 
         public void handleMessage(Message msg) {
             // update your view here
@@ -131,14 +132,16 @@ public class Question extends Activity implements RotationEndCallBack,
                 // and the last time will go to other conditions.
                 return;
             } else if (animN == ANIMATION_TRUE) {
-                // this condition is important when using Jocker
+                // this means you are using jocker to answer the question
                 return;
             } else {
-                // showYouLoseScreen after delete all wrong answers
-                showYouLoseScreen();
+                // (means you have answered wrong) showYouLoseScreen after delete all wrong answers
+                //New Logic will be implemented here
+                handleWhenUserLoseQuestion();
             }
         }
     };
+
     ArrayList<Integer> choisedCategory;
     boolean isAnimationEnd;
     WindowManager.LayoutParams params;
@@ -508,6 +511,11 @@ public class Question extends Activity implements RotationEndCallBack,
         txtStar.setTypeface(font);
     }
 
+
+    //This method to handle show You lose screen after all lives are gone
+    void handleWhenUserLoseQuestion(){
+        showYouLoseScreen();
+    }
     /*
      * this method called after initialize "level" object,
      * so in the first we get the help allowed depend on level,
@@ -1623,21 +1631,21 @@ public class Question extends Activity implements RotationEndCallBack,
         Thread timer = new Thread() {
             public void run() {
                 // delete first wrong answer instantly
-                //messageHandler.sendEmptyMessage(0);
+                //WrongAnswerDeletionHandler.sendEmptyMessage(0);
                 // now loop 3 times to delete the other two wrong answers
-                //Log.d("elswaf" + getClass().getSimpleName(), "" + question.getAllWrongAnswers().size());
                 // we need this count because the size with decrease every loop
                 try {
                     int count = question.getAllWrongAnswers().size();
                     for (int i = 0; i <= count; i++) {
                         try {
-                            sleep(700);
+                            sleep(500);
                             // reach to end so wait until user see the right answer
                             // then complete
                         } catch (Exception e) {
                             e.printStackTrace();
                         } finally {
-                            messageHandler.sendEmptyMessage(0);
+                            //this deletes the wrong question
+                            WrongAnswerDeletionHandler.sendEmptyMessage(0);
                         }
                     }
                 }catch (Exception ex){
@@ -1660,24 +1668,21 @@ public class Question extends Activity implements RotationEndCallBack,
         if (question.getAllWrongAnswers().size() < 1) {
             return false;
         } else {
+
             String wrongAnswer = question.getAllWrongAnswers().get(0);
-            if (!TextUtils.isEmpty(txtAnswer1.getText())
-                    && txtAnswer1.getText().equals(wrongAnswer)) {
-                txtAnswer1.setText("");
-                question.getAllWrongAnswers().remove(wrongAnswer);
-            } else if (!TextUtils.isEmpty(txtAnswer2.getText())
-                    && txtAnswer2.getText().equals(wrongAnswer)) {
-                txtAnswer2.setText("");
-                question.getAllWrongAnswers().remove(wrongAnswer);
-            } else if (!TextUtils.isEmpty(txtAnswer3.getText())
-                    && txtAnswer3.getText().equals(wrongAnswer)) {
-                txtAnswer3.setText("");
-                question.getAllWrongAnswers().remove(wrongAnswer);
-            } else if (!TextUtils.isEmpty(txtAnswer4.getText())
-                    && txtAnswer4.getText().equals(wrongAnswer)) {
-                txtAnswer4.setText("");
-                question.getAllWrongAnswers().remove(wrongAnswer);
+            TextView[] answersTextViews={txtAnswer1,txtAnswer2,txtAnswer3,txtAnswer4};
+            for(TextView answerTextView:answersTextViews){
+
+                if (!TextUtils.isEmpty(answerTextView.getText())
+                        && answerTextView.getText().equals(wrongAnswer)) {
+                    answerTextView.setText("");
+                    question.getAllWrongAnswers().remove(wrongAnswer);
+                    return true;
+                }
+
             }
+            //means it is not found in any text view so we have to delete is IT IS SAFE THAT WAY !
+            question.getAllWrongAnswers().remove(wrongAnswer);
             Log.d("elswaf" + getClass().getSimpleName(), "" + question.getAllWrongAnswers().size());
             return true;
         }
