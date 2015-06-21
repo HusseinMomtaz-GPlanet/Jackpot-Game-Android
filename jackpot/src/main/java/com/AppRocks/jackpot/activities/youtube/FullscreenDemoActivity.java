@@ -60,16 +60,16 @@ public class FullscreenDemoActivity extends Activity {
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        startService(new Intent(FullscreenDemoActivity.this,
-                ShowCompanyLogoService.class));
+        //startService(new Intent(FullscreenDemoActivity.this,
+                //ShowCompanyLogoService.class));
     }
 
     @Override
     protected void onPause() {
         // TODO Auto-generated method stub
         super.onPause();
-        stopService(new Intent(FullscreenDemoActivity.this,
-                ShowCompanyLogoService.class));
+        //stopService(new Intent(FullscreenDemoActivity.this,
+                //ShowCompanyLogoService.class));
     }
 
 }

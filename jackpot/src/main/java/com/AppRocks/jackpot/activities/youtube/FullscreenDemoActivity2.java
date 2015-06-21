@@ -114,8 +114,8 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
     protected void onPause() {
         // TODO Auto-generated method stub
         super.onPause();
-        stopService(new Intent(FullscreenDemoActivity2.this,
-                ShowCompanyLogoService.class));
+        //stopService(new Intent(FullscreenDemoActivity2.this,
+          //      ShowCompanyLogoService.class));
     }
 
     @Override
@@ -169,8 +169,8 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
 
         private void closeVideo() {
             // TODO Auto-generated method stub
-            stopService(new Intent(FullscreenDemoActivity2.this,
-                    ShowCompanyLogoService.class));
+           // stopService(new Intent(FullscreenDemoActivity2.this,
+             //       ShowCompanyLogoService.class));
             Toast.makeText(FullscreenDemoActivity2.this,
                     "You should to watch the complete video",
                     Toast.LENGTH_LONG).show();
@@ -199,8 +199,8 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
                     @Override
                     public void onStopped() {
                         // TODO Auto-generated method stub
-                        stopService(new Intent(FullscreenDemoActivity2.this,
-                                ShowCompanyLogoService.class));
+                       // stopService(new Intent(FullscreenDemoActivity2.this,
+                         //       ShowCompanyLogoService.class));
 
                         // detect if user reach to the end of the video
                         if (player.getCurrentTimeMillis() == player
@@ -237,16 +237,16 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
                             closeVideo();
                             isFirstTimeToPlay = false;
                         }
-                        startService(new Intent(FullscreenDemoActivity2.this,
-                                ShowCompanyLogoService.class));
+                       // startService(new Intent(FullscreenDemoActivity2.this,
+                         //       ShowCompanyLogoService.class));
 
                     }
 
                     @Override
                     public void onPaused() {
                         // TODO Auto-generated method stub
-                        stopService(new Intent(FullscreenDemoActivity2.this,
-                                ShowCompanyLogoService.class));
+                       // stopService(new Intent(FullscreenDemoActivity2.this,
+                         //       ShowCompanyLogoService.class));
                         isFirstTimeToPlay = false;
                     }
 
