@@ -200,7 +200,7 @@ public class FullscreenDemoActivity2 extends YouTubeBaseActivity implements
                     public void onStopped() {
                         // TODO Auto-generated method stub
                         //stopService(new Intent(FullscreenDemoActivity2.this,
-                               // ShowCompanyLogoService.class));
+                                //ShowCompanyLogoService.class));
 
                         // detect if user reach to the end of the video
                         if (player.getCurrentTimeMillis() == player
