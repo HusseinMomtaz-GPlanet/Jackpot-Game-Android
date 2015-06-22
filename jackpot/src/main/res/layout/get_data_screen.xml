@@ -34,7 +34,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_weight="6"
-            android:background="@drawable/enterdata_txt" />
+            android:background="@drawable/enterdata_txt_sp" />
 
         <LinearLayout
             android:layout_width="match_parent"

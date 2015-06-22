@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
-            android:text="You Lose"
+            android:text="@string/you_lose"
             android:textColor="#ffffff"
             android:textSize="19sp"
             android:textStyle="bold" />
@@ -133,7 +133,7 @@
                 android:gravity="center"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="Menu"
+                android:text="@string/Menu"
                 android:textColor="#0a8cda"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -147,7 +147,7 @@
                 android:gravity="center"
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp"
-                android:text="Try again!"
+                android:text="@string/Try_Again"
                 android:textColor="#0a8cda"
                 android:textSize="16sp"
                 android:textStyle="bold" />

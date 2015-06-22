@@ -767,9 +767,13 @@ public class Question extends Activity implements RotationEndCallBack,
         OkBtn.setTypeface(font);
 
         cheeseLevelNumberTxt.append("" + level.level);
-        cheeseLevelInfoTxt.append("" + getLevelNumberWord(level.level)
-                + " cheese!");
-
+        if(JackpotApplication.currentLanguage.equalsIgnoreCase("en")) {
+            cheeseLevelInfoTxt.append("" + getLevelNumberWord(level.level)
+                    + " cheese!");
+        }else{
+            cheeseLevelInfoTxt.append("" + getLevelNumberWordInSpanish(level.level)
+                    + " quesito!");
+        }
         OkBtn.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -911,9 +915,13 @@ public class Question extends Activity implements RotationEndCallBack,
         updateTxtLevel(txtLevel);
         level.oneMoreQuestion = false;
         level.isOneMoreQuestionSolved = false;
-
-        txtLevelRouletteTitle.setText("Level : ");
-        txtQuestionRouletteTitle.setText("Question : ");
+        if(JackpotApplication.currentLanguage.equalsIgnoreCase("en")) {
+            txtLevelRouletteTitle.setText("Level : ");
+            txtQuestionRouletteTitle.setText("Question : ");
+        }else{//spanish
+            txtLevelRouletteTitle.setText("Nivel : ");
+            txtQuestionRouletteTitle.setText("QUESITO : ");
+        }
         imgCheeseLeft.setVisibility(View.INVISIBLE);
         imgCheeseRight.setVisibility(View.INVISIBLE);
     }
@@ -1077,6 +1085,31 @@ public class Question extends Activity implements RotationEndCallBack,
         }
     }
 
+
+    private String getLevelNumberWordInSpanish(int n) {
+        switch (n) {
+            case 1:
+                return "primer";
+
+            case 2:
+                return "segundo";
+
+            case 3:
+                return "tercer";
+
+            case 4:
+                return "cuarto";
+
+            case 5:
+                return "quinto";
+
+            case 6:
+                return "sixth";
+
+            default:
+                return " ";
+        }
+    }
     // generate random numbers from 0 to 5
     private int getRandomNumber() {
         Random rGenerator = new Random();
@@ -1413,8 +1446,14 @@ public class Question extends Activity implements RotationEndCallBack,
     private void updateRouletteText() {
         if (level.oneMoreQuestion) {
             txtLevelRoulette.setText("");
-            txtLevelRouletteTitle.setText("CHEESE QUESTION");
-            txtQuestionRouletteTitle.setText("LEVEL");
+            if(JackpotApplication.currentLanguage.equalsIgnoreCase("en")) {
+                txtLevelRouletteTitle.setText("CHEESE QUESTION");
+                txtQuestionRouletteTitle.setText("LEVEL");
+            }else{//spanish
+                txtLevelRouletteTitle.setText("QUESITO");
+                txtQuestionRouletteTitle.setText("Nivel");
+            }
+
             txtQuestionRoulette.setText("  " + level.level);
 
             imgCheeseLeft.setVisibility(View.VISIBLE);

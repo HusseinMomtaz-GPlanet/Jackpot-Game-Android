@@ -23,7 +23,7 @@
             android:gravity="left"
             android:lines="13"
             android:padding="15dp"
-            android:text="Jackpot Info"
+            android:text=""
             android:textColor="@color/White"
             android:textSize="15sp"
             android:textStyle="bold" />

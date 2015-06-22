@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
-        android:text="Get Ready!"
+        android:text="@string/get_ready"
         android:textColor="#e1e7f3"
         android:textSize="41sp"
         android:textStyle="bold" />
