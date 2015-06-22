@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
-            android:text="Congratulations!!"
+            android:text="@string/Congratulations"
             android:textColor="#ffffff"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -54,7 +54,7 @@
                         android:id="@+id/txtScoreTitleYouLose"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Level"
+                        android:text="@string/level"
                         android:textColor="#ffee2c"
                         android:textSize="21sp"
                         android:textStyle="bold" />
@@ -64,7 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="-4dp"
-                        android:text="complete"
+                        android:text="@string/complete"
                         android:textColor="#ffd700"
                         android:textSize="21sp"
                         android:textStyle="bold" />
@@ -129,7 +129,7 @@
             android:gravity="center"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
-            android:text="Continue"
+            android:text="@string/continue_game"
             android:textColor="#005705"
             android:textSize="16sp"
             android:textStyle="bold" />

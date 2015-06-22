@@ -8,7 +8,24 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="app_id">793631417353886</string>
-
     <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
 
+    <string name="get_ready">Get Ready!</string>
+    <string name="you_lose">You Lose!</string>
+    <string name="time_up">Time's up</string>
+
+    <string name="click_logo">Click the logo before it disappear!</string>
+    <string name="somebody_won">Somebody just won this jackpot !!</string>
+    <string name="Menu">Menu</string>
+    <string name="Try_Again">Try Again</string>
+
+    <string name="Congratulations">Congratulations!</string>
+    <string name="level">level</string>
+    <string name="complete">complete</string>
+    <string name="continue_game">Continue</string>
+
+    <string name="invite_friends">Invite friends to play \nand win extra joker!</string>
+    <string name="answer_cheese">Answer the question correctly and win your </string>
+    <string name="answer_cheese_last">Answer the last question correctly and win the jackpot!!</string>
+    <string name="level_six">Level 6</string>
 </resources>

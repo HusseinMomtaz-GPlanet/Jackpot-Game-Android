@@ -32,7 +32,7 @@
             android:gravity="center"
             android:paddingLeft="45dp"
             android:paddingRight="45dp"
-            android:text="Somebody just won this jackpot !!"
+            android:text="@string/somebody_won"
             android:textColor="#f0fc12"
             android:textSize="20sp"
             android:textStyle="bold" />

@@ -185,7 +185,22 @@ public class Main extends BaseActivity {
 
         btnRight = (ImageButton) findViewById(R.id.btnRight);
         btnLeft = (ImageButton) findViewById(R.id.btnLeft);
+        btnRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(vp.getCurrentItem()+1<jackpotsList.size())
+                   vp.setCurrentItem(vp.getCurrentItem()+1);
+            }
+        });
+        btnLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(vp.getCurrentItem()>0)
+                    vp.setCurrentItem(vp.getCurrentItem()-1);
+            }
+        });
         vp.setOnTouchListener(new ButtonsTouchListener());
+
         vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
