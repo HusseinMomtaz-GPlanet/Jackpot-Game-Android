@@ -149,7 +149,7 @@ public class QuestionDetails {
                         setId(questionDetailsJson.getString(JackpotApplication.TAG_QUESTION_ID));
                         //has joker should be written once
                         JackpotApplication.jokerHas = questionDetailsJson.getInt(JackpotApplication.TAG_MY_JOKERS);
-                        JackpotApplication.floatyHas = questionDetailsJson.getInt(JackpotApplication.TAG_MY_FLOATS);
+                        JackpotApplication.livesHas = questionDetailsJson.getInt(JackpotApplication.TAG_MY_FLOATS);
 
                         setQuestion(q);
                         setAllChoices(new String[]{w1, w2, w3, w4});

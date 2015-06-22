@@ -266,7 +266,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="3dp"
-            android:text="10"
+            android:text="15"
             android:textColor="#fc1005"
             android:textSize="23sp"
             android:textStyle="bold" />
@@ -318,7 +318,7 @@
             android:id="@+id/floatyIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/floaty" />
+            android:background="@drawable/heart" />
 
         <TextView
             android:id="@+id/txtFloaty"

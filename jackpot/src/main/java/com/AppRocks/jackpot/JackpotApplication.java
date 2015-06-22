@@ -72,11 +72,11 @@ public class JackpotApplication extends Application {
     public static boolean isPlayFreeJackpot = false;
     // allowed to use on every question
     public static int jokerAllowed = 0;
-    public static int floatyAllowed = 0;
+    public static int livesAllowed = 0;
 
     // already has and may increasing
     public static int jokerHas = 3;
-    public static int floatyHas = 5;
+    public static int livesHas = 5;
     public static int jokerGifts;
 
     //using this if one player win the jackpot
@@ -95,6 +95,7 @@ public class JackpotApplication extends Application {
     }
 
     public static int getJockerAllowed(int difficulty, int level) {
+
         switch (difficulty) {
             case 1:
                 return 1;
@@ -119,6 +120,8 @@ public class JackpotApplication extends Application {
     }
 
     public static int getFloatyAllowed(int difficulty, int level) {
+        return livesHas;
+        /*
         switch (difficulty) {
             case 1:
                 if (level == 1 || level == 2)
@@ -145,6 +148,7 @@ public class JackpotApplication extends Application {
             default:
                 return 0;
         }
+        */
     }
 
 }

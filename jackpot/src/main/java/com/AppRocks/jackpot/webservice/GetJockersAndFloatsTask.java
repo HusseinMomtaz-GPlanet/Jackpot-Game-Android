@@ -27,7 +27,7 @@ public class GetJockersAndFloatsTask extends AsyncTask<Void, Void, Boolean> {
             try {
                 if (!jockersAndFloatsJSON.isNull(JackpotApplication.TAG_JOCKERS_NUMBER)) {
                     JackpotApplication.jokerHas = jockersAndFloatsJSON.getInt(JackpotApplication.TAG_JOCKERS_NUMBER);
-                    JackpotApplication.floatyHas = jockersAndFloatsJSON.getInt(JackpotApplication.TAG_FLOATS_NUMBERS);
+                    JackpotApplication.livesHas = jockersAndFloatsJSON.getInt(JackpotApplication.TAG_FLOATS_NUMBERS);
                     JackpotApplication.jokerGifts = jockersAndFloatsJSON.getInt(JackpotApplication.TAG_JOCKERS_GIFT);
                     //to make jokerhas the same value as returned from question details
                     JackpotApplication.jokerHas += JackpotApplication.jokerGifts;

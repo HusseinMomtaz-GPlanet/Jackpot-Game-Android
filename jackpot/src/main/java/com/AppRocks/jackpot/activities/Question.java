@@ -189,7 +189,7 @@ public class Question extends Activity implements RotationEndCallBack,
      * We have five elements invisible at beginning (imgNiddle, questionFrame,
 	 * bottomBar, leftIcon, rightIcon)
 	 */
-    private FloatyClickListener floatyClickListener;
+    private LifeClickListener lifeClickListener;
     private LayoutInflater inflater;
     private StartAppAd startAppAd = new StartAppAd(this);
     public boolean isProcessingAnswer;
@@ -355,7 +355,7 @@ public class Question extends Activity implements RotationEndCallBack,
 
         answerClickListener = new AnswerClickListener();
         jockerClickListener = new JokerClickListener();
-        floatyClickListener = new FloatyClickListener();
+        lifeClickListener = new LifeClickListener();
 
         btnPushRoulette.setOnClickListener(new PushRouletteClickListener());
 
@@ -514,8 +514,41 @@ public class Question extends Activity implements RotationEndCallBack,
 
     //This method to handle show You lose screen after all lives are gone
     void handleWhenUserLoseQuestion(){
-        showYouLoseScreen();
+        if(JackpotApplication.livesHas>0){
+            useLive();
+        }else {
+            showYouLoseScreen();
+        }
     }
+
+    //return if he can use live or not and if it can it do the appropriate actions
+    public void useLive(){
+        //minsTotalScoreAnimation(-10);
+        MediaPlayer floatMP = MediaPlayer.create(Question.this, R.raw.when_user_press_the_joker_or_float);
+        floatMP.start();
+                /*// this mean I have the right answer
+                if (JackpotApplication.numberOfFloatyUsed > 0) {
+                    deleteRandomWrongAnswer();
+                } else {*/
+        ConnectionDetector cd = new ConnectionDetector(Question.this);
+        if (cd.isConnectingToInternet()) {
+            //new DecrementFloatsTask().execute(1);
+            new HelpTask(Question.this).execute("1", "0");
+        }
+        //}
+        JackpotApplication.livesAllowed--;
+        JackpotApplication.livesHas--;
+        //JackpotApplication.numberOfFloatyUsed++;
+
+        updateFloaty();
+    }
+
+    //call back method for using life (if user has lives it  should enable him to continue the game)
+    public void continueGameAfterLosingQuestion(){
+        hideQuestionViewes();
+        showNextQuestion();
+    }
+
     /*
      * this method called after initialize "level" object,
      * so in the first we get the help allowed depend on level,
@@ -530,7 +563,7 @@ public class Question extends Activity implements RotationEndCallBack,
 
         JackpotApplication.jokerAllowed = JackpotApplication
                 .getJockerAllowed(level.prizeDifficulty, level.level);
-        JackpotApplication.floatyAllowed = JackpotApplication
+        JackpotApplication.livesAllowed = JackpotApplication
                 .getFloatyAllowed(level.prizeDifficulty, level.level);
 
         ConnectionDetector cd = new ConnectionDetector(Question.this);
@@ -920,7 +953,7 @@ public class Question extends Activity implements RotationEndCallBack,
 
         JackpotApplication.jokerAllowed = JackpotApplication
                 .getJockerAllowed(level.prizeDifficulty, level.level);
-        JackpotApplication.floatyAllowed = JackpotApplication
+        JackpotApplication.livesAllowed = JackpotApplication
                 .getFloatyAllowed(level.prizeDifficulty, level.level);
         updateTxtLevel(txtLevel);
         level.oneMoreQuestion = false;
@@ -1035,6 +1068,9 @@ public class Question extends Activity implements RotationEndCallBack,
         isTryingAgain = false;
     }
 
+
+
+
     private void showGetDataScreen() {
         Dialog pop_up = new Dialog(this);
         pop_up.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -1056,16 +1092,16 @@ public class Question extends Activity implements RotationEndCallBack,
         submitBtn.setTypeface(font);
             submitBtn.setOnClickListener(new OnClickListener() {
 
-            @Override
-            public void onClick(View arg0) {
-                // elsawaf
-                ConnectionDetector cd = new ConnectionDetector(Question.this);
-                if (cd.isConnectingToInternet()) {
-                    new WinTask(isThisSavedGame).execute(contactEmail.getText().toString(), contactPhone.getText().toString());
+                @Override
+                public void onClick(View arg0) {
+                    // elsawaf
+                    ConnectionDetector cd = new ConnectionDetector(Question.this);
+                    if (cd.isConnectingToInternet()) {
+                        new WinTask(isThisSavedGame).execute(contactEmail.getText().toString(), contactPhone.getText().toString());
+                    }
+                    startActivity(new Intent(Question.this, Main_.class));
                 }
-                startActivity(new Intent(Question.this, Main_.class));
-            }
-        });
+            });
 
         pop_up.show();
     }
@@ -1274,16 +1310,16 @@ public class Question extends Activity implements RotationEndCallBack,
     public void updateFloaty() {
         floatyIcon.setClickable(true);
         floatyIconFrame.setAlpha(1f);
-        if (JackpotApplication.floatyAllowed == 0) {
+        if (JackpotApplication.livesAllowed == 0) {
             ((TextView) findViewById(R.id.txtFloaty)).setText(""
-                    + JackpotApplication.floatyHas);
+                    + JackpotApplication.livesHas);
             floatyIcon.setClickable(false);
             floatyIconFrame.setAlpha(0.5f);
             floatyIconFrame.setVisibility(View.VISIBLE);
             return;
         } else {
             ((TextView) findViewById(R.id.txtFloaty)).setText(""
-                    + JackpotApplication.floatyHas);
+                    + JackpotApplication.livesHas);
             floatyIconFrame.setVisibility(View.VISIBLE);
             return;
         }
@@ -1336,7 +1372,7 @@ public class Question extends Activity implements RotationEndCallBack,
     private void startTimer() {
         // imgNiddle.setVisibility(View.VISIBLE);
         txtAlarm.setTextColor(Color.RED);
-        LevelController.timer = 10;
+        LevelController.timer = 15;
         txtAlarm.setText("" + LevelController.timer);
 
         if (timer != null) {
@@ -1871,29 +1907,11 @@ public class Question extends Activity implements RotationEndCallBack,
         }
     }
 
-    class FloatyClickListener implements OnClickListener {
+    class LifeClickListener implements OnClickListener {
         @Override
         public void onClick(View v) {
-            if (JackpotApplication.numberOfFloatyUsed < 3) {
-                //minsTotalScoreAnimation(-10);
-                MediaPlayer floatMP = MediaPlayer.create(Question.this, R.raw.when_user_press_the_joker_or_float);
-                floatMP.start();
-                /*// this mean I have the right answer
-                if (JackpotApplication.numberOfFloatyUsed > 0) {
-                    deleteRandomWrongAnswer();
-                } else {*/
-                    ConnectionDetector cd = new ConnectionDetector(Question.this);
-                    if (cd.isConnectingToInternet()) {
-                        //new DecrementFloatsTask().execute(1);
-                        new HelpTask(Question.this).execute("1", "0");
-                    }
-                //}
-                JackpotApplication.floatyAllowed--;
-                JackpotApplication.floatyHas--;
-                JackpotApplication.numberOfFloatyUsed++;
-
-                updateFloaty();
-            }
+           //now it does not need click listener because its action is converted to be automatically done
+           // (This was based on Change request from the client)
         }
     }
 
@@ -1913,8 +1931,8 @@ public class Question extends Activity implements RotationEndCallBack,
             txtAnswer4.setOnClickListener(answerClickListener);
             if (JackpotApplication.jokerAllowed > 0)
                 jockerIcon.setOnClickListener(jockerClickListener);
-            if (JackpotApplication.floatyAllowed > 0)
-                floatyIcon.setOnClickListener(floatyClickListener);
+            if (JackpotApplication.livesAllowed > 0)
+                floatyIcon.setOnClickListener(lifeClickListener);
         }
 
     }

@@ -12,7 +12,7 @@
 
     <string name="get_ready">Get Ready!</string>
     <string name="you_lose">You Lose!</string>
-    <string name="time_up">Time's up</string>
+    <string name="time_up">Time is up</string>
 
     <string name="click_logo">Click the logo before it disappear!</string>
     <string name="somebody_won">Somebody just won this jackpot !!</string>
