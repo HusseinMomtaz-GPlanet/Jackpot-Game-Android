@@ -159,7 +159,7 @@ public class Question extends Activity implements RotationEndCallBack,
     private RouletteView roulette;
     private RelativeLayout rootLayout;
     private FrameLayout choicesFrame;
-    private LinearLayout bottomBar;
+    //private LinearLayout bottomBar;
     private Animation qAnimation;
     private ImageView imgTrue;
     private Animation trueAnimation;
@@ -338,7 +338,7 @@ public class Question extends Activity implements RotationEndCallBack,
         txtStar = (TextView) findViewById(R.id.txtStar);
         starLayout = (RelativeLayout) findViewById(R.id.starLayout);
         choicesFrame = (FrameLayout) findViewById(R.id.choicesFrame);
-        bottomBar = (LinearLayout) findViewById(R.id.bottomBar);
+        //bottomBar = (LinearLayout) findViewById(R.id.bottomBar);
         //txtScoreWord = (TextView) findViewById(R.id.scoreWord);
         floatyIconFrame = (FrameLayout) findViewById(R.id.floatyIconFrame);
         jockerIconFrame = (FrameLayout) findViewById(R.id.jockerIconFrame);
@@ -502,8 +502,8 @@ public class Question extends Activity implements RotationEndCallBack,
         txtCategory.setTypeface(font);
         txtLevel.setTypeface(font);
         txtAlarm.setTypeface(font);
-        txtScore.setTypeface(font);
-        txtScoreWord.setTypeface(font);
+        //txtScore.setTypeface(font);
+//        txtScoreWord.setTypeface(font);
         txtLevelRoulette.setTypeface(font);
         txtQuestionRoulette.setTypeface(font);
         txtLevelRouletteTitle.setTypeface(font);
@@ -523,22 +523,17 @@ public class Question extends Activity implements RotationEndCallBack,
 
     //return if he can use live or not and if it can it do the appropriate actions
     public void useLive(){
-        //minsTotalScoreAnimation(-10);
+        userHeartAnimation();
         MediaPlayer floatMP = MediaPlayer.create(Question.this, R.raw.when_user_press_the_joker_or_float);
         floatMP.start();
-                /*// this mean I have the right answer
-                if (JackpotApplication.numberOfFloatyUsed > 0) {
-                    deleteRandomWrongAnswer();
-                } else {*/
+
         ConnectionDetector cd = new ConnectionDetector(Question.this);
         if (cd.isConnectingToInternet()) {
             //new DecrementFloatsTask().execute(1);
             new HelpTask(Question.this).execute("1", "0");
         }
-        //}
         JackpotApplication.livesAllowed--;
         JackpotApplication.livesHas--;
-        //JackpotApplication.numberOfFloatyUsed++;
 
         updateFloaty();
     }
@@ -549,6 +544,32 @@ public class Question extends Activity implements RotationEndCallBack,
         showNextQuestion();
     }
 
+//This is a callback method for using joker which noe deletes 2 wrong answers according to changes request
+    public void handleUsingJoker(){
+        //lock using another joker in the same question (NextQuestion() method will unlock it)
+        jockerIcon.setClickable(false);
+        Thread timer = new Thread() {
+            public void run() {
+                try {
+                    for (int i = 0; i < 2; i++) {
+                        try {
+                            sleep(500);
+                            // reach to end so wait until user see the right answer
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            //this deletes the wrong question
+                            WrongAnswerDeletionHandler.sendEmptyMessage(0);
+                        }
+                    }
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+
+        };
+        timer.start();
+    }
     /*
      * this method called after initialize "level" object,
      * so in the first we get the help allowed depend on level,
@@ -1253,7 +1274,7 @@ public class Question extends Activity implements RotationEndCallBack,
     }
 
     public void setQuestionDetailsOnScreen() {
-        alarmTimer = new AlarmTimer(11000, 1000, this);
+        alarmTimer = new AlarmTimer(16000, 1000, this);
 
         updateJocker();
         updateFloaty();
@@ -1340,10 +1361,31 @@ public class Question extends Activity implements RotationEndCallBack,
         animN = ANIMATION_TRUE;
 
         deleteAllWrongAnswersAndClose();
-//        imgTrue.setBackgroundResource(R.drawable.true_icon255);
-//        imgTrue.startAnimation(trueAnimation);
-//        imgTrue.setVisibility(View.VISIBLE);
     }
+
+
+
+    private void userHeartAnimation() {
+        //zoom in and out animation for the heart
+        Animation userHeartAnimation = AnimationUtils.loadAnimation(Question.this, R.anim.zoom_in);
+        final Animation userHeartZoomoutAnimation = AnimationUtils.loadAnimation(Question.this, R.anim.zoom_out);
+        userHeartAnimation.setAnimationListener(new AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                floatyIconFrame.startAnimation(userHeartZoomoutAnimation);
+            }
+        });
+        floatyIconFrame.startAnimation(userHeartAnimation);
+   }
 
     private void minsTotalScoreAnimation(final int scoreMins) {
         Animation scoreMinsAnimtion = AnimationUtils.loadAnimation(Question.this, R.anim.zoom_in_and_disappear);
@@ -1444,6 +1486,8 @@ public class Question extends Activity implements RotationEndCallBack,
         question = nextQuestion();
         updateCategoryBackground();
         intiNiddleToRotate();
+        updateJocker();
+        updateFloaty();
     }
 
     private void hideQuestionViewes() {
@@ -1455,7 +1499,7 @@ public class Question extends Activity implements RotationEndCallBack,
         imgTrue.setVisibility(View.INVISIBLE);
         choicesFrame.setVisibility(View.INVISIBLE);
         questionBackground.setVisibility(View.INVISIBLE);
-        bottomBar.setVisibility(View.INVISIBLE);
+        //bottomBar.setVisibility(View.INVISIBLE);
         floatyIconFrame.setVisibility(View.INVISIBLE);
         jockerIconFrame.setVisibility(View.INVISIBLE);
     }
@@ -1568,7 +1612,7 @@ public class Question extends Activity implements RotationEndCallBack,
 
     public void updateTotalScore() {
         level.totalScore += level.newScore;
-        txtScore.setText("" + level.totalScore);
+        //txtScore.setText("" + level.totalScore);
     }
 
     public void deleteTheSavedGame() {
@@ -1686,7 +1730,7 @@ public class Question extends Activity implements RotationEndCallBack,
                     choicesFrame.startAnimation(choicesAnimation);
                     animN = ANIMATION_CHOICES;
 
-                    bottomBar.setVisibility(View.VISIBLE);
+                   // bottomBar.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -1900,7 +1944,7 @@ public class Question extends Activity implements RotationEndCallBack,
 
             updateJocker();
 
-            stopTimer();
+            //stopTimer();
             MediaPlayer jockerMP = MediaPlayer.create(Question.this, R.raw.when_user_press_the_joker_or_float);
             jockerMP.start();
 

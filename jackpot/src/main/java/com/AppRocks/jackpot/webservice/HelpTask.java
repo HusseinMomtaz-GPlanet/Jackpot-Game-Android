@@ -59,9 +59,9 @@ public class HelpTask extends AsyncTask<String, Void, Integer> {
             callerActivity.continueGameAfterLosingQuestion();
         } else if (result == JOKER_USED) {
             //Toast.makeText(callerActivity, "Joker User", Toast.LENGTH_LONG).show();
-            //callerActivity.WrongAnswerDeletionHandler.sendEmptyMessage(0);
-            new AnswerTask(callerActivity, true).execute(callerActivity.question.getAnswer(), "" + JackpotApplication.numberOfFloatyUsed,
-                    "1");
+            callerActivity.handleUsingJoker();
+//            new AnswerTask(callerActivity, true).execute(callerActivity.question.getAnswer(), "" + JackpotApplication.numberOfFloatyUsed,
+//                    "1");
         } else {
             Toast.makeText(callerActivity.getApplicationContext(), "Sorry, something is wrong ...", Toast.LENGTH_SHORT).show();
             callerActivity.finish();

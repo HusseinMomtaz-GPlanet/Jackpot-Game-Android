@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.AsyncTask;
@@ -18,6 +19,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.ForegroundColorSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -58,6 +60,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 public class Login extends Activity {
 
@@ -127,6 +130,7 @@ public class Login extends Activity {
 
         setContentView(R.layout.login);
 
+        changeGameLanguage();
         //loginButton = (LoginButton) findViewById(R.id.login_button);
         //loginButton.setReadPermissions(Arrays.asList("email"));
         p = new JackpotParameters(this);
@@ -153,6 +157,18 @@ public class Login extends Activity {
 
         initOperations();
 
+
+    }
+
+    void changeGameLanguage(){
+        JackpotApplication.currentLanguage="es";
+
+        Resources res = this.getResources();
+        // Change locale settings in the app.
+        DisplayMetrics dm = res.getDisplayMetrics();
+        android.content.res.Configuration conf = res.getConfiguration();
+        conf.locale = new Locale(JackpotApplication.currentLanguage.toLowerCase());
+        res.updateConfiguration(conf, dm);
 
     }
 

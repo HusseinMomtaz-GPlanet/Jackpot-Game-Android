@@ -158,7 +158,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:textColor="#433f40"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -188,7 +188,7 @@
         android:id="@+id/choicesFrame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/bottomBar"
+        android:layout_above="@+id/floatyIconFrame"
         android:layout_marginBottom="10dp"
         android:visibility="invisible">
 
@@ -325,11 +325,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:layout_marginBottom="2dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginRight="6dp"
             android:text="0"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
     </FrameLayout>
 
