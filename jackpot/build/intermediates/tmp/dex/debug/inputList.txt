@@ -1,13 +1,13 @@
 D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\classes\debug
-D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\support-annotations-21.0.0-24b9297db9006460b8149f110b92d47b04f11ed9.jar
+D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-a4e99bb09db83315001218d362c2ad030bbe2f2c.jar
 D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\bolts-dbe4be1fad04389ba1893107e356d742d9f876a4.jar
 D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\androidannotations-api-3.0.1-328d193a7375cac494c664d9abbc58ed021803d3.jar
+D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-3236591c7af9dff2556043182723f8a39c6de3fa.jar
 D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\classes-9a2aba5be89e114dbed90a851c67e0f482f84bdb.jar
 D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\classes-28f1a110afe24c5fdce697c564c2fffe6dc536fb.jar
 D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\YouTubeAndroidPlayerApi-cb0347dec5cd7ad4dc249eeff3687b72e55afcff.jar
 D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\classes-706069a49e7c1611938f2a89b77c744d739b7d55.jar
-D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\internal_impl-21.0.0-88a0d07e617c4d2440bb8ee795f86dad2311d13a.jar
 D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\gson-2.2.4-e575dee3680a521996fb55edeb4f23ddf2ddf664.jar
 D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\classes-7715d9c8a21e1ea0059c67ce32ecf8192dfd0658.jar
-D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\classes-319497b4c2caad568f92c5cb06b89a150769e510.jar
+D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\classes-6e069ff43723a4569d5c595b7685af9b28b58fa5.jar
 D:\Hussein (Systems & Computers)\Android Studio Workspace Backup\AndroidstudioProjects\jackpotversion\jackpot\build\intermediates\pre-dexed\debug\StartAppInApp-2.4.15-e90ce389b2f3a22bb0883f18a7c5771ee1939458.jar

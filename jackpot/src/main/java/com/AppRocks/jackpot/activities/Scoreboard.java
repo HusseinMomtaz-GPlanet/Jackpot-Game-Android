@@ -58,7 +58,7 @@ public class Scoreboard extends Activity {
                     for (int i = 0; i < topScoreArrayJson.length(); i++) {
                         JSONObject j = topScoreArrayJson.getJSONObject(i);
                         HashMap<String, String> scoreUser = new HashMap<String, String>();
-
+                        scoreUser.put(JackpotApplication.TAG_Mail, j.getString(JackpotApplication.TAG_Mail));
                         scoreUser.put(JackpotApplication.TAG_NICKNAME, j.getString(JackpotApplication.TAG_NICKNAME));
                         scoreUser.put(JackpotApplication.TAG_TOTAL_SCORE, j.getString(JackpotApplication.TAG_TOTAL_SCORE));
 

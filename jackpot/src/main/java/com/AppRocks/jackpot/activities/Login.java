@@ -160,10 +160,10 @@ public class Login extends Activity {
 
     }
 
-    void changeGameLanguage(){
+    public void changeGameLanguage(){
         JackpotApplication.currentLanguage="es";
 
-        Resources res = this.getResources();
+        Resources res = getBaseContext().getResources();
         // Change locale settings in the app.
         DisplayMetrics dm = res.getDisplayMetrics();
         android.content.res.Configuration conf = res.getConfiguration();
@@ -663,7 +663,12 @@ public class Login extends Activity {
             if (result == SUCCESS) {
                 hideSignUpForm();
             } else if (result == EMAIL_EXISTS) {
-                Toast.makeText(getApplicationContext(), "The email already exists!", Toast.LENGTH_SHORT).show();
+                if(JackpotApplication.currentLanguage.equalsIgnoreCase("en")) {
+                    Toast.makeText(getApplicationContext(), "The email already exists!", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Este apodo no est� libre, escoge otro", Toast.LENGTH_SHORT).show();
+
+                }
             } else {
                 Toast.makeText(getApplicationContext(), "Error, please try again.", Toast.LENGTH_SHORT).show();
             }
@@ -708,10 +713,17 @@ public class Login extends Activity {
             if (result == SUCCESS) {
                 hideSignUpForm();
             } else if (result == PASSWORD_INVALID) {
-                Toast.makeText(getApplicationContext(), "The password is wrong", Toast.LENGTH_SHORT).show();
+                if(JackpotApplication.currentLanguage.equalsIgnoreCase("en")) {
+                    Toast.makeText(getApplicationContext(), "The password is wrong", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), "Contrase�a incorrecta", Toast.LENGTH_SHORT).show();
+                }
             } else if (result == EMAIL_INVALID) {
-               // Toast.makeText(getApplicationContext(), "The email is wrong", Toast.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(),"Nick no disponible, escoge otro", Toast.LENGTH_SHORT).show();
+                if(JackpotApplication.currentLanguage.equalsIgnoreCase("en")) {
+                    Toast.makeText(getApplicationContext(), "The email is wrong", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(),"Este Nick no existe", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 Toast.makeText(getApplicationContext(), "Error, please try again.", Toast.LENGTH_SHORT).show();
             }

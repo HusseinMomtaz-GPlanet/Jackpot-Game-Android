@@ -50,7 +50,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="Answer the question correctly and win your "
+            android:text="@string/answer_cheese"
             android:textColor="#f8f500"
             android:textSize="21sp"
             android:textStyle="bold" />

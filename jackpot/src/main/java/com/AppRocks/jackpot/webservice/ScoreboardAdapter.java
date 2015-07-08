@@ -60,8 +60,11 @@ public class ScoreboardAdapter extends BaseAdapter {
 
         hMap = new HashMap<String, String>();
         hMap = scoreList.get(position);
-
-        txtName.setText(hMap.get(JackpotApplication.TAG_NICKNAME));
+        if (hMap.get(JackpotApplication.TAG_NICKNAME) == null || hMap.get(JackpotApplication.TAG_NICKNAME).isEmpty()) {
+            txtName.setText(hMap.get(JackpotApplication.TAG_Mail));
+        } else {
+            txtName.setText(hMap.get(JackpotApplication.TAG_NICKNAME));
+        }
         txtNumber.setText("" + (position + 1));
         txtScore.setText(hMap.get(JackpotApplication.TAG_TOTAL_SCORE));
 

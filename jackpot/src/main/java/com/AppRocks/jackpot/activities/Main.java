@@ -4,11 +4,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -56,6 +58,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 @EActivity
 public class Main extends BaseActivity {
@@ -150,8 +153,20 @@ public class Main extends BaseActivity {
         setContentView(R.layout.main);
         p = new JackpotParameters(this);
         SoundPlayer.initSounds(getApplicationContext());
+        changeGameLanguage();
     }
 
+    void changeGameLanguage(){
+        JackpotApplication.currentLanguage="es";
+
+        Resources res = this.getResources();
+        // Change locale settings in the app.
+        DisplayMetrics dm = res.getDisplayMetrics();
+        android.content.res.Configuration conf = res.getConfiguration();
+        conf.locale = new Locale(JackpotApplication.currentLanguage.toLowerCase());
+        res.updateConfiguration(conf, dm);
+
+    }
     @Override
     protected void onStart() {
         initUILConfig();

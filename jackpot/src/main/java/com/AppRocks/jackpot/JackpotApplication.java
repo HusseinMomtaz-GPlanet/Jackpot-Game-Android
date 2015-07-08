@@ -31,6 +31,7 @@ public class JackpotApplication extends Application {
     public static final String TAG_WON_USER_FIRST_NAME = "first_name";
     public static final String TAG_WON_USER_LAST_NAME = "last_name";
     public static final String TAG_WON_USER_Nick_NAME = "nickname";
+    public static final String TAG_Mail = "email";
     // getquestion fields
     public static final String TAG_ANSWER_1 = "answer_1";
     public static final String TAG_ANSWER_2 = "answer_2";

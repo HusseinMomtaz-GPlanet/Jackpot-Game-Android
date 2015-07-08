@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
@@ -21,6 +22,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -79,6 +81,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -159,7 +162,7 @@ public class Question extends Activity implements RotationEndCallBack,
     private RouletteView roulette;
     private RelativeLayout rootLayout;
     private FrameLayout choicesFrame;
-    //private LinearLayout bottomBar;
+    private LinearLayout bottomBar;
     private Animation qAnimation;
     private ImageView imgTrue;
     private Animation trueAnimation;
@@ -214,6 +217,19 @@ public class Question extends Activity implements RotationEndCallBack,
         initUILConfig();
 
         showJackpotLogoOnRightCircle();
+        changeGameLanguage();
+    }
+
+    public void changeGameLanguage(){
+        JackpotApplication.currentLanguage="es";
+
+        Resources res = getBaseContext().getResources();
+        // Change locale settings in the app.
+        DisplayMetrics dm = res.getDisplayMetrics();
+        android.content.res.Configuration conf = res.getConfiguration();
+        conf.locale = new Locale(JackpotApplication.currentLanguage.toLowerCase());
+        res.updateConfiguration(conf, dm);
+
     }
 
     @Override
@@ -249,7 +265,6 @@ public class Question extends Activity implements RotationEndCallBack,
             updateRouletteText();
             // the suitble place to execute getquestiontask
         }
-
     }
 
     @Override
@@ -338,7 +353,7 @@ public class Question extends Activity implements RotationEndCallBack,
         txtStar = (TextView) findViewById(R.id.txtStar);
         starLayout = (RelativeLayout) findViewById(R.id.starLayout);
         choicesFrame = (FrameLayout) findViewById(R.id.choicesFrame);
-        //bottomBar = (LinearLayout) findViewById(R.id.bottomBar);
+        bottomBar = (LinearLayout) findViewById(R.id.bottomBar);
         //txtScoreWord = (TextView) findViewById(R.id.scoreWord);
         floatyIconFrame = (FrameLayout) findViewById(R.id.floatyIconFrame);
         jockerIconFrame = (FrameLayout) findViewById(R.id.jockerIconFrame);
@@ -502,7 +517,7 @@ public class Question extends Activity implements RotationEndCallBack,
         txtCategory.setTypeface(font);
         txtLevel.setTypeface(font);
         txtAlarm.setTypeface(font);
-        //txtScore.setTypeface(font);
+        txtScore.setTypeface(font);
 //        txtScoreWord.setTypeface(font);
         txtLevelRoulette.setTypeface(font);
         txtQuestionRoulette.setTypeface(font);
@@ -514,7 +529,7 @@ public class Question extends Activity implements RotationEndCallBack,
 
     //This method to handle show You lose screen after all lives are gone
     void handleWhenUserLoseQuestion(){
-        if(JackpotApplication.livesHas>0){
+        if(JackpotApplication.livesHas>1){
             useLive();
         }else {
             showYouLoseScreen();
@@ -1093,38 +1108,65 @@ public class Question extends Activity implements RotationEndCallBack,
 
 
     private void showGetDataScreen() {
+        rouletteDim.setVisibility(View.VISIBLE);
+        windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);// context.getSystemService(Context.WINDOW_SERVICE);
+        LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        getReadyView = inflator.inflate(R.layout.you_win_south_america, null);
+
+        int windowHeight = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
+                .getDefaultDisplay().getHeight();
+
+        params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+
+        params.windowAnimations = R.style.screen_animation;
+        params.gravity = Gravity.TOP | Gravity.LEFT;
+        params.x = 0;
+        params.y = windowHeight / 5;
+        windowManager.addView(getReadyView, params);
+
+        /*
         Dialog pop_up = new Dialog(this);
         pop_up.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         pop_up.getWindow().setGravity(Gravity.CENTER);
         LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        getReadyView = inflator.inflate(R.layout.get_data_screen, null);
+        getReadyView = inflator.inflate(R.layout.you_win_south_america, null);
         pop_up.setContentView(getReadyView);
+        */
 
-        final EditText contactEmail = (EditText) getReadyView
-                .findViewById(R.id.txt_get_ready);
-        final EditText contactPhone = (EditText) getReadyView
-                .findViewById(R.id.txt_get_ready2);
         Button submitBtn = (Button) getReadyView
                 .findViewById(R.id.btnTryAgain);
         Typeface font = Typeface.createFromAsset(getAssets(),
                 "BigSoftie-Fat.otf");
+
+        /*final EditText contactEmail = (EditText) getReadyView
+                .findViewById(R.id.txt_get_ready);
+        final EditText contactPhone = (EditText) getReadyView
+                .findViewById(R.id.txt_get_ready2);
         contactEmail.setTypeface(font);
-        contactPhone.setTypeface(font);
+        contactPhone.setTypeface(font);*/
         submitBtn.setTypeface(font);
             submitBtn.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View arg0) {
                     // elsawaf
-                    ConnectionDetector cd = new ConnectionDetector(Question.this);
-                    if (cd.isConnectingToInternet()) {
-                        new WinTask(isThisSavedGame).execute(contactEmail.getText().toString(), contactPhone.getText().toString());
-                    }
-                    startActivity(new Intent(Question.this, Main_.class));
+//                    ConnectionDetector cd = new ConnectionDetector(Question.this);
+//                    if (cd.isConnectingToInternet()) {
+//                        new WinTask(isThisSavedGame).execute(contactEmail.getText().toString(), contactPhone.getText().toString());
+//                    }
+//                    startActivity(new Intent(Question.this, Main_.class));
+
+                    //changed in this version to not submit user data
+                    hideScreen();
                 }
             });
 
-        pop_up.show();
+        //pop_up.show();
     }
 
     private String getLevelNumberWord(int n) {
@@ -1156,22 +1198,22 @@ public class Question extends Activity implements RotationEndCallBack,
     private String getLevelNumberWordInSpanish(int n) {
         switch (n) {
             case 1:
-                return "primer";
+                return " primer";
 
             case 2:
-                return "segundo";
+                return " segundo";
 
             case 3:
-                return "tercer";
+                return " tercer";
 
             case 4:
-                return "cuarto";
+                return " cuarto";
 
             case 5:
-                return "quinto";
+                return " quinto";
 
             case 6:
-                return "sixth";
+                return " sixth";
 
             default:
                 return " ";
@@ -1310,7 +1352,7 @@ public class Question extends Activity implements RotationEndCallBack,
     public void updateJocker() {
         jockerIcon.setClickable(true);
 
-        if (JackpotApplication.jokerAllowed == 0) {
+        if (JackpotApplication.jokerHas == 0) {
             ((TextView) findViewById(R.id.txtJoker)).setText(""
                     + (JackpotApplication.jokerHas));
             jockerIcon.setClickable(false);
@@ -1335,7 +1377,7 @@ public class Question extends Activity implements RotationEndCallBack,
             ((TextView) findViewById(R.id.txtFloaty)).setText(""
                     + JackpotApplication.livesHas);
             floatyIcon.setClickable(false);
-            floatyIconFrame.setAlpha(0.5f);
+            //floatyIconFrame.setAlpha(0.5f);
             floatyIconFrame.setVisibility(View.VISIBLE);
             return;
         } else {
@@ -1499,7 +1541,7 @@ public class Question extends Activity implements RotationEndCallBack,
         imgTrue.setVisibility(View.INVISIBLE);
         choicesFrame.setVisibility(View.INVISIBLE);
         questionBackground.setVisibility(View.INVISIBLE);
-        //bottomBar.setVisibility(View.INVISIBLE);
+        bottomBar.setVisibility(View.INVISIBLE);
         floatyIconFrame.setVisibility(View.INVISIBLE);
         jockerIconFrame.setVisibility(View.INVISIBLE);
     }
@@ -1612,7 +1654,7 @@ public class Question extends Activity implements RotationEndCallBack,
 
     public void updateTotalScore() {
         level.totalScore += level.newScore;
-        //txtScore.setText("" + level.totalScore);
+        txtScore.setText("" + level.totalScore);
     }
 
     public void deleteTheSavedGame() {
@@ -1730,7 +1772,7 @@ public class Question extends Activity implements RotationEndCallBack,
                     choicesFrame.startAnimation(choicesAnimation);
                     animN = ANIMATION_CHOICES;
 
-                   // bottomBar.setVisibility(View.VISIBLE);
+                    bottomBar.setVisibility(View.VISIBLE);
                 }
             }
         });
