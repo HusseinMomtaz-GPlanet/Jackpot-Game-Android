@@ -45,5 +45,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile files('libs/androidannotations-api-3.0.1.jar')
     compile files('libs/YouTubeAndroidPlayerApi.jar')
-    compile files('libs/StartAppInApp-2.4.15.jar')
+    compile files('libs/StartAppInApp-3.1.2.jar')
 }

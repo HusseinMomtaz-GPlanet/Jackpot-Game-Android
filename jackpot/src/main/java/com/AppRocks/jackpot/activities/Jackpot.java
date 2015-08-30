@@ -1,6 +1,5 @@
 package com.AppRocks.jackpot.activities;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -18,9 +18,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.ScaleAnimation;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -35,7 +33,6 @@ import com.AppRocks.jackpot.services.MusicService;
 import com.AppRocks.jackpot.util.ConnectionDetector;
 import com.AppRocks.jackpot.webservice.GetJackpotDetailsTask;
 import com.AppRocks.jackpot.webservice.PlayJackpotTask;
-import com.AppRocks.jackpot.webservice.WinTask;
 import com.makeramen.RoundedImageView;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -44,6 +41,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.startapp.android.publish.StartAppAd;
+import com.startapp.android.publish.StartAppSDK;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -55,8 +54,10 @@ import org.json.JSONObject;
 @EActivity(R.layout.jackpot)
 public class Jackpot extends BaseActivity {
 
+    MediaPlayer mp;
 	/*@ViewById
     TextView txtSignOut;*/
+    private StartAppAd startAppAd = new StartAppAd(this);
 
     public String desc;
     @ViewById
@@ -103,6 +104,7 @@ public class Jackpot extends BaseActivity {
     private WindowManager windowManager;
     private View getReadyView;
     public static int LOGO_APPEARANCE;
+    public  String reamining_winners;
     @Click
     void btnSeeTheVideo() {
         if (progressYou == 100) {
@@ -243,8 +245,10 @@ public class Jackpot extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StartAppSDK.init(this, "103654352", "206877549", true);
         initUILConfig();
         jackParams = new JackpotParameters(this);
+
     }
 
 
@@ -287,9 +291,48 @@ public class Jackpot extends BaseActivity {
         super.onStart();
     }
 
+
+    private void showOwlPopup() {
+
+        final Dialog pop_up = new Dialog(this,R.style.DialogSlideAnim);
+        pop_up.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        pop_up.getWindow().setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
+        LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        getReadyView = inflator.inflate(R.layout.owl_popup, null);
+        pop_up.setContentView(getReadyView);
+
+        Typeface font = Typeface.createFromAsset(getAssets(),
+                "BigSoftie-Fat.otf");
+        TextView remaining_textField = (TextView) getReadyView
+                .findViewById(R.id.remaining_winners);
+        remaining_textField.setTypeface(font);
+        remaining_textField.setText(this.reamining_winners+"");
+        Button exit_button = (Button) getReadyView
+                .findViewById(R.id.exit_button);
+        exit_button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pop_up.dismiss();
+            }
+        });
+
+        pop_up.show();
+        mp = MediaPlayer.create(this, R.raw.owl);
+        mp.start();
+    }
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        startAppAd.onResume();
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
+        startAppAd.onPause();
         if (!playMusicContinue) {
             stopService(new Intent(getBaseContext(), MusicService.class));
         }
@@ -422,6 +465,11 @@ public class Jackpot extends BaseActivity {
         try {
             //set the count of company logo appearance to use in video screen
             LOGO_APPEARANCE=jackpotDetailsJSON.getInt("logo_videos");
+            reamining_winners=jackpotDetailsJSON.getString("remaining_winners");
+
+            //if(!reamining_winners.equalsIgnoreCase("0"))
+               showOwlPopup();
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

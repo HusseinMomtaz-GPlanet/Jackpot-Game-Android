@@ -49,6 +49,8 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.startapp.android.publish.StartAppAd;
+import com.startapp.android.publish.StartAppSDK;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -102,7 +104,7 @@ public class Main extends BaseActivity {
     private int jackpotDifficulty;
     private ImageButton btnPlayMusic;
 
-
+    private StartAppAd startAppAd = new StartAppAd(this);
     // Scale the given view, its contents, and all of its children by the given
     // factor.
     public static void scaleViewAndChildren(View root, float scale) {
@@ -149,8 +151,9 @@ public class Main extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // overridePendingTransition(R.anim.hold, R.anim.push_out_to_left);
+        StartAppSDK.init(this, "103654352", "206877549", true);
         setContentView(R.layout.main);
+
         p = new JackpotParameters(this);
         SoundPlayer.initSounds(getApplicationContext());
         changeGameLanguage();
@@ -177,6 +180,7 @@ public class Main extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        startAppAd.onPause();
         if (!playMusicContinue) {
             stopService(new Intent(getBaseContext(), MusicService.class));
         }
@@ -228,6 +232,8 @@ public class Main extends BaseActivity {
                         JackpotApplication.TAG_HASWINNER);
                 String is_blocked = jackpotsList.get(vp.getCurrentItem()).get(
                         JackpotApplication.TAG_Bloked);
+                if(page==null)
+                    return;
                 ImageView status_image=(ImageView)page.findViewById(R.id.status_image);
 
                 if(Integer.parseInt(has_winner)!=0){
@@ -427,6 +433,7 @@ public class Main extends BaseActivity {
         overridePendingTransition(android.R.anim.slide_in_left,
                 android.R.anim.slide_out_right);
         super.onResume();
+        startAppAd.onResume();
     }
 
     @Override

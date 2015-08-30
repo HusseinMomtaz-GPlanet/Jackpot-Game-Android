@@ -200,7 +200,7 @@ public class Question extends Activity implements RotationEndCallBack,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StartAppSDK.init(this, "103783037", "203962058", true);
+        StartAppSDK.init(this, "103654352", "206877549", true);
         setContentView(R.layout.question);
 
         // Should load sound to be ready when we need it
@@ -218,6 +218,7 @@ public class Question extends Activity implements RotationEndCallBack,
 
         showJackpotLogoOnRightCircle();
         changeGameLanguage();
+
     }
 
     public void changeGameLanguage(){
@@ -532,7 +533,11 @@ public class Question extends Activity implements RotationEndCallBack,
         if(JackpotApplication.livesHas>1){
             useLive();
         }else {
+            startAppAd.showAd(); // show the ad
+            startAppAd.loadAd(); // load the next ad
+
             showYouLoseScreen();
+
         }
     }
 
@@ -1108,65 +1113,67 @@ public class Question extends Activity implements RotationEndCallBack,
 
 
     private void showGetDataScreen() {
-        rouletteDim.setVisibility(View.VISIBLE);
-        windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);// context.getSystemService(Context.WINDOW_SERVICE);
-        LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        getReadyView = inflator.inflate(R.layout.you_win_south_america, null);
-
-        int windowHeight = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
-                .getDefaultDisplay().getHeight();
-
-        params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT);
-
-        params.windowAnimations = R.style.screen_animation;
-        params.gravity = Gravity.TOP | Gravity.LEFT;
-        params.x = 0;
-        params.y = windowHeight / 5;
-        windowManager.addView(getReadyView, params);
-
-        /*
+//        rouletteDim.setVisibility(View.VISIBLE);
+//        windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);// context.getSystemService(Context.WINDOW_SERVICE);
+//        LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        getReadyView = inflator.inflate(R.layout.you_win_south_america, null);
+//
+//        int windowHeight = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
+//                .getDefaultDisplay().getHeight();
+//
+//        params = new WindowManager.LayoutParams(
+//                WindowManager.LayoutParams.MATCH_PARENT,
+//                WindowManager.LayoutParams.WRAP_CONTENT,
+//                WindowManager.LayoutParams.TYPE_PHONE,
+//                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+//                PixelFormat.TRANSLUCENT);
+//
+//        params.windowAnimations = R.style.screen_animation;
+//        params.gravity = Gravity.TOP | Gravity.LEFT;
+//        params.x = 0;
+//        params.y = windowHeight / 5;
+//        windowManager.addView(getReadyView, params);
         Dialog pop_up = new Dialog(this);
         pop_up.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         pop_up.getWindow().setGravity(Gravity.CENTER);
         LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        getReadyView = inflator.inflate(R.layout.you_win_south_america, null);
+        getReadyView = inflator.inflate(R.layout.get_data_screen, null);
         pop_up.setContentView(getReadyView);
-        */
+
 
         Button submitBtn = (Button) getReadyView
                 .findViewById(R.id.btnTryAgain);
+        TextView title = (TextView) getReadyView
+                .findViewById(R.id.title);
         Typeface font = Typeface.createFromAsset(getAssets(),
                 "BigSoftie-Fat.otf");
 
-        /*final EditText contactEmail = (EditText) getReadyView
+        final EditText contactEmail = (EditText) getReadyView
                 .findViewById(R.id.txt_get_ready);
-        final EditText contactPhone = (EditText) getReadyView
-                .findViewById(R.id.txt_get_ready2);
         contactEmail.setTypeface(font);
-        contactPhone.setTypeface(font);*/
         submitBtn.setTypeface(font);
+        title.setTypeface(font);
             submitBtn.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View arg0) {
                     // elsawaf
-//                    ConnectionDetector cd = new ConnectionDetector(Question.this);
-//                    if (cd.isConnectingToInternet()) {
-//                        new WinTask(isThisSavedGame).execute(contactEmail.getText().toString(), contactPhone.getText().toString());
-//                    }
-//                    startActivity(new Intent(Question.this, Main_.class));
+                    ConnectionDetector cd = new ConnectionDetector(Question.this);
+                    if (cd.isConnectingToInternet()) {
+                        new WinTask(Question.this,isThisSavedGame).execute(contactEmail.getText().toString(), " ");
+                    }
+
 
                     //changed in this version to not submit user data
-                    hideScreen();
+                   // hideScreen();
                 }
             });
 
-        //pop_up.show();
+        pop_up.show();
+    }
+
+    public void onWinnerDataSaved(){
+        startActivity(new Intent(Question.this, Scoreboard.class));
     }
 
     private String getLevelNumberWord(int n) {
@@ -1360,8 +1367,9 @@ public class Question extends Activity implements RotationEndCallBack,
             jockerIconFrame.setVisibility(View.VISIBLE);
             return;
         } else {
-            //jockerIcon.setOnClickListener(jockerClickListener);
+            jockerIcon.setOnClickListener(jockerClickListener);
             jockerIconFrame.setAlpha(1f);
+
             ((TextView) findViewById(R.id.txtJoker)).setText(""
                     + (JackpotApplication.jokerHas));
             jockerIconFrame.setVisibility(View.VISIBLE);
@@ -1605,7 +1613,7 @@ public class Question extends Activity implements RotationEndCallBack,
 
     }
 
-    public void wineer() {
+    public void youWin() {
         mp = MediaPlayer.create(Question.this, R.raw.when_user_win_the_jackpot);
         mp.start();
 
@@ -1613,6 +1621,16 @@ public class Question extends Activity implements RotationEndCallBack,
         updateTotalScore();
 
         showGetDataScreen();
+    }
+
+    public void wineer() {
+        mp = MediaPlayer.create(Question.this, R.raw.when_user_win_the_jackpot);
+        mp.start();
+
+        // call update score UI
+        updateTotalScore();
+
+        showOoopsScreen();
     }
 
     public void rightAnswer() {
@@ -1985,7 +2003,7 @@ public class Question extends Activity implements RotationEndCallBack,
             }
 
             updateJocker();
-
+            jockerIconFrame.setAlpha(0.5f);
             //stopTimer();
             MediaPlayer jockerMP = MediaPlayer.create(Question.this, R.raw.when_user_press_the_joker_or_float);
             jockerMP.start();

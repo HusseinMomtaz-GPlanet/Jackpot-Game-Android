@@ -517,7 +517,12 @@ public class Login extends Activity {
 //        txtSex.setVisibility(View.GONE);
 //        radioGruopSex.setVisibility(View.GONE);
 
-        btnSignUp.setText("Login");
+        if(JackpotApplication.currentLanguage.equalsIgnoreCase("en")) {
+            btnSignUp.setText("Login");
+        }else{
+            btnSignUp.setText("Entrar");
+        }
+
         txtSignUp.setTextColor(getResources().getColor(R.color.Black));
         txtLogin.setTextColor(getResources().getColor(R.color.Red));
 
@@ -533,7 +538,12 @@ public class Login extends Activity {
         txtSex.setVisibility(View.VISIBLE);
         radioGruopSex.setVisibility(View.VISIBLE);
 */
-        btnSignUp.setText("Sign Up");
+        if(JackpotApplication.currentLanguage.equalsIgnoreCase("en")) {
+            btnSignUp.setText("Sign Up");
+        }else{
+            btnSignUp.setText("Registrarse");
+        }
+
         txtSignUp.setTextColor(getResources().getColor(R.color.Red));
         txtLogin.setTextColor(getResources().getColor(R.color.Black));
 

@@ -24,6 +24,9 @@
     <string name="complete">complete</string>
     <string name="continue_game">Continue</string>
 
+    <string name="signup">Sign Up</string>
+    <string name="login">Login</string>
+
     <string name="invite_friends">Invite friends to play \nand win extra joker!</string>
     <string name="answer_cheese">Answer the question correctly and win your </string>
     <string name="answer_cheese_last">Answer the last question correctly and win the jackpot!!</string>

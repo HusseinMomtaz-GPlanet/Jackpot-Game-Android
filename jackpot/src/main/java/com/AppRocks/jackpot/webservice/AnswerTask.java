@@ -17,6 +17,7 @@ public class AnswerTask extends AsyncTask<String, Void, Integer> {
     final int WINNER = 2;
     final int TIME_IS_UP = 3;
     final int JOCKER_USED = 4;
+    final int You_WIN=5;
     Question callerActivity;
     boolean isJockerUsed;
 
@@ -51,6 +52,8 @@ public class AnswerTask extends AsyncTask<String, Void, Integer> {
                     // the winner
                     if (answerJSON.has("has_won")) {
                         return WINNER;
+                    }else if(callerActivity.isLast.equalsIgnoreCase("1")){
+                        return You_WIN;
                     } else if (isJockerUsed) {
                         return JOCKER_USED;
                     }
@@ -97,6 +100,8 @@ public class AnswerTask extends AsyncTask<String, Void, Integer> {
             callerActivity.wrongAnswer();
         } else if (result == WINNER) {
             callerActivity.wineer();
+        }else if (result == You_WIN) {
+            callerActivity.youWin();
         } else if (result == TIME_IS_UP) {
             callerActivity.timer.schedule(callerActivity.timeIsUpTask, 1500);
         } else {

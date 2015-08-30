@@ -47,17 +47,19 @@ public class WinnerScreen extends Activity {
     private void setWinnerInfo() {
         // TODO Auto-generated method stub
         HashMap<String, String> winnerInfo = (HashMap<String, String>) getIntent().getSerializableExtra("winner");
-        txtCompanyName.setText(winnerInfo.get(JackpotApplication.TAG_COMPANY));
-        txtBrandName.setText(winnerInfo.get(JackpotApplication.TAG_BRAND));
+        if(winnerInfo!=null) {
+            txtCompanyName.setText(winnerInfo.get(JackpotApplication.TAG_COMPANY));
+            txtBrandName.setText(winnerInfo.get(JackpotApplication.TAG_BRAND));
 
+        /*
         //show user name is existed or nick name if not
         String username=winnerInfo.get(JackpotApplication.TAG_WON_USER_FIRST_NAME) + " " + winnerInfo.get(JackpotApplication.TAG_WON_USER_LAST_NAME);
         if(username.trim().isEmpty()){
             username=winnerInfo.get(JackpotApplication.TAG_WON_USER_Nick_NAME);
         }
         txtWinnerName.setText(username);
-
-
+        */
+        }
         String imgFly = winnerInfo.get(JackpotApplication.TAG_FLY);
         String imgURL = JackpotApplication.BASE_URL
                 + imgFly.substring(imgFly.indexOf("uploads"));

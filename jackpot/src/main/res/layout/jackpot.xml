@@ -1,8 +1,15 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
     tools:context=".Main">
 
     <LinearLayout
@@ -129,8 +136,8 @@
 
                         <com.makeramen.RoundedImageView
                             android:id="@+id/imgJAckBot"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
                             android:background="@drawable/jackpot_badge"
                             android:padding="5dip"
                             android:scaleType="fitXY"
@@ -163,7 +170,7 @@
                         android:id="@+id/relativeLayoutRight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp">
+                        android:layout_margin="3dp">
 
                         <View
                             android:id="@+id/viewBGWorld"
@@ -196,18 +203,18 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="3dp"
                     android:layout_weight="1"
                     android:background="#59FFFFFF"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="5dp">
+                    android:padding="2dp">
 
                     <TextView
                         android:id="@+id/txtDesc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:lines="3"
+                        android:lines="2"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:textColor="@color/DarkGreen"
@@ -224,7 +231,7 @@
                         android:paddingRight="6dp"
                         android:text="+ info"
                         android:textColor="#b8eae1"
-                        android:textSize="18sp"
+                        android:textSize="17sp"
                         android:visibility="invisible" />
                 </LinearLayout>
             </LinearLayout>
@@ -294,3 +301,10 @@
         android:visibility="invisible" />
 
 </RelativeLayout>
+
+    <com.startapp.android.publish.banner.Banner
+        android:id="@+id/startAppBanner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"/>
+</LinearLayout>

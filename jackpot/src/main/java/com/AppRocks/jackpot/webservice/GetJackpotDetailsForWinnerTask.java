@@ -63,10 +63,11 @@ public class GetJackpotDetailsForWinnerTask extends AsyncTask<Object, Void, Void
                                     .getString(JackpotApplication.TAG_IMAGE));
 
                     JSONObject userWonJson = wonJson.getJSONObject(JackpotApplication.TAG_WON_USER);
-                    winnerDetails.put(JackpotApplication.TAG_WON_USER_FIRST_NAME, userWonJson.getString(JackpotApplication.TAG_WON_USER_FIRST_NAME));
-                    winnerDetails.put(JackpotApplication.TAG_WON_USER_LAST_NAME, userWonJson.getString(JackpotApplication.TAG_WON_USER_LAST_NAME));
-                    winnerDetails.put(JackpotApplication.TAG_WON_USER_Nick_NAME, userWonJson.getString(JackpotApplication.TAG_WON_USER_Nick_NAME));
-
+                    if(userWonJson!=null) {
+                        winnerDetails.put(JackpotApplication.TAG_WON_USER_FIRST_NAME, userWonJson.getString(JackpotApplication.TAG_WON_USER_FIRST_NAME));
+                        winnerDetails.put(JackpotApplication.TAG_WON_USER_LAST_NAME, userWonJson.getString(JackpotApplication.TAG_WON_USER_LAST_NAME));
+                        winnerDetails.put(JackpotApplication.TAG_WON_USER_Nick_NAME, userWonJson.getString(JackpotApplication.TAG_WON_USER_Nick_NAME));
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

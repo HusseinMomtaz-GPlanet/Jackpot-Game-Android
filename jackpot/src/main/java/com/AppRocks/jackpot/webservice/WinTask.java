@@ -2,13 +2,16 @@ package com.AppRocks.jackpot.webservice;
 
 import android.os.AsyncTask;
 
+import com.AppRocks.jackpot.activities.Question;
+
 public class WinTask extends AsyncTask<String, Void, Void> {
 
     private boolean isThisWasSavedGame;
+    Question questionActivity;
 
-
-    public WinTask(boolean isThisWasSavedGame) {
+    public WinTask(Question qActivity,boolean isThisWasSavedGame) {
         this.isThisWasSavedGame = isThisWasSavedGame;
+        questionActivity=qActivity;
     }
 
     @Override
@@ -23,6 +26,7 @@ public class WinTask extends AsyncTask<String, Void, Void> {
         if (isThisWasSavedGame) {
             new SaveGameTask(SaveGameTask.END_TASK).execute(0, 0, 0, 0);
         }
+        questionActivity.onWinnerDataSaved();
         super.onPostExecute(result);
     }
 }

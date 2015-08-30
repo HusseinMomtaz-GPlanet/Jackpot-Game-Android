@@ -8,7 +8,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="35dp"
-        android:background="@drawable/enterdata_bk" />
+
+        android:background="@drawable/winner_bk" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -23,43 +24,50 @@
         android:orientation="vertical"
         android:focusable="true">
 
-        <View
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="7" />
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_weight="4" >
 
-        <View
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:text="!Felicidades!"
+                android:textColor="@color/yellow"
+                android:id="@+id/title" />
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/winnerowl"/>
+            </LinearLayout>
+
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_weight="6"
-            android:background="@drawable/enterdata_txt_sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="17dp"
-            android:layout_marginTop="35dp"
+            android:layout_weight="4"
+            android:orientation="vertical"
             android:focusable="true"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
-                android:layout_marginLeft="20dp"
-                android:layout_weight=".3"
-                android:src="@drawable/enterdata_mail" />
-
+            android:background="@drawable/winner_words" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:gravity="center"/>
             <EditText
                 android:id="@+id/txt_get_ready"
-                android:layout_width="210dp"
+                android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight=".3"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:background="@drawable/et_bg_get_data"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
@@ -67,48 +75,29 @@
                 android:textSize="18sp"
                 android:focusableInTouchMode="true"
                 android:textStyle="bold" >
-            <requestFocus />
+                <requestFocus />
             </EditText>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="17dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center">
+            android:focusable="true"
+            android:gravity="center"/>
 
-            <ImageView
-                android:id="@+id/imageViewphone"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
-                android:layout_marginLeft="20dp"
-                android:layout_weight=".3"
-                android:src="@drawable/enterdata_phone" />
 
-            <EditText
-                android:id="@+id/txt_get_ready2"
-                android:layout_width="210dp"
-                android:layout_height="38dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight=".3"
-                android:background="@drawable/et_bg_get_data"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:textColor="#F00"
-                android:textSize="18sp"
-                android:textStyle="bold" >
-            <requestFocus />
-            </EditText>
-        </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+       />
 
         <Button
             android:id="@+id/btnTryAgain"
@@ -121,7 +110,7 @@
             android:gravity="center"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
-            android:text="Submit"
+            android:text="Enviar"
             android:textColor="#0a8cda"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -129,7 +118,7 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="0.5" />
     </LinearLayout>
 
 

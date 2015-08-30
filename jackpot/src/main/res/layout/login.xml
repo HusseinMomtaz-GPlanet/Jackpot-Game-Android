@@ -113,7 +113,7 @@
             android:layout_toRightOf="@+id/textView4"
             android:clickable="true"
             android:onClick="txtLoginClick"
-            android:text="Login"
+            android:text="@string/login"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/Black" />
 
@@ -126,7 +126,7 @@
             android:layout_marginTop="10dp"
             android:clickable="true"
             android:onClick="txtSignupClick"
-            android:text=" Sign Up"
+            android:text="@string/signup"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/Red"
              />

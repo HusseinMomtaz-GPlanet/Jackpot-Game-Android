@@ -8,8 +8,8 @@
 
     <com.makeramen.RoundedImageView
         android:id="@+id/imgJAckBot"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:background="@drawable/jackpot_badge"
